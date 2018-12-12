@@ -21,6 +21,9 @@
         <a class="nav-link" routerLink="/user/profile">Profile</a>
       </li>
       <li class="nav-item" *ngIf="isLogged">
+        <a class="nav-link" routerLink="/my-books">My Books</a>
+      </li>
+      <li class="nav-item" *ngIf="isLogged">
         <a class="nav-link" routerLink="/admin/list-books">List Books</a>
       </li>
       <li class="nav-item" *ngIf="!isLogged">

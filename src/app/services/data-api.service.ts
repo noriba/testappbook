@@ -55,16 +55,29 @@ export class DataApiService {
     }));
   }
 
-  addBook(book: BookInterface): void {
-    this.booksCollection.add(book);
+  addBook(book: BookInterface) {
+    return new Promise((resolve, reject) => {
+
+      this.booksCollection.add(book)
+        .then(userData => {
+        }).catch(err => console.log(reject(err)))
+
+    })
   }
-  updateBook(book: BookInterface): void {
+
+  updateBook(book: BookInterface) {
     let idBook = book.id;
     this.bookDoc = this.afs.doc<BookInterface>(`books/${idBook}`);
-    this.bookDoc.update(book);
+    return this.bookDoc.update(book).then((res) => {
+    }).catch(err => {
+      console.log('err', err.message);
+    });
   }
-  deleteBook(idBook: string): void {
+  deleteBook(idBook: string) {
     this.bookDoc = this.afs.doc<BookInterface>(`books/${idBook}`);
-    this.bookDoc.delete();
+    return this.bookDoc.delete().then((res) => {
+    }).catch(err => {
+      console.log('err', err.message);
+    });
   }
 }

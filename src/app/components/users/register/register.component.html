@@ -26,7 +26,6 @@
                   <div *ngIf="password.errors.required">Password is required</div>
                   <div *ngIf="password.errors.minlength">Password must be at least 5 characters</div>
                 </div>
-                <hr>
                 <div class="form-group">
                   <h5>Seleccionar image:</h5>
                   <input type="file" accept=".png, .jpg" (change)="onUpload($event)">

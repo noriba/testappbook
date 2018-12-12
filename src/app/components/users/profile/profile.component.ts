@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
-import { UserInterface } from '../../../models/user';
+import { UserInterface } from '../../../models/roles';
 
 @Component({
   selector: 'app-profile',
@@ -10,6 +10,7 @@ import { UserInterface } from '../../../models/user';
 export class ProfileComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
+
   user: UserInterface = {
     name: '',
     email: '',
@@ -18,6 +19,7 @@ export class ProfileComponent implements OnInit {
   };
 
   public providerId: string = 'null';
+
   ngOnInit() {
     this.authService.isAuth().subscribe(user => {
       if (user) {

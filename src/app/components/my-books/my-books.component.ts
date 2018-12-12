@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { DataApiService } from '../../../services/data-api.service';
-import { BookInterface } from '../../../models/book';
-import { NgForm } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
-import { AngularFireAuth } from '@angular/fire/auth';
+import {DataApiService} from '../../services/data-api.service';
+import {AuthService} from '../../services/auth.service';
+import {BookInterface} from '../../models/book';
 
 @Component({
-  selector: 'app-list-books',
-  templateUrl: './list-books.component.html',
-  styleUrls: ['./list-books.component.css']
+  selector: 'app-my-books',
+  templateUrl: './my-books.component.html',
+  styleUrls: ['./my-books.component.css']
 })
-export class ListBooksComponent implements OnInit {
+export class MyBooksComponent implements OnInit {
 
   constructor(private dataApi: DataApiService, private authService: AuthService) { }
   private books: BookInterface[];
@@ -24,10 +22,18 @@ export class ListBooksComponent implements OnInit {
 
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
+      console.log('id :', auth.uid);
+      console.log('displayName :', auth.displayName);
+      console.log('phoneNumber :', auth.phoneNumber);
+      console.log('email :', auth.email);
+      console.log('photoURL :', auth.photoURL);
       if (auth) {
         this.userUid = auth.uid;
         this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
           this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
+          // this.isAdmin = true;
+          console.log('err Admin role test', this.isAdmin);
+          console.log('err Roles finded', userRole.roles);
         })
       }
     })

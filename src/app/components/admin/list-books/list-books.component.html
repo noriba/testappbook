@@ -5,6 +5,7 @@
       <thead>
         <tr>
           <th scope="col">#</th>
+          <th scope="col">Jacket</th>
           <th scope="col">Titulo</th>
           <th scope="col">Autor</th>
           <th scope="col">Idioma</th>
@@ -16,7 +17,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let book of books; index as i">
-          <th scope="row">{{i+1}}</th>
+          <th  scope="row">{{i+1}}</th>
+          <td class="book-img"><img src="{{book.portada}}"></td>
           <td>{{book.titulo}}</td>
           <td>{{book.autor}}</td>
           <td>{{book.idioma}}</td>

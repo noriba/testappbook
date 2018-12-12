@@ -1,0 +1,48 @@
+<section class="row mt-5">
+  <div class="col">
+    <button class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalBook">New Book</button>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Jacket</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Autor</th>
+        <th scope="col">Idioma</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Oferta</th>
+        <th scope="col">&nbsp;</th>
+        <th scope="col">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let book of books; index as i">
+        <th  scope="row">{{i+1}}</th>
+        <td class="book-img"><img src="{{book.portada}}"></td>
+        <td>{{book.titulo}}</td>
+        <td>{{book.autor}}</td>
+        <td>{{book.idioma}}</td>
+        <td>{{book.precio}}</td>
+        <td>{{book.oferta == 1 ? 'Sí': 'No'}}</td>
+        <td *ngIf="book.userUid == userUid || isAdmin == true; else noOwner">
+          <button class="btn btn-primary" data-toggle="modal" data-target="#modalBook" (click)="onPreUpdateBook(book)">Update</button>
+        </td>
+        <ng-template #noOwner>
+          <td>
+            <button class="btn btn-secondary" disabled="true">Update</button>
+          </td>
+        </ng-template>
+        <td *ngIf="isAdmin == true; else noAdmin">
+          <button class="btn btn-danger" (click)="onDeleteBook(book.id)">Delete</button>
+        </td>
+        <ng-template #noAdmin>
+          <td>
+            <button class="btn btn-danger" disabled="true">Delete</button>
+          </td>
+        </ng-template>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<app-modal [userUid]="userUid"></app-modal>
