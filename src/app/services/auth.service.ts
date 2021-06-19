@@ -5,8 +5,6 @@ import {  auth } from "firebase/auth";
 
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import {UserInterface} from '../models/roles';
-import * as firebase from 'firebase/app';
-import {UpdateCommand} from '@angular/cli/commands/update-impl';
 
 @Injectable({
   providedIn: 'root'
