@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
-import {  auth } from "firebase/app";
+import { auth } from "firebase/app";
 
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import {UserInterface} from '../models/roles';
+import { UserInterface } from '../models/roles';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
   private imageprofile: any;
 
   constructor(private afsAuth: AngularFireAuth, private afs: AngularFirestore) { }
@@ -20,8 +21,7 @@ export class AuthService {
         .then(userData => {
           console.log("registerUser ::: userData "+ userData.user.photoURL);
           this.imageprofile = userData.user.photoURL;
-          return (this.updateUserData(userData.user),
-            resolve(userData));
+          return (resolve(userData) , this.updateUserData(userData.user));
         }).catch(err => console.log(reject(err)))
     });
   }
@@ -54,7 +54,9 @@ export class AuthService {
   }
 
   isAuth() {
-    return this.afsAuth.authState.pipe(map(auth => auth));
+    return this.afsAuth.authState.pipe(map(auth => {
+      return auth;
+    }));
   }
 
   private updateUserData(user) {

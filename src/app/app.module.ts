@@ -23,7 +23,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MyBooksComponent } from './components/my-books/my-books.component';
-
+import { Component } from '@angular/core';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { MyBooksComponent } from './components/my-books/my-books.component';
     AngularFireDatabaseModule,
     AngularFireStorageModule,
   ],
-  providers: [AngularFireAuth, AngularFirestore],
+  providers: [AngularFireAuth, AngularFirestore, NgbModal, NgbModalConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,8 +11,8 @@ import {map} from 'rxjs/operators';
 export class NavbarComponent implements OnInit {
 
   constructor(private authService: AuthService, private afsAuth: AngularFireAuth) { }
-  public app_name: string = 'BookStore';
-  public isLogged: boolean = false;
+  private app_name: string = 'BookStore';
+  private isLogged: boolean = false;
 
   ngOnInit() {
     this.getCurrentUser();

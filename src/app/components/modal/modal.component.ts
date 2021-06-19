@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { DataApiService } from '../../services/data-api.service';
-import { BookInterface } from '../../models/book';
 import { NgForm } from '@angular/forms';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {Observable} from 'rxjs/internal/Observable';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal',
@@ -27,15 +27,22 @@ export class ModalComponent implements OnInit {
   msgError: string;
   isError: any;
 
-  constructor(/*private modalService: NgbModal,*/ private dataApi: DataApiService,private storage: AngularFireStorage) { }
+  constructor(public dataApi: DataApiService, private storage: AngularFireStorage,config: NgbModalConfig, private modalService: NgbModal) {    // customize default values of modals used by this component tree
+    config.backdrop = 'static';
+    config.keyboard = false; }
 
   @ViewChild('btnClose') btnClose: ElementRef;
   @Input() userUid: string;
   @ViewChild('imageBook') inputImageBook: ElementRef;
+  @ViewChild('modal') modal: ElementRef;
 
 
+  open(content) {
+    this.modalService.open(content);
+  }
 
   ngOnInit() {
+
   }
 
   onSaveBook(bookForm: NgForm): void {
@@ -46,24 +53,18 @@ export class ModalComponent implements OnInit {
         .then(()=>{
         bookForm.resetForm();
         this.btnClose.nativeElement.click();
-          console.log("onSaveBook() ::: url = "+ bookForm.value.portada);
-          console.log("onSaveBook() ::: url = "+ this.dataApi.selectedBook.portada);
       })
         .catch(err => {
           this.isError = true;
           this.msgError = err.message;
-          console.log('error onSaveBook() ::: ' + err);
         });
     } else {
       // Update
       bookForm.value.portada = this.inputImageBook.nativeElement.value;
-
       this.dataApi.updateBook(bookForm.value)
         .then(()=>{
           bookForm.resetForm();
           this.btnClose.nativeElement.click();
-          console.log("onSaveBook() ::: url = "+ bookForm.value.portada);
-          console.log("onSaveBook() ::: url = "+ this.dataApi.selectedBook.portada);
       })
         .catch(err => {
           this.isError = true;
@@ -75,25 +76,8 @@ export class ModalComponent implements OnInit {
 
   }
 
-  closeResult: string;
-
- /* private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
-  }*/
   onUpload(event) {
 
- /*   this.modalService.open(event, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-*/
     this.imageLoad.id = Math.random().toString(36).substring(2);
     this.imageLoad.file = event.target.files[0];
     this.imageLoad.filePath = `uploads/book_${this.imageLoad.id}`;

@@ -13,17 +13,20 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class ListBooksComponent implements OnInit {
 
   constructor(private dataApi: DataApiService, private authService: AuthService) { }
-  private books: BookInterface[];
-  public isAdmin: any = null;
-  public userUid: string = null;
+
+  allBooks: BookInterface[];
+  private isAdmin: any ;
+  private userUid: string ;
 
   ngOnInit() {
-    this.getListBooks();
     this.getCurrentUser();
+    this.getListBooks();
   }
 
   getCurrentUser() {
+    debugger;
     this.authService.isAuth().subscribe(auth => {
+      debugger;
       if (auth) {
         this.userUid = auth.uid;
         this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
@@ -33,9 +36,11 @@ export class ListBooksComponent implements OnInit {
     })
   }
   getListBooks() {
+    debugger;
     this.dataApi.getAllBooks()
       .subscribe(books => {
-        this.books = books;
+        debugger;
+        this.allBooks = books;
       });
   }
 

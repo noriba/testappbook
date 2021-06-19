@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {DataApiService} from '../../services/data-api.service';
 import {AuthService} from '../../services/auth.service';
 import {BookInterface} from '../../models/book';
+import {Observable} from 'rxjs/internal/Observable';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-my-books',
@@ -11,37 +13,35 @@ import {BookInterface} from '../../models/book';
 export class MyBooksComponent implements OnInit {
 
   constructor(private dataApi: DataApiService, private authService: AuthService) { }
-  private books: BookInterface[];
-  public isAdmin: any = null;
-  public userUid: string = null;
+
+    myBooks: BookInterface[];
+  private isAdmin: any ;
+  private userUid: string;
 
   ngOnInit() {
-    this.getListBooks();
     this.getCurrentUser();
+    //this.getMyBooks();
   }
 
   getCurrentUser() {
+    debugger;
     this.authService.isAuth().subscribe(auth => {
-      console.log('id :', auth.uid);
-      console.log('displayName :', auth.displayName);
-      console.log('phoneNumber :', auth.phoneNumber);
-      console.log('email :', auth.email);
-      console.log('photoURL :', auth.photoURL);
+      debugger;
       if (auth) {
-        this.userUid = auth.uid;
+        this.userUid= auth.uid;
+        this.getMyBooks(this.userUid);
         this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
           this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
-          // this.isAdmin = true;
-          console.log('err Admin role test', this.isAdmin);
-          console.log('err Roles finded', userRole.roles);
         })
       }
     })
   }
-  getListBooks() {
-    this.dataApi.getAllBooks()
+  getMyBooks(userId) {
+    debugger;
+    this.dataApi.getMyBooks(userId)
       .subscribe(books => {
-        this.books = books;
+        debugger;
+        this.myBooks = books;
       });
   }
 
