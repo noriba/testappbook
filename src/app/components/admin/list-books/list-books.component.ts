@@ -22,9 +22,7 @@ export class ListBooksComponent implements OnInit {
   }
 
   getCurrentUser() {
-    debugger;
     this.authService.isAuth().subscribe(auth => {
-      debugger;
       if (auth) {
         this.userUid = auth.uid;
         this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
@@ -34,10 +32,8 @@ export class ListBooksComponent implements OnInit {
     })
   }
   getListBooks() {
-    debugger;
     this.dataApi.getAllBooks()
       .subscribe(books => {
-        debugger;
         this.allBooks = books;
       });
   }

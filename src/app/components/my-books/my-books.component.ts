@@ -23,9 +23,7 @@ export class MyBooksComponent implements OnInit {
   }
 
   getCurrentUser() {
-    debugger;
     this.authService.isAuth().subscribe(auth => {
-      debugger;
       if (auth) {
         this.userUid= auth.uid;
         this.getMyBooks(this.userUid);
@@ -36,10 +34,8 @@ export class MyBooksComponent implements OnInit {
     })
   }
   getMyBooks(userId) {
-    debugger;
     this.dataApi.getMyBooks(userId)
       .subscribe(books => {
-        debugger;
         this.myBooks = books;
       });
   }

@@ -1,7 +1,11 @@
-<section class="row mt-5">
-  <div class="col">
-    <button class="btn btn-primary float-right mb-3" data-toggle="modal" data-target="#modalBook">New Book</button>
-    <table class="table table-hover">
+<section class="row mt-2">
+  <div class="container ">
+
+  <div class="table-responsive ">
+    <div class="float-right">
+      <button class="btn btn-primary m-2 m-xl-2 " data-toggle="modal" data-target="#modalBook">New Book</button>
+    </div>
+    <table class="table table-hover ">
       <thead>
       <tr>
         <th scope="col">#</th>
@@ -11,14 +15,18 @@
         <th scope="col">Idioma</th>
         <th scope="col">Precio</th>
         <th scope="col">Oferta</th>
-        <th scope="col">&nbsp;</th>
-        <th scope="col">&nbsp;</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let book of myBooks; index as i">
         <th  scope="row">{{i+1}}</th>
-        <td class="book-img"><img src="{{book.portada}}"></td>
+        <td class="  ">
+          <div class="">
+            <div class=" ">
+              <img class=" img-fluid " src="{{book.portada}}">
+            </div>
+          </div>
+        </td>
         <td>{{book.titulo}}</td>
         <td>{{book.autor}}</td>
         <td>{{book.idioma}}</td>
@@ -44,5 +52,6 @@
       </tbody>
     </table>
   </div>
+  </div>
+  <app-modal [userUid]="userUid"></app-modal>
 </section>
-<app-modal [userUid]="userUid"></app-modal>

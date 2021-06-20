@@ -10,6 +10,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { MyBooksComponent } from './components/my-books/my-books.component';
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
+import {TimesheetComponent} from './components/timesheet/timesheet.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'book/:id', component: DetailsBookComponent },
   { path: 'admin/list-books', component: ListBooksComponent, canActivate: [AuthGuard] },
   { path: 'my-books', component: MyBooksComponent, canActivate: [AuthGuard] },
+  { path: 'timesheet', component: TimesheetComponent, canActivate: [AuthGuard] },
   { path: 'user/login', component: LoginComponent },
   { path: 'user/register', component: RegisterComponent },
   { path: 'user/profile', component: ProfileComponent, canActivate: [AuthGuard] },

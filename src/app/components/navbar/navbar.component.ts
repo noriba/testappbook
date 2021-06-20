@@ -35,14 +35,12 @@ export class NavbarComponent implements OnInit {
   onLogout() {
     this.authService.logoutUser()
       .then(res => {
-        debugger;
         console.log("Succes onLogout() :: "+res);
       })
       .catch(error => {
         console.log("Error onLogout() :: "+error);
       });
 
-    //this.afsAuth.auth.signOut();
   }
 
 

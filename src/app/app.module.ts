@@ -22,6 +22,7 @@ import {AngularFireAuth} from '@angular/fire/auth/auth';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {environment} from '../environments/environment';
+import { TimesheetComponent } from './components/timesheet/timesheet.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {environment} from '../environments/environment';
     ProfileComponent,
     RegisterComponent,
     Page404Component,
-    MyBooksComponent
+    MyBooksComponent,
+    TimesheetComponent
   ],
   imports: [
     BrowserModule,
