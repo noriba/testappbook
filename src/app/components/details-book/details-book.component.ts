@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataApiService } from '../../services/data-api.service';
 import { BookInterface } from '../../models/book';
-import { ActivatedRoute, Params } from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-details-book',

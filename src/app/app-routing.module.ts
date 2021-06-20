@@ -1,5 +1,3 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { OffersComponent } from 'src/app/components/offers/offers.component';
 import { DetailsBookComponent } from './components/details-book/details-book.component';
@@ -10,6 +8,8 @@ import { ProfileComponent } from 'src/app/components/users/profile/profile.compo
 import { Page404Component } from './components/page404/page404.component';
 import { AuthGuard } from './guards/auth.guard';
 import { MyBooksComponent } from './components/my-books/my-books.component';
+import {RouterModule, Routes} from '@angular/router';
+import {NgModule} from '@angular/core';
 
 
 const routes: Routes = [
@@ -26,7 +26,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

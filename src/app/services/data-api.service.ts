@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentChangeAction} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/firestore/firestore';
 import { BookInterface } from '../models/book';
-import { Observable } from 'rxjs/internal/Observable';
-import { map } from 'rxjs/operators';
-import {User} from 'firebase';
-import {Subject} from 'rxjs';
+import { map } from 'rxjs/internal/operators';
+import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +14,7 @@ export class DataApiService {
   private booksCollection: AngularFirestoreCollection<BookInterface>;
   private booksList: Observable<BookInterface[]>;
   private books: Observable<BookInterface[]>;
+  private booksOffers: Observable<BookInterface[]>;
   private bookDoc: AngularFirestoreDocument<BookInterface>;
   private book: Observable<BookInterface>;
   public selectedBook: BookInterface = { id: null };
@@ -21,11 +22,12 @@ export class DataApiService {
   getAllBooks() {
     debugger;
     this.booksCollection = this.afs.collection<BookInterface>('books');
-    return this.books = this.booksCollection.snapshotChanges()
+    return this.books = this.booksCollection
+      .snapshotChanges()
       .pipe(map(changes => {
         return changes.map(action => {
           const data = action.payload.doc.data() as BookInterface;
-          data.id = action.payload.doc.id;
+          data.id = action.payload.doc.data().id;
           return data;
         });
       }));
@@ -38,7 +40,7 @@ export class DataApiService {
       .pipe(map(changes => {
         return changes.map( action => {
           const data = action.payload.doc.data() as BookInterface;
-          data.id = action.payload.doc.id;
+          data.id = action.payload.doc.data().id;
           return data;
         }).filter(data => data.userUid == user);
       }));
@@ -53,7 +55,7 @@ export class DataApiService {
           return null;
         } else {
           const data = action.payload.data() as BookInterface;
-          data.id = action.payload.id;
+          data.id = action.payload.data().id;
           return data;
       }
     }));
@@ -61,11 +63,12 @@ export class DataApiService {
 
   getAllBooksOffers() {
     this.booksCollection = this.afs.collection('books', ref => ref.where('oferta', '==', '1'));
-    return this.books = this.booksCollection.snapshotChanges()
+    return this.booksOffers = this.booksCollection
+      .snapshotChanges()
       .pipe(map(changes => {
         return changes.map(action => {
           const data = action.payload.doc.data() as BookInterface;
-          data.id = action.payload.doc.id;
+          data.id = action.payload.doc.data().id;
           return data;
         });
       }));

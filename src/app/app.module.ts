@@ -1,6 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListBooksComponent } from './components/admin/list-books/list-books.component';
@@ -14,17 +11,18 @@ import { LoginComponent } from './components/users/login/login.component';
 import { ProfileComponent } from './components/users/profile/profile.component';
 import { RegisterComponent } from './components/users/register/register.component';
 import { Page404Component } from './components/page404/page404.component';
-import { FormsModule } from '@angular/forms';
-import { environment } from '../environments/environment';
+import {MyBooksComponent} from './components/my-books/my-books.component';
+import {AngularFirestore} from '@angular/fire/firestore/firestore';
+import {AngularFireStorageModule} from '@angular/fire/storage/storage.module';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
+import {AngularFireModule} from '@angular/fire';
+import {NgModule} from "@angular/core";
+import {AngularFireAuth} from '@angular/fire/auth/auth';
+import {FormsModule} from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {environment} from '../environments/environment';
 
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { MyBooksComponent } from './components/my-books/my-books.component';
-import { Component } from '@angular/core';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [

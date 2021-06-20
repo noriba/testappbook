@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
-import { DataApiService } from '../../services/data-api.service';
-import { NgForm } from '@angular/forms';
-import {finalize} from 'rxjs/operators';
-import {AngularFireStorage} from '@angular/fire/storage';
+import {DataApiService} from '../../services/data-api.service';
+import {finalize} from 'rxjs/internal/operators/finalize';
+import {NgForm} from '@angular/forms';
 import {Observable} from 'rxjs/internal/Observable';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {AngularFireStorage} from '@angular/fire/storage';
+
 
 @Component({
   selector: 'app-modal',
@@ -27,19 +27,14 @@ export class ModalComponent implements OnInit {
   msgError: string;
   isError: any;
 
-  constructor(public dataApi: DataApiService, private storage: AngularFireStorage,config: NgbModalConfig, private modalService: NgbModal) {    // customize default values of modals used by this component tree
-    config.backdrop = 'static';
-    config.keyboard = false; }
+  constructor(public dataApi: DataApiService, private storage: AngularFireStorage) {    // customize default values of modals used by this component tree
+     }
 
   @ViewChild('btnClose') btnClose: ElementRef;
   @Input() userUid: string;
   @ViewChild('imageBook') inputImageBook: ElementRef;
-  @ViewChild('modal') modal: ElementRef;
 
 
-  open(content) {
-    this.modalService.open(content);
-  }
 
   ngOnInit() {
 

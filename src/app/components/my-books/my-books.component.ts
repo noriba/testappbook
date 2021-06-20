@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DataApiService} from '../../services/data-api.service';
 import {AuthService} from '../../services/auth.service';
 import {BookInterface} from '../../models/book';
-import {Observable} from 'rxjs/internal/Observable';
-import {Subject} from 'rxjs';
+
 
 @Component({
   selector: 'app-my-books',

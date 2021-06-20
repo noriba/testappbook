@@ -28,35 +28,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
   }
-/*
-  onUpload(e) {
-    // console.log('subir', e.target.files[0]);
-    const id = Math.random().toString(36).substring(2);
-    const file = e.target.files[0];
-    const filePath = 'uploads_'+id;
-    const ref = this.storage.ref(filePath);
-    const task = this.storage.upload(filePath, file);
-    this.uploadPercent = task.percentageChanges();
-   // task.snapshotChanges().pipe(finalize(() => this.urlImage = ref.getDownloadURL())).subscribe();
-    task
-      .snapshotChanges()
-      .pipe(
-        finalize(() => {
-          this.urlImage = ref.getDownloadURL();
-          this.urlImage.subscribe(url => {
-            if (url) {
-              this.fb = url;
-            }
-            console.log("URL :: "+ this.fb);
-          });
-        })
-      )
-      .subscribe(url => {
-        if (url) {
-          console.log("URL2 :: "+url);
-        }
-      });
-  }*/
+
 
   imageLoad: any = {
     id: '',

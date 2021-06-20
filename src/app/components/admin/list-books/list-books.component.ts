@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataApiService } from '../../../services/data-api.service';
 import { BookInterface } from '../../../models/book';
-import { NgForm } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-list-books',
@@ -15,8 +13,8 @@ export class ListBooksComponent implements OnInit {
   constructor(private dataApi: DataApiService, private authService: AuthService) { }
 
   allBooks: BookInterface[];
-  private isAdmin: any ;
-  private userUid: string ;
+   isAdmin: any ;
+  userUid: string ;
 
   ngOnInit() {
     this.getCurrentUser();
