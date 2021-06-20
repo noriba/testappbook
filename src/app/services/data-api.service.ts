@@ -20,7 +20,6 @@ export class DataApiService {
   public selectedBook: BookInterface = { id: null };
 
   getAllBooks() {
-    debugger;
     this.booksCollection = this.afs.collection<BookInterface>('books');
     return this.books = this.booksCollection
       .snapshotChanges()
@@ -34,7 +33,6 @@ export class DataApiService {
   }
 
   getMyBooks(user) {
-    debugger;
     this.booksCollection = this.afs.collection<BookInterface>('books');
     return this.booksList = this.booksCollection.snapshotChanges()
       .pipe(map(changes => {
@@ -77,7 +75,6 @@ export class DataApiService {
 
 
   addBook(book: BookInterface) {
-    debugger;
     return new Promise((resolve, reject) => {
 
       this.booksCollection.add(book)
