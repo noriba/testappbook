@@ -1,4 +1,4 @@
-import {AngularFirestore} from '@angular/fire/firestore/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import { BookInterface } from '../models/book';
 import { map } from 'rxjs/internal/operators';
 import { Observable } from 'rxjs';

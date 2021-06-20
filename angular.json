@@ -13,6 +13,37 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "firebase",
+              "lodash/dropRight",
+              "@angular/common/locales/fr",
+              "@firebase/app",
+              "@firebase/database",
+              "@firebase/firestore",
+              "@firebase/functions",
+              "@firebase/performance",
+              "@firebase/component",
+              "@firebase/remote-config",
+              "core-js-pure/features/array/is-array",
+              "core-js-pure/features/object/get-prototype-of",
+              "core-js-pure/features/object/set-prototype-of",
+              "core-js-pure/features/array/from",
+              "core-js-pure/features/object/get-own-property-descriptor",
+              "core-js-pure/features/object/set-own-property-descriptor",
+              "core-js-pure/features/object/define-property",
+              "core-js-pure/features/symbol",
+              "core-js-pure/features/instance/slice",
+              "core-js-pure/features/promise",
+              "core-js-pure/features/object/create",
+              "core-js-pure/features/reflect/get",
+              "core-js-pure/features/reflect/set",
+              "core-js-pure/features/symbol/iterator",
+              "rxjs/internal/operators/finalize",
+              "rxjs/internal/operators",
+              "rxjs/internal/operators/map",
+              "raf"
+            ],
             "outputPath": "dist/bookStore",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -35,7 +66,14 @@
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/umd/popper.js",
               "./node_modules/bootstrap/dist/js/bootstrap.js"
-            ]
+            ],
+            "aot": false,
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -48,7 +86,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -62,7 +99,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
