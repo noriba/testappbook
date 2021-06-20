@@ -1,7 +1,5 @@
-export interface Roles {
-  editor?: boolean;
-  admin?: boolean;
-}
+import {Roles} from './roles';
+
 
 export interface UserInterface {
   id?: string;

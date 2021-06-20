@@ -12,7 +12,7 @@ import { ProfileComponent } from './components/users/profile/profile.component';
 import { RegisterComponent } from './components/users/register/register.component';
 import { Page404Component } from './components/page404/page404.component';
 import {MyBooksComponent} from './components/my-books/my-books.component';
-import {AngularFirestore} from '@angular/fire/firestore/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage/storage.module';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {NgbModal, NgbModalConfig} from '@ng-bootstrap/ng-bootstrap';
@@ -46,7 +46,7 @@ import { TimesheetComponent } from './components/timesheet/timesheet.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebaseConfig,'book-store'),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
   ],
