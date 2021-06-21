@@ -23,6 +23,16 @@ import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {environment} from '../environments/environment';
 import { TimesheetComponent } from './components/timesheet/timesheet.component';
+import {AngularFireStorage} from '@angular/fire/storage';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { InputTextModule } from "primeng/inputtext";
+import { ButtonModule } from "primeng/button";
+import { CheckboxModule } from "primeng/checkbox";
+import { RadioButtonModule } from "primeng/radiobutton";
+import { DropdownModule } from "primeng/dropdown";
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+
+import * as i3 from "@angular/cdk/scrolling";
 
 
 @NgModule({
@@ -46,11 +56,17 @@ import { TimesheetComponent } from './components/timesheet/timesheet.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig,'book-store'),
+    BrowserAnimationsModule,
+    ButtonModule,
+    InputTextModule,
+    CheckboxModule,
+    RadioButtonModule,
+    DropdownModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
   ],
-  providers: [AngularFireAuth, AngularFirestore, NgbModal, NgbModalConfig],
+  providers: [AngularFireAuth, AngularFirestore, AngularFireStorage, NgbModal, NgbModalConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
