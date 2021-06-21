@@ -3,6 +3,8 @@ import {DataApiService} from '../../services/data-api.service';
 import {AuthService} from '../../services/auth.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import {RadioButtonModule} from 'primeng/radiobutton';
+
 
 @Component({
   selector: 'app-timesheet',
