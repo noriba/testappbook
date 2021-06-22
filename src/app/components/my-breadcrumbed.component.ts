@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BreadcrumbService} from '../services/breadcrumb.service';
 
 @Component({
@@ -8,15 +8,14 @@ import {BreadcrumbService} from '../services/breadcrumb.service';
 })
 export class MyBreadcrumbedComponent implements OnInit {
 
-  constructor(private breadcrumb: BreadcrumbService) { }
+  constructor(private breadcrumb: BreadcrumbService) {
+  }
 
   ngOnInit() {
-    this.breadcrumb.setCrumbs([{
-      label: 'A'
-    }, {
-      label: 'B'
-    }, {
-      label: 'C'
-    }]);
+    this.breadcrumb.setCrumbs([
+      {label: 'A'},
+      {label: 'B'},
+      {label: 'C'}
+    ]);
   }
 }

@@ -1,29 +1,12 @@
-<div class="m-3">test1<br>
-  <p-breadcrumb [model]="crumbs$ | async "></p-breadcrumb>
+<h1>PARENT COMPONENT</h1>
+
+<p-tabMenu [model]="items"></p-tabMenu>
+
+------------------------------------------------------------------------
+<div class="m-3">
+  <p-breadcrumb [model]="crumbs$  | async "></p-breadcrumb>
 </div>
 
-<li >{{crumbs}}</li>
-test2 <br>
-<li *ngIf="(crumbs | async ) as person">{{person.label}}</li>
-<tr *ngFor="let item of crumbs">
-  <td>{{item.label}}</td>
-  <td>{{item}}</td>
-</tr>
-test3<br>
-
-<ng-container *ngrxLet="crumbs$ as n">
-  <app-number [number]="n.label">
-    <td>{{n.label}}</td>
-    <td>{{n}}</td>
-  </app-number>
-</ng-container>
-test4<br>
-<ng-container *ngrxLet="crumbs$; let n; let e = $error, let c = $complete">
-  <td>{{n.label}}</td>
-  <td>{{crumbs$}}</td>
-</ng-container>
-
-<div><code>observable|async</code>:
-  Time: {{ time | async }}</div>
+-----------------------------------------------------------------------------------------------
 
 <router-outlet></router-outlet>

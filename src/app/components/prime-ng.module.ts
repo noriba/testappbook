@@ -18,21 +18,23 @@ import {TreeTableModule} from 'primeng/treetable';
 import {TableModule} from 'primeng/table';
 import {DataViewModule} from 'primeng/dataview';
 import { ReactiveComponentModule } from '@ngrx/component';
+import {MenuModule} from 'primeng/menu';
+import {TabMenuModule} from 'primeng/tabmenu';
 
 
 
 const ngroutes: Routes = [
   {    path: 'data-table', component: DataTableComponent  },
-  {
-    path: 'prime', component: ParentComponent,    children: [{
+  {    path: 'prime', component: ParentComponent,
+    children: [{
       path: 'file-tree', component: FileTreeComponent  }, {
-      path: 'breadcrumb', component: MyBreadcrumbedComponent
-    }, {
+      path: 'breadcrumb', component: MyBreadcrumbedComponent    }, {
       path: 'breadcrumb2', component: MyBreadcrumbed2Component, canActivate: [BreadcrumbInitializedGuard], data: {
         crumbs: [
-          {label: 'Step 1'},
-          {label: 'Step 2'},
-          {label: 'Step 3'}
+          {label: 'Home', routerLink: '/'},
+          {label: 'Tab1', routerLink: '/tab1'},
+          {label: 'Tab2', routerLink: '/tab2'},
+          {label: 'Tab3', routerLink: '/tab3'},
         ]
       }
     }],
@@ -50,7 +52,8 @@ const ngroutes: Routes = [
     CalendarModule],
   imports: [
     ReactiveComponentModule,
-
+    MenuModule,
+    TabMenuModule,
     DataViewModule,
     TableModule,
     RouterModule.forChild(ngroutes),
