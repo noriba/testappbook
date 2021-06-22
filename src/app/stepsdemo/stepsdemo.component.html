@@ -1,0 +1,125 @@
+<section class="row mt-2">
+
+
+  <div class="container   ">
+    <div class=" col-lg-md-8 mx-auto p-2 " id="htmlData">
+      <app-breadcrumb></app-breadcrumb>
+
+
+
+      <div class="card my-4 ">
+        <h5>Addons</h5>
+        <div class="">
+          <div class="row col-lg-12 my-2 ">
+            <div class=" col-lg-8 mb-2 ">
+              <div class="p-inputgroup ">
+                <span class="col-4 col-lg-4 p-inputgroup-addon ">Année</span>
+                <input type="text" #profile="ngModel" id="year" name="year" class="col-8 col-lg-8" pInputText
+                       [(ngModel)]="profile.year" placeholder="" type="text">
+              </div>
+            </div>
+            <div class=" col-lg-4 ">
+              <div class="p-inputgroup">
+                <span class="col-4 col-lg-6 p-inputgroup-addon">Semaine</span>
+                <input type="text" class="col-8 col-lg-6" id="week" name="week" pInputText
+                       [(ngModel)]="profile.week" placeholder="" type="text">
+              </div>
+            </div>
+          </div>
+          <div class="row col-lg-12 my-2">
+            <div class="col-lg-8 mb-2">
+              <div class="p-inputgroup">
+                <span class="col-4 col-lg-4 p-inputgroup-addon">Matricule</span>
+                <input type="text" class="col-5 col-lg-5 mr-1" id="matricule" name="matricule" pInputText
+                       [(ngModel)]="profile.matricule" placeholder="" type="text">
+                <input type="text" class="col-3 col-lg-3" id="matriculem3" name="matriculem3" pInputText
+                       [(ngModel)]="profile.matriculem3" placeholder="" type="text">
+              </div>
+            </div>
+            <div class="col-lg-4 ">
+              <div class="p-inputgroup">
+                <span class="col-4 col-lg-6 p-inputgroup-addon">Début</span>
+                <input type="text" class="col-8 col-lg-6" id="start" name="start" pInputText
+                       [(ngModel)]="profile.start" placeholder="" type="text">
+              </div>
+            </div>
+          </div>
+          <div class="row  col-lg-12 my-2">
+            <div class="col-lg-8 mb-2">
+              <div class="p-inputgroup">
+                <span class="col-4 col-lg-4 p-inputgroup-addon">Nom & Prénom</span>
+                <input class="col-8 col-lg-8" id="lastname" name="lastname" pInputText
+                       [(ngModel)]="profile.lastname"
+                       placeholder="" type="text">
+              </div>
+            </div>
+            <div class="col-lg-4 ">
+              <div class="p-inputgroup">
+                <span class="col-4 col-lg-6 p-inputgroup-addon">Fin</span>
+                <input type="text" class="col-8 col-lg-6" id="end" name="end" pInputText
+                       [(ngModel)]="profile.end " placeholder="" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div class="row col-lg-12 my-2  ">
+            <div class="col-lg-8 ">
+              <div class=" mb-2 mb-lg-3 ">
+                <div class="p-inputgroup">
+                  <span class="col-4 col-lg-4 p-inputgroup-addon">Site</span>
+                  <input type="text" class="col-8 col-lg-8" id="site" name="site" pInputText
+                         [(ngModel)]="profile.site" placeholder="" type="text">
+                </div>
+              </div>
+              <div class="mb-2">
+                <div class="p-inputgroup">
+                  <span class="col-4 col-lg-4 p-inputgroup-addon">Contrat</span>
+                  <div class="col-8 col-lg-8 py-2 px-4 form-check-inline">
+<!--                    <div class="my-auto  p-field-radiobutton">
+                      <p-radioButton type="text" id="cdi" name="cdi"  [binary]="true"
+                                     [(ngModel)]="profile.contract"        [ngClass]="profile.contract==='cdi'? true : false" inputId=""></p-radioButton>
+                      <label for="city2">CDI</label>
+                    </div>
+                    <div class="my-auto  p-field-radiobutton">
+                      <p-radioButton type="text" id="cdd" name="cdd"  [binary]="true"
+                                     [(ngModel)]="profile.contract"          [ngClass]="profile.contract ==='cdd'? true : false" inputId=""></p-radioButton>
+                      <label for="city3">CDD</label>
+                    </div>
+                    <div class="my-auto  p-field-radiobutton">
+                      <p-radioButton type="text" id="int" name="int" [binary]="true"
+                                     [(ngModel)]="profile.contract" [ngClass]="profile.contract ==='int'" inputId=""></p-radioButton>
+                      <label for="city4">INT</label>
+                    </div>-->
+                    <div *ngFor="let contract of contracts" class="p-field-checkbox">
+                      <p-radioButton [inputId]="contract.key" name="contract" [value]="contract"
+                                     [(ngModel)]="profile.contract"
+                                     [disabled]="contract.key === profile.contract"></p-radioButton>
+                      <label [for]="contract.type">{{contract.key}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 p-inputgroup">
+              <span class="col-4 col-lg-6 p-inputgroup-addon">Régime horaire</span>
+              <input type="text" class="col-8 col-lg-6" id="hours" name="hours" pInputText [(ngModel)]="profile.hours"
+                     placeholder="" type="text">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="p-grid p-nogutter p-justify-end">
+          <p-button type="text" id="" label="Next" (onClick)="nextPage()" icon="pi pi-angle-right"
+                    iconPos="right"></p-button>
+        </div>
+
+    </div>
+
+
+  </div>
+
+
+</section>
+

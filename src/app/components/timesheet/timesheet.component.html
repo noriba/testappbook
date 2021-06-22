@@ -1,13 +1,20 @@
 <section class="row mt-2">
 
 
-
   <div class="container   ">
     <div class=" col-lg-md-8 mx-auto p-2 " id="htmlData">
+
+      <div class="col-lg-md-4 text-right p-2">
+        <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+      </div>
+
+      <div class="col-lg-md-4 text-right p-2">
+        <p-steps [model]="steps" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
+      </div>
+
       <div class="col-lg-md-4 text-right p-2">
         <button (click)="openPDF()" class="btn btn-success btn-block">Download PDF</button>
       </div>
-
 
       <div class="card my-4 ">
         <h5>Addons</h5>
@@ -16,13 +23,13 @@
             <div class=" col-lg-8 mb-2 ">
               <div class="p-inputgroup ">
                 <span class="col-4 col-lg-4 p-inputgroup-addon ">Année</span>
-                <input class="col-8 col-lg-8" pInputText placeholder="Website" type="text">
+                <input class="col-8 col-lg-8" pInputText placeholder="" type="text">
               </div>
             </div>
             <div class=" col-lg-4 ">
               <div class="p-inputgroup">
                 <span class="col-4 col-lg-6 p-inputgroup-addon">Semaine</span>
-                <input class="col-8 col-lg-6" pInputText placeholder="Website" type="text">
+                <input class="col-8 col-lg-6" pInputText placeholder="" type="text">
               </div>
             </div>
           </div>
@@ -30,14 +37,14 @@
             <div class="col-lg-8 mb-2">
               <div class="p-inputgroup">
                 <span class="col-4 col-lg-4 p-inputgroup-addon">Matricule</span>
-                <input class="col-5 col-lg-5" pInputText placeholder="Website" type="text">
-                <input class="col-3 col-lg-3" pInputText placeholder="Website" type="text">
+                <input class="col-5 col-lg-5 mr-1" pInputText placeholder="" type="text">
+                <input class="col-3 col-lg-3" pInputText placeholder="" type="text">
               </div>
             </div>
             <div class="col-lg-4 ">
               <div class="p-inputgroup">
                 <span class="col-4 col-lg-6 p-inputgroup-addon">Début</span>
-                <input class="col-8 col-lg-6" pInputText placeholder="Website" type="text">
+                <input class="col-8 col-lg-6" pInputText placeholder="" type="text">
               </div>
             </div>
           </div>
@@ -45,13 +52,13 @@
             <div class="col-lg-8 mb-2">
               <div class="p-inputgroup">
                 <span class="col-4 col-lg-4 p-inputgroup-addon">Nom & Prénom</span>
-                <input class="col-8 col-lg-8" pInputText placeholder="Website" type="text">
+                <input class="col-8 col-lg-8" pInputText placeholder="" type="text">
               </div>
             </div>
             <div class="col-lg-4 ">
               <div class="p-inputgroup">
                 <span class="col-4 col-lg-6 p-inputgroup-addon">Fin</span>
-                <input class="col-8 col-lg-6" pInputText placeholder="Website" type="text">
+                <input class="col-8 col-lg-6" pInputText placeholder="" type="text">
               </div>
             </div>
           </div>
@@ -61,7 +68,7 @@
               <div class=" mb-2 mb-lg-3 ">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-4 p-inputgroup-addon">Site</span>
-                  <input class="col-8 col-lg-8" pInputText placeholder="Website" type="text">
+                  <input class="col-8 col-lg-8" pInputText placeholder="" type="text">
                 </div>
               </div>
               <div class="mb-2">
@@ -87,15 +94,14 @@
             </div>
             <div class="col-lg-4 p-inputgroup">
               <span class="col-4 col-lg-6 p-inputgroup-addon">Régime horaire</span>
-              <input class="col-8 col-lg-6" pInputText placeholder="Website" type="text">
+              <input class="col-8 col-lg-6" pInputText placeholder="" type="text">
             </div>
           </div>
         </div>
       </div>
-
-
-
-
+        <div class="p-grid p-nogutter p-justify-end">
+          <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+        </div>
       <!--
             <div>
               <table class="table table-bordered" border="0" cellpadding="0" cellspacing="0" width="1737" style="border-collapse:
@@ -2006,90 +2012,10 @@
             </div>
       -->
     </div>
+
+
   </div>
 
-  <div class="card my-4 ">
-    <h5>Addons</h5>
-    <div class="">
-      <div class="row col-lg-12 my-2 ">
-        <div class="col-lg-8  ">
-          <div class="p-inputgroup ">
-            <span class="col-lg-4 p-inputgroup-addon ">Année</span>
-            <input class="col-lg-8" pInputText placeholder="Website" type="text">
-          </div>
-        </div>
-        <div class=" col-lg-4 ">
-          <div class="p-inputgroup">
-            <span class="col-lg-6 p-inputgroup-addon">Semaine</span>
-            <input class="col-lg-6" pInputText placeholder="Website" type="text">
-          </div>
-        </div>
-      </div>
-      <div class="row col-lg-12 my-2">
-        <div class="col-lg-8 ">
-          <div class="p-inputgroup">
-            <span class="col-lg-4 p-inputgroup-addon">Matricule</span>
-            <input class="col-lg-5" pInputText placeholder="Website" type="text">
-            <input class="col-lg-3" pInputText placeholder="Website" type="text">
-          </div>
-        </div>
-        <div class="col-lg-4 ">
-          <div class="p-inputgroup">
-            <span class="col-lg-6 p-inputgroup-addon">Début</span>
-            <input class="col-lg-6" pInputText placeholder="Website" type="text">
-          </div>
-        </div>
-      </div>
-      <div class="row  col-lg-12 my-2">
-        <div class="col-lg-8 ">
-          <div class="p-inputgroup">
-            <span class="col-lg-4 p-inputgroup-addon">Nom & Prénom</span>
-            <input class="col-lg-8" pInputText placeholder="Website" type="text">
-          </div>
-        </div>
-        <div class="col-lg-4 ">
-          <div class="p-inputgroup">
-            <span class="col-lg-6 p-inputgroup-addon">Fin</span>
-            <input class="col-lg-6" pInputText placeholder="Website" type="text">
-          </div>
-        </div>
-      </div>
-
-      <div class="row col-lg-12 my-2  ">
-        <div class="col-lg-8 ">
-          <div class=" mb-3 ">
-            <div class="p-inputgroup">
-              <span class="col-lg-4 p-inputgroup-addon">Site</span>
-              <input class="col-lg-8" pInputText placeholder="Website" type="text">
-            </div>
-          </div>
-          <div class="">
-            <div class="p-inputgroup">
-              <span class="col-lg-4 p-inputgroup-addon">Contrat</span>
-              <div class="col-lg-8 py-2 px-4 form-check-inline">
-                <div class="my-auto  p-field-radiobutton">
-                  <p-radioButton name="city" value="Los Angeles" [(ngModel)]="city" inputId="city2"></p-radioButton>
-                  <label for="city2">CDI</label>
-                </div>
-                <div class="my-auto  p-field-radiobutton">
-                  <p-radioButton name="city" value="New York" [(ngModel)]="city" inputId="city3"></p-radioButton>
-                  <label for="city3">CDD</label>
-                </div>
-                <div class="my-auto  p-field-radiobutton">
-                  <p-radioButton name="city" value="San Francisco" [(ngModel)]="city"
-                                 inputId="city4"></p-radioButton>
-                  <label for="city4">INT</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 p-inputgroup">
-          <span class="col-lg-6 p-inputgroup-addon">Régime horaire</span>
-          <input class="col-lg-6" pInputText placeholder="Website" type="text">
-        </div>
-      </div>
-    </div>
-  </div>
 
 </section>
+

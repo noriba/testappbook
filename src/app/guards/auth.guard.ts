@@ -10,10 +10,10 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private afsAuth: AngularFireAuth, private router: Router) { }
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  constructor(private afsAuth: AngularFireAuth, private router: Router) {
+  }
+
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
     return this.afsAuth.authState
       .pipe(take(1))
