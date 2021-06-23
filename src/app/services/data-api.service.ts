@@ -1,9 +1,8 @@
-import {AngularFirestore} from '@angular/fire/firestore';
 import { BookInterface } from '../models/book';
 import { map } from 'rxjs/internal/operators';
 import { Observable } from 'rxjs';
 import {Injectable} from '@angular/core';
-import {AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {AngularFirestoreCollection, AngularFirestoreDocument,AngularFirestore} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'

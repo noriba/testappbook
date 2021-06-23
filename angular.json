@@ -41,6 +41,7 @@
               "core-js-pure/features/symbol/iterator",
               "rxjs/internal/operators/finalize",
               "rxjs/internal/operators",
+              "rxjs/internal/Observable",
               "rxjs/internal/operators/map",
               "raf"
             ],
