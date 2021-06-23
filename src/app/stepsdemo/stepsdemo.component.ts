@@ -16,7 +16,7 @@ import {BreadcrumbComponent} from '../components/breadcrumb/breadcrumb.component
 @Component({
   templateUrl: './stepsdemo.component.html',
   styleUrls: ['stepsdemo.component.css'],
-  providers: [MessageService, BreadcrumbComponent]
+  providers: [MessageService]
 })
 export class StepsdemoComponent implements OnInit {
 
@@ -42,7 +42,6 @@ export class StepsdemoComponent implements OnInit {
               private dataApi: DataApiService,
               private authService: AuthService,
               private router: Router) {
-    this.breadcrumb.activeIndex=0 ;
 
   }
 
