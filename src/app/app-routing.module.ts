@@ -23,7 +23,6 @@ import {MyBreadcrumbedComponent} from './components/my-breadcrumbed.component';
 import {MyBreadcrumbed2Component} from './components/my-breadcrumbed-2.component';
 import {BreadcrumbInitializedGuard} from './guards/breadcrumbInitialized.guard';
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
-import {StepComponent, StepsComponent} from './components/breadcrumb/wizard.module';
 
 
 const routes: Routes = [
@@ -41,8 +40,6 @@ const routes: Routes = [
   {path: 'step4', component: Step4},
   {path: 'step4', component: Step4},
   {path: 'step2', component: Step2},
-  {path: 'step', component: StepComponent},
-  {path: 'steps', component: StepsComponent},
   {path: 'user/profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'data-table', component: DataTableComponent},
   {    path: 'data-table', component: DataTableComponent  },
@@ -55,9 +52,6 @@ const routes: Routes = [
         crumbs: [
           {label: 'Home', routerLink: '/'},
           {label: 'Tab1', routerLink: '/tab1'},
-          {label: 'Tab2', routerLink: '/tab2'},
-          {label: 'Tab2', routerLink: '/tab2'},
-          {label: 'Tab2', routerLink: '/tab2'},
           {label: 'Tab2', routerLink: '/tab2'},
           {label: 'Tab3', routerLink: '/tab3'},
         ]
