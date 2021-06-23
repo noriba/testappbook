@@ -60,13 +60,11 @@ import {MyBreadcrumbed2Component} from './components/my-breadcrumbed-2.component
 import {MyBreadcrumbedComponent} from './components/my-breadcrumbed.component';
 import {FileTreeComponent} from './components/file-tree.component';
 import {DataTableComponent} from './components/data-table.component';
-import {StepComponent, StepsComponent, WizardModule} from './components/breadcrumb/wizard.module';
 
 
 
 @NgModule({
   declarations: [
-
     DataTableComponent,
     FileTreeComponent,
     MyBreadcrumbed2Component,
@@ -94,7 +92,6 @@ import {StepComponent, StepsComponent, WizardModule} from './components/breadcru
     TimesheetComponent
   ],
   imports: [
-    WizardModule,
     ReactiveComponentModule,
     DataViewModule,
     CommonModule,
@@ -120,13 +117,7 @@ import {StepComponent, StepsComponent, WizardModule} from './components/breadcru
     DropdownModule,
     TreeTableModule
   ],
-  exports:[
-    WizardModule,
-
-    StepsComponent,
-    StepComponent],
-  providers: [AngularFireAuth, AngularFirestore, AngularFireStorage, NgbModal, NgbModalConfig,BreadcrumbComponent,    StepComponent,StepsComponent
-  ],
+  providers: [AngularFireAuth, AngularFirestore, AngularFireStorage, NgbModal, NgbModalConfig,BreadcrumbComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

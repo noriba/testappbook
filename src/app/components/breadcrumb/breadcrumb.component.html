@@ -15,38 +15,11 @@
 <div class="col-lg-md-4 text-right p-2">
   <button (click)="openPDF()" class="btn btn-success btn-block">Download PDF</button>
 </div>
-<div class="col-lg-md-4 text-right p-2">
-  <button pButton type="button" label="Last Step" (click)="lastStepPlease3()"></button>
-</div>
-<div class="col-lg-md-4 text-right p-2">
-  <button pButton type="button" label="Next Step" (click)="nextStepPlease2()"></button>
-</div>
 
-<div #stepsDiv>
-  <p-steps
-           [model]="crumbs$ | async"
-           (activeIndexChange)="stepperChanged($event)"
-           [(activeIndex)]="activeIndex"
-           [readonly]="false"
-  ></p-steps>
-</div>
 <div class="col-lg-md-4 text-right p-2">
   <button pButton type="button" label="Next Step" (click)="nextStepPlease()"></button>
 </div>
 
-<div #stepsDiv2>
-  <p-steps
-           [model]="steps$ "
-           (activeIndexChange)="stepperChanged2($event)"
-           [(activeIndex)]="activeIndex"
-           [readonly]="false"
-  ></p-steps>
-</div>
-<div #stepsDiv3>
-  <p-steps
-           [model]="items "
-           (activeIndexChange)="stepperChanged3($event)"
-           [(activeIndex)]="activeIndex"
-           [readonly]="false"
-  ></p-steps>
+<div #stepsDiv>
+  <p-steps [model]="crumbs$ | async" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
 </div>
