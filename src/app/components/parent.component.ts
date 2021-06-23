@@ -8,9 +8,9 @@ import {BreadcrumbModule} from 'primeng/breadcrumb';
 @Component({
   selector: 'app-parent',
   templateUrl: './parent.component.html',
-//  template: `    <p-breadcrumb [model]=""></p-breadcrumb>  `
 })
 export class ParentComponent implements OnInit {
+
   crumbs$: Observable<MenuItem[]>;
    breadcrumbsIn: Observable<MenuItem[]>;
   itemsModel: (

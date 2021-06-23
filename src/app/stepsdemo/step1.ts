@@ -12,7 +12,7 @@ import {BreadcrumbComponent} from '../components/breadcrumb/breadcrumb.component
 
 @Component({
   templateUrl: './step1.html',
-  providers: [MessageService,BreadcrumbComponent]
+  providers: [MessageService]
 
 })
 export class Step1 implements OnInit {
