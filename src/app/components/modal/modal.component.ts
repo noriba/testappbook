@@ -27,8 +27,8 @@ export class ModalComponent implements OnInit {
   msgError: string;
   isError: any;
 
-  constructor(public dataApi: DataApiService, private storage: AngularFireStorage) {    // customize default values of modals used by this component tree
-     }
+  constructor(public dataApi: DataApiService,
+              private storage: AngularFireStorage) { }
 
   @ViewChild('btnClose') btnClose: ElementRef;
   @Input() userUid: string;

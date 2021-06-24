@@ -51,20 +51,29 @@ import {BreadcrumbInitializedGuard} from './guards/breadcrumbInitialized.guard';
 import {MenuItem, MessageService} from 'primeng/api';
 
 import { ReactiveComponentModule } from '@ngrx/component';
-import {Step1} from './stepsdemo/step1';
-import {Step2} from './stepsdemo/step2';
-import {Step3} from './stepsdemo/step3';
-import {Step4} from './stepsdemo/step4';
+import {Step1} from './components/timesheet/step1';
+import {Step2} from './components/timesheet/step2';
+import {Step3} from './components/timesheet/step3';
+import {Step4} from './components/timesheet/step4';
 import {ParentComponent} from './components/parent.component';
 import {MyBreadcrumbed2Component} from './components/my-breadcrumbed-2.component';
 import {MyBreadcrumbedComponent} from './components/my-breadcrumbed.component';
 import {FileTreeComponent} from './components/file-tree.component';
 import {DataTableComponent} from './components/data-table.component';
-
+import {StepComponent, StepsComponent, WizardModule} from './components/breadcrumb/wizard.module';
+import {ProductService} from './services/product.service';
+import { HttpClientModule } from '@angular/common/http';
+import {TableModule} from 'primeng/table';
+import {SliderModule} from 'primeng/slider';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {ContextMenuModule} from 'primeng/contextmenu';
+import {DialogModule} from 'primeng/dialog';
+import {ProgressBarModule} from 'primeng/progressbar';
 
 
 @NgModule({
   declarations: [
+
     DataTableComponent,
     FileTreeComponent,
     MyBreadcrumbed2Component,
@@ -92,6 +101,9 @@ import {DataTableComponent} from './components/data-table.component';
     TimesheetComponent
   ],
   imports: [
+    HttpClientModule,
+    TableModule,
+    WizardModule,
     ReactiveComponentModule,
     DataViewModule,
     CommonModule,
@@ -117,7 +129,21 @@ import {DataTableComponent} from './components/data-table.component';
     DropdownModule,
     TreeTableModule
   ],
-  providers: [AngularFireAuth, AngularFirestore, AngularFireStorage, NgbModal, NgbModalConfig,BreadcrumbComponent ],
+  exports:[
+    WizardModule,
+    StepsComponent,
+    StepComponent],
+  providers: [
+    AngularFireAuth,
+    AngularFirestore,
+    AngularFireStorage,
+    NgbModal,
+    NgbModalConfig,
+    BreadcrumbComponent,
+    StepComponent,
+    StepsComponent,
+    ProductService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
