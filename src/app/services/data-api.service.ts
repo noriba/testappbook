@@ -3,13 +3,16 @@ import { map } from 'rxjs/internal/operators';
 import { Observable } from 'rxjs';
 import {Injectable} from '@angular/core';
 import {AngularFirestoreCollection, AngularFirestoreDocument,AngularFirestore} from '@angular/fire/firestore';
+import {Product} from '../models/products';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataApiService {
+  selectedRow: number;
 
   constructor(private afs: AngularFirestore) { }
+
   private booksCollection: AngularFirestoreCollection<BookInterface>;
   private booksList: Observable<BookInterface[]>;
   private books: Observable<BookInterface[]>;
@@ -17,6 +20,7 @@ export class DataApiService {
   private bookDoc: AngularFirestoreDocument<BookInterface>;
   private book: Observable<BookInterface>;
   public selectedBook: BookInterface = { id: null };
+  public selectedProduct: Product = { id: null };
 
   getAllBooks() {
     this.booksCollection = this.afs.collection<BookInterface>('books');

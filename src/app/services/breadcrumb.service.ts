@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
+import {Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {MenuItem} from 'primeng/api';
 import {Observable} from 'rxjs/internal/Observable';
 
@@ -10,15 +12,20 @@ export class BreadcrumbService {
 
   private crumbs: ReplaySubject<MenuItem[]>;
   crumbs$: Observable<MenuItem[]>;
+  crumbs2$: any;
 
   constructor() {
-    this.crumbs = new ReplaySubject<MenuItem[]>();
+    console.log(':::::::::::::::::: BreadcrumbService construction :::::::::::::::::::');
 
+    this.crumbs = new ReplaySubject<MenuItem[]>();
     this.crumbs$ = this.crumbs.asObservable();
   }
 
   setCrumbs(items: MenuItem[]) {
-    debugger
+    console.log(':::::::::::::::::: BreadcrumbService :::::::::::::::::::');
+
+    this.crumbs.subscribe()
+   // this.crumbs.subscribe(x=> {console.log('crumbs datas 1 =' +JSON.stringify(x))});
     this.crumbs.next(items);
     /*    (items || []).map(item => {
            const data = Object.assign({}, item, {
@@ -27,16 +34,15 @@ export class BreadcrumbService {
            return data;
          })
        ); */
-    console.log(':::::::::::::::::: BreadcrumbService :::::::::::::::::::');
+    console.log('items datas =' + this.crumbs$);
+    //console.log('crumbs datas =' + JSON.stringify(this.crumbs.observers));
+   // this.crumbs$.subscribe(x=>console.log('crumbs datas 2 =' +x));
+   // this.crumbs.next(items);
 
-
-    console.log('items datas =' + JSON.stringify(items));
-    console.log('crumbs datas =' + JSON.stringify(this.crumbs.observers));
-
-
+    //this.crumbs.next();
   }
 
   getCrumbs() {
-    return this.crumbs.asObservable();
+    return this.crumbs$;
   }
 }

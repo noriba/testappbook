@@ -1,13 +1,13 @@
 import {Component,OnInit} from '@angular/core';
-import { TicketService } from './ticketservice';
+import { TicketService } from '../../stepsdemo/ticketservice';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 import {MenuItem, MessageService} from 'primeng/api';
-import {DataApiService} from '../services/data-api.service';
-import {AuthService} from '../services/auth.service';
+import {DataApiService} from '../../services/data-api.service';
+import {AuthService} from '../../services/auth.service';
 import {Subscription} from 'rxjs';
 import {Breadcrumb} from 'primeng/breadcrumb';
-import {BreadcrumbComponent} from '../components/breadcrumb/breadcrumb.component';
+import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
 
 
 @Component({

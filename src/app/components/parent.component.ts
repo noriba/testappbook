@@ -24,25 +24,11 @@ export class ParentComponent implements OnInit {
 
   ngOnInit() {
 
-  /*  this.items = [
-      {label: 'Home', routerLink: '/'},
-      {label: 'Tab1',  routerLink: '/tab1'},
-      {label: 'Tab2',  routerLink: '/tab2'},
-      {label: 'Tab3',  routerLink: '/tab3'},
-    ];*/
-   // console.log("MenuItem List exemple : "+ this.items)
-   // console.log("MenuItem List exemple : "+ this.items)
-    // this.crumbs$ = Observable.create(observer => {
-    //   this.breadcrumb.crumbs$;
-    // });
-    // this.crumbs$.subscribe(value => this.crumbs = value);
-
     this.breadcrumbsIn = this.breadcrumb.getCrumbs()
     this.crumbs$ = this.breadcrumb.crumbs$;
 
     console.log("MenuItem List crumbs$ : "+ this.crumbs$)
     console.log("MenuItem List breadcrumbsIn : "+ this.breadcrumbsIn)
-
 
   }
 

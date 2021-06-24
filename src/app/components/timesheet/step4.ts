@@ -1,8 +1,8 @@
 import {Component,OnInit} from '@angular/core';
-import { TicketService } from './ticketservice';
+import { TicketService } from '../../stepsdemo/ticketservice';
 import { Router } from '@angular/router';
 import {MessageService} from 'primeng/api';
-import {BreadcrumbComponent} from '../components/breadcrumb/breadcrumb.component';
+import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
 
 
 @Component({
@@ -15,10 +15,7 @@ import {BreadcrumbComponent} from '../components/breadcrumb/breadcrumb.component
 
   constructor(public ticketService: TicketService,
               private breadcrumb:BreadcrumbComponent,
-              private router: Router) {
-    this.breadcrumb.activeIndex=4 ;
-
-  }
+              private router: Router) {  }
 
   ngOnInit() {
     this.ticketInformation = this.ticketService.ticketInformation;

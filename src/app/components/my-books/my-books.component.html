@@ -35,11 +35,13 @@
         <td *ngIf="book.userUid == userUid || isAdmin == true; else noOwner">
           <button class="btn btn-primary" data-toggle="modal" data-target="#modalBook" (click)="onPreUpdateBook(book)">Update</button>
         </td>
+
         <ng-template #noOwner>
           <td>
             <button class="btn btn-secondary" disabled="true">Update</button>
           </td>
         </ng-template>
+
         <td *ngIf="isAdmin == true; else noAdmin">
           <button class="btn btn-danger" (click)="onDeleteBook(book.id)">Delete</button>
         </td>
