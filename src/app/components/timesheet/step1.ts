@@ -1,23 +1,26 @@
-import {Component,ViewChild, OnInit,AfterViewInit } from '@angular/core';
+import {Component,OnInit} from '@angular/core';
+import { TicketService } from '../../stepsdemo/ticketservice';
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
+import {MenuItem, MessageService} from 'primeng/api';
 import {DataApiService} from '../../services/data-api.service';
 import {AuthService} from '../../services/auth.service';
+import {Subscription} from 'rxjs';
+import {Breadcrumb} from 'primeng/breadcrumb';
+import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
+import {ViewChild, AfterViewInit } from '@angular/core';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {RadioButtonModule} from 'primeng/radiobutton';
-import {MenuItem} from 'primeng/api';
 import {StepsModule} from 'primeng/steps';
-import {MessageService} from 'primeng/api';
-import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
-import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-timesheet',
-  templateUrl: './timesheet.component.html',
-  styleUrls: ['./timesheet.component.css'],
+  templateUrl: './step1.html',
   providers: [MessageService]
+
 })
-export class TimesheetComponent implements OnInit   {
+export class Step1 implements OnInit {
 
   constructor(private dataApi: DataApiService,
               private authService: AuthService,
@@ -42,11 +45,12 @@ export class TimesheetComponent implements OnInit   {
 
   lastStepPlease(){
     this.child.lastStepPlease();
-    this.router.navigate(['step1']);
+    this.router.navigate(['timesheet']);
   }
 
   nextStepPlease(){
-    this.router.navigate(['step1']);
+    this.child.nextStepPlease();
+    this.router.navigate(['step2']);
   }
 
   setBreadCrumb() {
@@ -113,24 +117,6 @@ export class TimesheetComponent implements OnInit   {
       PDF.save('angular-demo.pdf');
     });
   }
-
-  selectedState: any = null;
-
-  states: any[] = [
-    {name: 'Arizona', code: 'Arizona'},
-    {name: 'California', value: 'California'},
-    {name: 'Florida', code: 'Florida'},
-    {name: 'Ohio', code: 'Ohio'},
-    {name: 'Washington', code: 'Washington'}
-  ];
-
-  cities1: any[] = [];
-
-  cities2: any[] = [];
-
-  city1: any = null;
-
-  city2: any = null;
 
 
 }

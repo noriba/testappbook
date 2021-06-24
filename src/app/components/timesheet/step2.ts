@@ -1,26 +1,37 @@
-import {Component,ViewChild, OnInit,AfterViewInit } from '@angular/core';
+import {Component,OnInit} from '@angular/core';
+import { TicketService } from '../../stepsdemo/ticketservice';
+import { Router } from '@angular/router';
+import {MessageService} from 'primeng/api';
+import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
 import {DataApiService} from '../../services/data-api.service';
 import {AuthService} from '../../services/auth.service';
+import { Route } from '@angular/compiler/src/core';
+import {MenuItem} from 'primeng/api';
+import {Subscription} from 'rxjs';
+import {Breadcrumb} from 'primeng/breadcrumb';
+import {ViewChild, AfterViewInit } from '@angular/core';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {RadioButtonModule} from 'primeng/radiobutton';
-import {MenuItem} from 'primeng/api';
 import {StepsModule} from 'primeng/steps';
-import {MessageService} from 'primeng/api';
-import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
-import { Router } from '@angular/router';
+import { SelectItem } from 'primeng/api';
+import {Product} from '../../models/products';
+import {ProductService} from '../../services/product.service';
+import {Observable} from 'rxjs/internal/Observable';
+import {ReplaySubject} from 'rxjs';
 
 
 @Component({
-  selector: 'app-timesheet',
-  templateUrl: './timesheet.component.html',
-  styleUrls: ['./timesheet.component.css'],
+  selector:'app-step2',
+  templateUrl: './step2.html',
   providers: [MessageService]
-})
-export class TimesheetComponent implements OnInit   {
 
-  constructor(private dataApi: DataApiService,
+})
+export class Step2 implements OnInit {
+
+  constructor(public dataApi: DataApiService,
               private authService: AuthService,
+              private productService: ProductService,
               private router: Router,
               private messageService: MessageService) {  }
 
@@ -34,11 +45,49 @@ export class TimesheetComponent implements OnInit   {
   home: MenuItem;
   activeIndex: number = 1;
 
+  products: Product[];
+  statuses: SelectItem[];
+  clonedProducts: { [s: string]: Product; } = {};
+  clonedProduct: Product;
+
   ngOnInit() {
     this.setBreadCrumb();
     this.setsteps();
     this.getCurrentUser();
+
+    this.productService.getProductsSmall().then(data => this.products = data);
+
+    this.statuses = [
+      {label: 'In Stock', value: 'INSTOCK'},
+      {label: 'Low Stock', value: 'LOWSTOCK'},
+      {label: 'Out of Stock', value: 'OUTOFSTOCK'}]
   }
+
+  onRowEditInit(product: Product, ri : number) {
+    this.clonedProducts[product.id] = {...product};
+    //this.clonedProduct= product ;
+    this.dataApi.selectedProduct = this.clonedProducts[product.id];
+    this.dataApi.selectedRow = ri;
+    console.log("Selected product to editing ...  "+ JSON.stringify(Object.assign({}, product)) )
+  }
+
+  onRowEditSave(product: Product) {
+    if (product.price > 0) {
+      delete this.clonedProducts[product.id];
+      this.messageService.add({severity:'success', summary: 'Success', detail:'Product is updated'});
+    }
+    else {
+      this.messageService.add({severity:'error', summary: 'Error', detail:'Invalid Price'});
+    }
+  }
+
+  onRowEditCancel(product: Product, index: number) {
+    this.products[index] = this.clonedProducts[product.id];
+    delete this.clonedProducts[product.id];
+  }
+
+
+
 
   lastStepPlease(){
     this.child.lastStepPlease();
@@ -46,7 +95,8 @@ export class TimesheetComponent implements OnInit   {
   }
 
   nextStepPlease(){
-    this.router.navigate(['step1']);
+    this.child.nextStepPlease();
+    this.router.navigate(['step3']);
   }
 
   setBreadCrumb() {
@@ -113,24 +163,6 @@ export class TimesheetComponent implements OnInit   {
       PDF.save('angular-demo.pdf');
     });
   }
-
-  selectedState: any = null;
-
-  states: any[] = [
-    {name: 'Arizona', code: 'Arizona'},
-    {name: 'California', value: 'California'},
-    {name: 'Florida', code: 'Florida'},
-    {name: 'Ohio', code: 'Ohio'},
-    {name: 'Washington', code: 'Washington'}
-  ];
-
-  cities1: any[] = [];
-
-  cities2: any[] = [];
-
-  city1: any = null;
-
-  city2: any = null;
 
 
 }

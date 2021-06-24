@@ -1,8 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/internal/Observable';
-import {MenuItem, MessageService} from 'primeng/api';
+import {Component} from '@angular/core';
+import {MessageService} from 'primeng/api';
 import {BreadcrumbService} from '../services/breadcrumb.service';
-import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-my-breadcrumbed-2',
@@ -11,7 +9,9 @@ import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
 
 })
 export class MyBreadcrumbed2Component {
-  crumbs$: Observable<MenuItem[]>;
+  crumbs$: any;
+
+  //crumbs$: Observable<MenuItem[]>;
 
   constructor(private breadservice: BreadcrumbService
   ) {
@@ -19,9 +19,9 @@ export class MyBreadcrumbed2Component {
 
     console.log(':::::::::::::::::: MyBreadcrumbed2Component :::::::::::::::::::');
 
-    this.crumbs$ = this.breadservice.getCrumbs();
+    this.crumbs$ = this.breadservice.getCrumbs()
 
-    console.log('crumbs datas =' + JSON.stringify(this.breadservice.crumbs$));
+    //console.log('crumbs datas =' + JSON.stringify(this.breadservice.crumbs$));
 
 
   }

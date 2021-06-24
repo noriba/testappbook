@@ -1,0 +1,141 @@
+<div class="stepsdemo-content">
+
+  <app-breadcrumb></app-breadcrumb>
+
+  <button type="button"
+          class="btn btn-primary p-m-2"
+          data-toggle="modal"
+          data-target="#exampleModal"
+          data-whatever="@mdo">Nouvelle Journée +
+  </button>
+
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Activitée du jour</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="">
+            <div class="form-group">
+              <label class="col-form-label">Recipient:</label>
+
+              <input class="form-control" type="text" name="code" [(ngModel)]="this.dataApi.selectedProduct.code ">
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Recipient:</label>
+
+              <input class="form-control" name="name" type="text" [(ngModel)]="this.dataApi.selectedProduct.name"
+                     required>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Recipient:</label>
+
+              <p-dropdown [options]="statuses" name="status" [(ngModel)]="this.dataApi.selectedProduct.inventoryStatus"
+                          [style]="{'width':'100%'}">
+
+              </p-dropdown>
+            </div>
+            <div class="form-group">
+              <label class="col-form-label">Recipient:</label>
+
+              <input class="form-control" name="price" type="text" [(ngModel)]="this.dataApi.selectedProduct.price">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-success"
+                  (click)="onRowEditSave(this.dataApi.selectedProduct)" >Save</button>
+          <button type="button" class="btn btn-danger"
+                  (click)="onRowEditCancel(this.dataApi.selectedProduct,this.dataApi.selectedRow)">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <p-card>
+    <div class="card">
+      <h5>Row Editing</h5>
+      <p-table [value]="products" dataKey="id" editMode="row">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Quantity</th>
+            <th style="width:8rem"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-ri="rowIndex">
+          <tr [pEditableRow]="product">
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="product.code">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{product.code}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="product.name" required>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{product.name}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-dropdown [options]="statuses" [(ngModel)]="product.inventoryStatus"
+                              [style]="{'width':'100%'}"></p-dropdown>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{product.inventoryStatus}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="product.price">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{product.price | currency: 'USD'}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td style="text-align:center">
+              <button *ngIf="!editing" pButton pRipple type="button"
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                      pInitEditableRow icon="pi pi-pencil"
+                      (click)="onRowEditInit(product, ri)"
+                      class="p-button-rounded p-button-text"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </div>
+
+    <div class="col-lg-md-4 text-right p-2">
+      <button class="ml-2" pButton type="button" label="< Last Step" (click)="lastStepPlease()"></button>
+
+      <button class="ml-2" pButton type="button" label="Next Step >" (click)="nextStepPlease()"></button>
+    </div>
+
+  </p-card>
+</div>
