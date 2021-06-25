@@ -37,6 +37,7 @@
 
 <div class="pt-4 ">
   <p-steps #stepper
+           class=""
            [model]="steps$"
            (activeIndexChange)="stepperChanged($event)"
 
@@ -47,9 +48,10 @@
 
 
 
+<!--
 <div class="col-lg-md-4 text-right p-2">
   <button (click)="openPDF()" class="btn btn-success btn-block">Download PDF</button>
-</div>
+</div>-->
 
 <!--
 <div class="col-lg-md-4 text-right p-2">
@@ -58,5 +60,6 @@
   <button class="ml-2" pButton type="button" label="Next Step >" (click)="nextStepPlease()"></button>
 </div>
 -->
+
 
 

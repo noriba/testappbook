@@ -8,6 +8,7 @@ import {Product} from '../models/products';
 })export class ProductService {
 
   status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
+  jours: string[] = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi','Dimanche'];
 
   productNames: string[] = [
     "Bamboo Watch",
@@ -68,16 +69,13 @@ import {Product} from '../models/products';
   generatePrduct(): Product {
     const product: Product =  {
       id: this.generateId(),
-      name: this.generateName(),
-      description: "Product Description",
-      price: this.generatePrice(),
-      quantity: this.generateQuantity(),
-      category: "Product Category",
-      inventoryStatus: this.generateStatus(),
-      rating: this.generateRating()
+      immatriculation: this.generateName(),
+      kilometrage: this.generateQuantity(),
+      debut: this.generateQuantity(),
+      fin: this.generateQuantity(),
+      pause: this.generateQuantity()
     };
 
-    product.image = product.name.toLocaleLowerCase().split(/[ ,]+/).join('-')+".jpg";;
     return product;
   }
 

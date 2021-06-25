@@ -14,7 +14,7 @@
              <button (click)="openPDF()" class="btn btn-success btn-block">Download PDF</button>
            </div>
      -->
-      <div class="card my-4 ">
+      <p-card>
         <h5>Addons</h5>
         <div class="">
           <div class="row col-lg-12 my-2 ">
@@ -74,7 +74,8 @@
                   <span class="col-4 col-lg-4 p-inputgroup-addon">Contrat</span>
                   <div class="col-8 col-lg-8 py-2 px-4 form-check-inline">
                     <div class="my-auto  p-field-radiobutton">
-                      <p-radioButton name="city" value="Los Angeles" [(ngModel)]="city2" inputId="city2"></p-radioButton>
+                      <p-radioButton name="city" value="Los Angeles" [(ngModel)]="city2"
+                                     inputId="city2"></p-radioButton>
                       <label for="">CDI</label>
                     </div>
                     <div class="my-auto  p-field-radiobutton">
@@ -96,13 +97,13 @@
             </div>
           </div>
         </div>
-      </div>
+        <ng-template pTemplate="footer">
+          <button class="ml-2 fixed-bottom" pButton type="button" label="< Last Step" (click)="lastStepPlease()"></button>
+          <button class="ml-2" pButton type="button" label="Next Step >" (click)="nextStepPlease()"></button>
 
-      <div class="col-lg-md-4 text-right p-2">
-        <button class="ml-2" pButton type="button" label="< Last Step" (click)="lastStepPlease()"></button>
+        </ng-template>
+      </p-card>
 
-        <button class="ml-2" pButton type="button" label="Next Step >" (click)="nextStepPlease()"></button>
-      </div>
 
 
       <!--

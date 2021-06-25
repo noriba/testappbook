@@ -25,9 +25,8 @@ import {ReplaySubject} from 'rxjs';
   selector:'app-step2',
   templateUrl: './step2.html',
   providers: [MessageService]
-
 })
-export class Step2 implements OnInit {
+export class Step2 implements OnInit , AfterViewInit {
 
   constructor(public dataApi: DataApiService,
               private authService: AuthService,
@@ -35,7 +34,7 @@ export class Step2 implements OnInit {
               private router: Router,
               private messageService: MessageService) {  }
 
-  @ViewChild(BreadcrumbComponent) child;
+  @ViewChild(BreadcrumbComponent, { static: false }) child: BreadcrumbComponent;
 
   private isAdmin: any;
   private userUid: string;
@@ -43,20 +42,17 @@ export class Step2 implements OnInit {
   items: MenuItem[];
   steps: MenuItem[];
   home: MenuItem;
-  activeIndex: number = 1;
-
+  activeIndex: number ;
+  jours: string[];
   products: Product[];
   statuses: SelectItem[];
   clonedProducts: { [s: string]: Product; } = {};
-  clonedProduct: Product;
 
   ngOnInit() {
-    this.setBreadCrumb();
     this.setsteps();
     this.getCurrentUser();
-
+    this.jours = this.productService.jours;
     this.productService.getProductsSmall().then(data => this.products = data);
-
     this.statuses = [
       {label: 'In Stock', value: 'INSTOCK'},
       {label: 'Low Stock', value: 'LOWSTOCK'},
@@ -64,6 +60,8 @@ export class Step2 implements OnInit {
   }
 
   onRowEditInit(product: Product, ri : number) {
+    console.log("EDITING.....");
+
     this.clonedProducts[product.id] = {...product};
     //this.clonedProduct= product ;
     this.dataApi.selectedProduct = this.clonedProducts[product.id];
@@ -72,30 +70,26 @@ export class Step2 implements OnInit {
   }
 
   onRowEditSave(product: Product) {
-    if (product.price > 0) {
-      delete this.clonedProducts[product.id];
-      this.messageService.add({severity:'success', summary: 'Success', detail:'Product is updated'});
-    }
-    else {
-      this.messageService.add({severity:'error', summary: 'Error', detail:'Invalid Price'});
-    }
+    console.log("SAVING..... "+ product.immatriculation);
+
+
   }
 
   onRowEditCancel(product: Product, index: number) {
+    console.log("CANCELlING..... " + product.immatriculation);
     this.products[index] = this.clonedProducts[product.id];
     delete this.clonedProducts[product.id];
   }
 
-
-
+  ngAfterViewInit() {
+    this.child.activeIndex=1;
+  }
 
   lastStepPlease(){
-    this.child.lastStepPlease();
     this.router.navigate(['step1']);
   }
 
   nextStepPlease(){
-    this.child.nextStepPlease();
     this.router.navigate(['step3']);
   }
 

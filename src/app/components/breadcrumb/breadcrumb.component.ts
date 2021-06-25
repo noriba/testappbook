@@ -9,7 +9,7 @@ import {
   Output,
   Renderer2,
   ViewChild,
-  AfterViewInit
+  ViewEncapsulation
 } from '@angular/core';
 import {MenuItem, MessageService} from 'primeng/api';
 import {Subscription} from 'rxjs';
@@ -26,10 +26,10 @@ import {Steps} from 'primeng/steps';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.css'],
   providers: [MessageService],
-  //encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 @Injectable()
-export class BreadcrumbComponent implements OnInit  {
+export class BreadcrumbComponent implements OnInit {
 
   items: MenuItem[];
   private isAdmin: any;
@@ -54,16 +54,13 @@ export class BreadcrumbComponent implements OnInit  {
               private router: Router,
               private route: ActivatedRoute,
               private cd: ChangeDetectorRef) {
-    console.log(':::::::::::::::::: BreadcrumbCOMP construction :::::::::::::::::::');
 
-
+    console.log(':::::::::::::::::: BreadcrumbCOMP construction :::::::::::::::::::')
   }
 
-  activeIndex3: number = 2;
   @Output() activeIndexChange: EventEmitter<number> = new EventEmitter();
   @Output() onChange: EventEmitter<any> = new EventEmitter();
-  @Input() activeIndex = 0;
-  @Input() activeIndex2 = 0;
+  activeIndex = 0;
   @ViewChild('stepper', {static: true}) stepper: Steps;
   @ViewChild('stepsDiv') elRef2: ElementRef;
   @ViewChild('stepsDiv2') elRef3: ElementRef;
@@ -71,25 +68,23 @@ export class BreadcrumbComponent implements OnInit  {
 
   ngOnInit(): void {
     console.log(':::::::::::::::::: BreadcrumbCOMP init :::::::::::::::::::');
-    this.crumbs$ = this.breadservice.getCrumbs();
-
+    //this.crumbs$ = this.breadservice.getCrumbs();
     this.setsteps();
-    this.setsteps2();
   }
 
-  message:string;
-
-
+  message: string;
 
   nextStepPlease() {
+    this.messageService.add({severity: 'success', summary: 'Etape validée'});
     this.length = Object.keys(this.steps$).length;
     console.log('size of crumbs$ : ' + this.length + '  && value of index : ' + this.activeIndex);
     let x = this.length - 1;
-    debugger
     if (this.activeIndex < x && this.activeIndex >= 0) {
       this.activeIndex++;
       this.stepper.activeIndexChange.emit(this.activeIndex);
-    }else{ this.messageService.add({severity: 'error', summary: 'ERROR'});}
+    } else {
+      this.messageService.add({severity: 'error', summary: 'ERROR'});
+    }
   }
 
   lastStepPlease() {
@@ -100,28 +95,21 @@ export class BreadcrumbComponent implements OnInit  {
     if (this.activeIndex <= x && this.activeIndex > 0) {
       this.activeIndex--;
       this.stepper.activeIndexChange.emit(this.activeIndex);
-    }else { this.messageService.add({severity: 'error', summary: 'ERROR'});}
+    } else {
+      this.messageService.add({severity: 'error', summary: 'ERROR'});
+    }
   }
-
 
   stepperChanged(step) {
-    this.activeIndexChange.emit(step);
+/*    this.activeIndexChange.emit(step);
     this.onChange.emit({originalEvent: event, index: step});
     let newmenu: MenuItem;
-    this.stepper.model;
-   // console.log('stepper change ::: this.stepper.activeIndex = ' + this.stepper.activeIndex);
-   // console.log('stepper change ::: this.activeIndex = ' + this.activeIndex);
+    this.stepper.model;*/
+    // console.log('stepper change ::: this.stepper.activeIndex = ' + this.stepper.activeIndex);
+    // console.log('stepper change ::: this.activeIndex = ' + this.activeIndex);
   }
 
 
-  stepperChanged3(step) {
-    this.activeIndexChange.emit(step);
-    this.onChange.emit({originalEvent: event, index: step});
-    let newmenu: MenuItem;
-    this.stepper.model;
-    console.log('stepper change ::: this.stepper.activeIndex = ' + this.stepper.activeIndex);
-    console.log('stepper change ::: this.activeIndex = ' + this.activeIndex);
-  }
 
 
   length: any = 0;
@@ -131,10 +119,8 @@ export class BreadcrumbComponent implements OnInit  {
     console.log('size of crumbs$ ' + this.length);
     console.log('value of index ' + this.activeIndex);
     let x = this.length - 1;
-    debugger
     if (this.activeIndex < x && this.activeIndex >= 0) {
       let lists = this.elRef2.nativeElement.querySelectorAll('span:first-child');
-      debugger
       this.renderer.setStyle(lists[this.activeIndex + 1], 'background', '#E3F2FD');
       this.renderer.setStyle(lists[this.activeIndex + 1], 'opacity', '1');
       if (this.activeIndex >= 0) {
@@ -186,28 +172,28 @@ export class BreadcrumbComponent implements OnInit  {
   setsteps() {
     this.steps$ = [
       {
-        label: 'hello',
+        label: 'Identité',
         command: (event: any) => {
           this.activeIndex = 0;
-          this.messageService.add({severity: 'info', summary: 'First Step', detail: event.item.label});
+          this.messageService.add({severity: 'info', summary: 'Etape 1', detail: event.item.label});
         }
       }, {
-        label: 'Seat',
+        label: 'Pointage',
         command: (event: any) => {
           this.activeIndex = 1;
-          this.messageService.add({severity: 'info', summary: 'Seat Selection', detail: event.item.label});
+          this.messageService.add({severity: 'info', summary: 'Etape 2', detail: event.item.label});
         }
       }, {
-        label: 'Seat',
+        label: 'Heures supp',
         command: (event: any) => {
           this.activeIndex = 2;
-          this.messageService.add({severity: 'info', summary: 'Seat Selection', detail: event.item.label});
+          this.messageService.add({severity: 'info', summary: 'Etape 3', detail: event.item.label});
         }
       }, {
-        label: 'Confirmation',
+        label: 'Signature',
         command: (event: any) => {
           this.activeIndex = 3;
-          this.messageService.add({severity: 'info', summary: 'Last Step', detail: event.item.label});
+          this.messageService.add({severity: 'info', summary: 'Etape 4', detail: event.item.label});
         }
       }];
 
