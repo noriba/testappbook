@@ -1,12 +1,9 @@
 export interface Product {
   id?:string;
-  code?:string;
-  name?:string;
-  description?:string;
-  price?:number;
-  quantity?:number;
-  inventoryStatus?:string;
-  category?:string;
-  image?:string;
-  rating?:number;
+  jour?:string;
+  immatriculation?:string;
+  kilometrage?:number;
+  debut?:number;
+  fin?:number;
+  pause?:number;
 }

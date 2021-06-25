@@ -10,7 +10,6 @@ import {MessageService} from 'primeng/api';
 import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-timesheet',
   templateUrl: './timesheet.component.html',
@@ -24,24 +23,19 @@ export class TimesheetComponent implements OnInit   {
               private router: Router,
               private messageService: MessageService) {  }
 
-  @ViewChild(BreadcrumbComponent) child;
-
   private isAdmin: any;
   private userUid: string;
   USERS: any;
   items: MenuItem[];
   steps: MenuItem[];
   home: MenuItem;
-  activeIndex: number = 1;
+  activeIndex: number ;
 
   ngOnInit() {
-    this.setBreadCrumb();
-    this.setsteps();
     this.getCurrentUser();
   }
 
   lastStepPlease(){
-    this.child.lastStepPlease();
     this.router.navigate(['step1']);
   }
 
@@ -113,24 +107,5 @@ export class TimesheetComponent implements OnInit   {
       PDF.save('angular-demo.pdf');
     });
   }
-
-  selectedState: any = null;
-
-  states: any[] = [
-    {name: 'Arizona', code: 'Arizona'},
-    {name: 'California', value: 'California'},
-    {name: 'Florida', code: 'Florida'},
-    {name: 'Ohio', code: 'Ohio'},
-    {name: 'Washington', code: 'Washington'}
-  ];
-
-  cities1: any[] = [];
-
-  cities2: any[] = [];
-
-  city1: any = null;
-
-  city2: any = null;
-
 
 }
