@@ -1,4 +1,4 @@
-import {Component,OnInit} from '@angular/core';
+import {Component,OnInit,  ViewChild,AfterViewInit} from '@angular/core';
 import { TicketService } from '../../stepsdemo/ticketservice';
 import { Router } from '@angular/router';
 import {MessageService} from 'primeng/api';
@@ -7,30 +7,30 @@ import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
 
 @Component({
   templateUrl: './step3.html',
-  providers: [MessageService
-  ]
-
-})export class Step3 implements OnInit {
+  providers: [MessageService  ]
+})
+export class Step3 implements OnInit , AfterViewInit{
 
   paymentInformation: any;
+  @ViewChild(BreadcrumbComponent, { static: false }) child: BreadcrumbComponent;
 
   constructor(public ticketService: TicketService,
-              private breadcrumb: BreadcrumbComponent,
-
               private router: Router) { }
 
   ngOnInit() {
     this.paymentInformation = this.ticketService.ticketInformation.paymentInformation;
   }
 
-  nextPage() {
-
-
-    this.ticketService.ticketInformation.paymentInformation = this.paymentInformation;
-    this.router.navigate(['step4']);
+  ngAfterViewInit() {
+    this.child.activeIndex = 2;
   }
 
-  prevPage() {
+  lastStepPlease(){
     this.router.navigate(['step2']);
+  }
+
+  nextStepPlease(){
+    this.ticketService.ticketInformation.paymentInformation = this.paymentInformation;
+    this.router.navigate(['step4']);
   }
 }

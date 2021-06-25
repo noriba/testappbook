@@ -1,0 +1,32 @@
+
+
+.p-steps-item {
+  background: #bb11d9;
+
+}
+
+.p-steps-item ul{
+  background: #1ba585;
+
+}
+.p-steps-number ul{
+  background: #123029;
+
+}
+.p-steps-title a{
+  background: #1132d9;
+
+}
+ .p-menuitem-link:after {
+  background: #11d9aa;
+
+}
+
+.p-steps-current ul:after{
+  background: #d9b811;
+
+}
+.p-steps ul{
+  background: #d91111;
+
+}

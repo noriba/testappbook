@@ -39,7 +39,6 @@ const routes: Routes = [
   {path: 'step1', component: Step1},
   {path: 'step3', component: Step3},
   {path: 'step4', component: Step4},
-  {path: 'step4', component: Step4},
   {path: 'step2', component: Step2},
   {path: 'step', component: StepComponent},
   {path: 'steps', component: StepsComponent},

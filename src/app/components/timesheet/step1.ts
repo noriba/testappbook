@@ -8,7 +8,7 @@ import {AuthService} from '../../services/auth.service';
 import {Subscription} from 'rxjs';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
-import {ViewChild, AfterViewInit } from '@angular/core';
+import {ViewChild, ViewChildren, ContentChildren, ContentChild, AfterViewInit } from '@angular/core';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {RadioButtonModule} from 'primeng/radiobutton';
@@ -18,16 +18,15 @@ import {StepsModule} from 'primeng/steps';
 @Component({
   templateUrl: './step1.html',
   providers: [MessageService]
-
 })
-export class Step1 implements OnInit {
+export class Step1 implements OnInit , AfterViewInit {
 
   constructor(private dataApi: DataApiService,
               private authService: AuthService,
               private router: Router,
               private messageService: MessageService) {  }
 
-  @ViewChild(BreadcrumbComponent) child;
+  @ViewChild(BreadcrumbComponent, {static: false}) child: BreadcrumbComponent ;
 
   private isAdmin: any;
   private userUid: string;
@@ -35,22 +34,24 @@ export class Step1 implements OnInit {
   items: MenuItem[];
   steps: MenuItem[];
   home: MenuItem;
-  activeIndex: number = 1;
+  activeIndex: number ;
+
+  ngAfterViewInit() {
+    this.child.activeIndex= 0;
+
+  }
 
   ngOnInit() {
-    this.setBreadCrumb();
-    this.setsteps();
     this.getCurrentUser();
   }
 
   lastStepPlease(){
-    this.child.lastStepPlease();
     this.router.navigate(['timesheet']);
   }
 
   nextStepPlease(){
-    this.child.nextStepPlease();
     this.router.navigate(['step2']);
+
   }
 
   setBreadCrumb() {
