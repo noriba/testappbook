@@ -46,7 +46,7 @@ export class Step1 implements OnInit , AfterViewInit {
   }
 
   lastStepPlease(){
-    this.router.navigate(['timesheet']);
+    this.router.navigate(['timesheet.ts']);
   }
 
   nextStepPlease(){

@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Product} from '../models/products';
+import {Timesheet} from '../models/timesheet';
 
 
 @Injectable({
   providedIn: 'root'
-})export class ProductService {
+})
+export class ProductService {
 
   status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
   jours: string[] = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi','Dimanche'];
