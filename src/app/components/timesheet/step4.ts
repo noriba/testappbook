@@ -31,6 +31,6 @@ export class Step4 implements OnInit , AfterViewInit{
 
   nextStepPlease(){
     this.ticketService.ticketInformation.paymentInformation = this.paymentInformation;
-    this.router.navigate(['timesheet']);
+    this.router.navigate(['timesheet.ts']);
   }
 }

@@ -1,17 +1,20 @@
 import { BookInterface } from '../models/book';
+import { Timesheet } from '../models/timesheet';
+import { TIMESHEETS } from '../models/timesheet';
 import { map } from 'rxjs/internal/operators';
 import { Observable } from 'rxjs';
 import {Injectable} from '@angular/core';
 import {AngularFirestoreCollection, AngularFirestoreDocument,AngularFirestore} from '@angular/fire/firestore';
 import {Product} from '../models/products';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataApiService {
-  selectedRow: number;
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore,
+              private http: HttpClient) { }
 
   private booksCollection: AngularFirestoreCollection<BookInterface>;
   private booksList: Observable<BookInterface[]>;
@@ -21,6 +24,20 @@ export class DataApiService {
   private book: Observable<BookInterface>;
   public selectedBook: BookInterface = { id: null };
   public selectedProduct: Product = { id: null };
+  public timesheets: Timesheet = TIMESHEETS;
+  selectedRow: number;
+
+  getMyTimesheets(user) {
+    console.log("Timesheets fromn api "+ JSON.stringify(this.timesheets));
+    return this.timesheets;
+  }
+
+  getMyTimesheetsJSON() {
+    return this.http.get<any>('assets/timesheets.json')
+      .toPromise()
+      .then(res => <Timesheet>res.data)
+      .then(data => { return data; });
+  }
 
   getAllBooks() {
     this.booksCollection = this.afs.collection<BookInterface>('books');
@@ -46,6 +63,8 @@ export class DataApiService {
         }).filter(data => data.userUid == user);
       }));
   }
+
+
 
   getOneBook(idBook: string) {
     this.bookDoc = this.afs.doc<BookInterface>(`books/${idBook}`);

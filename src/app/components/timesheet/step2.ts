@@ -19,6 +19,7 @@ import {Product} from '../../models/products';
 import {ProductService} from '../../services/product.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {ReplaySubject} from 'rxjs';
+import {Dayactivity, Timesheet} from '../../models/timesheet';
 
 
 @Component({
@@ -28,11 +29,13 @@ import {ReplaySubject} from 'rxjs';
 })
 export class Step2 implements OnInit , AfterViewInit {
 
-  constructor(public dataApi: DataApiService,
+
+  constructor(private dataApi: DataApiService,
               private authService: AuthService,
               private productService: ProductService,
               private router: Router,
-              private messageService: MessageService) {  }
+              private messageService: MessageService) {
+  }
 
   @ViewChild(BreadcrumbComponent, { static: false }) child: BreadcrumbComponent;
 
@@ -47,16 +50,20 @@ export class Step2 implements OnInit , AfterViewInit {
   products: Product[];
   statuses: SelectItem[];
   clonedProducts: { [s: string]: Product; } = {};
+  timesheets: Timesheet;
+  dayactivities: Dayactivity[];
 
   ngOnInit() {
     this.setsteps();
     this.getCurrentUser();
     this.jours = this.productService.jours;
-    this.productService.getProductsSmall().then(data => this.products = data);
-    this.statuses = [
-      {label: 'In Stock', value: 'INSTOCK'},
-      {label: 'Low Stock', value: 'LOWSTOCK'},
-      {label: 'Out of Stock', value: 'OUTOFSTOCK'}]
+    this.productService.getProductsSmall().then(data => console.log( "products from json " +JSON.stringify(data)));
+    this.productService.getProductsSmall().then(data => this.products= data);
+    this.dataApi.getMyTimesheetsJSON().then(data => console.log( "timesheets from json " +JSON.stringify(data)));
+    this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets=data);
+    this.timesheets = this.dataApi.getMyTimesheets("test");
+    this.dayactivities = this.products;
+    console.log("timesheets " + JSON.stringify( this.products.filter(d=> d == "immatriculation")));
   }
 
   onRowEditInit(product: Product, ri : number) {
