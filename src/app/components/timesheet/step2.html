@@ -11,7 +11,7 @@
   </button>
 
   <p-card>
-      <p-table [value]="products" dataKey="id" editMode="row">
+      <p-table [value]="dayactivities" dataKey="id" editMode="row">
         <ng-template pTemplate="header">
           <tr>
             <th>Jour</th>
@@ -23,84 +23,84 @@
             <th style="width:8rem"></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product let-editing="editing" let-ri="rowIndex">
-          <tr [pEditableRow]="product">
+        <ng-template pTemplate="body" let-dayactivitiy let-editing="editing" let-ri="rowIndex">
+          <tr [pEditableRow]="dayactivitiy">
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="product.jour">
+                  <input pInputText type="text" [(ngModel)]="dayactivitiy.day">
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{product.jour}}
+                  {{dayactivitiy.day}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="product.immatriculation" required>
+                  <input pInputText type="text" [(ngModel)]="dayactivitiy.numberplate" required>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{product.immatriculation}}
+                  {{dayactivitiy.numberplate}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="product.kilometrage" required>
+                  <input pInputText type="text" [(ngModel)]="dayactivitiy.mileage" required>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{product.kilometrage}}
+                  {{dayactivitiy.mileage}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="product.debut" required>
+                  <input pInputText type="text" [(ngModel)]="dayactivitiy.daystart" required>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{product.debut}}
+                  {{dayactivitiy.daystart}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="product.fin" required>
+                  <input pInputText type="text" [(ngModel)]="dayactivitiy.dayend" required>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{product.fin}}
+                  {{dayactivitiy.dayend}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="product.pause" required>
+                  <input pInputText type="text" [(ngModel)]="dayactivitiy.pause" required>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{product.pause}}
+                  {{dayactivitiy.pause}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td style="text-align:center">
               <button *ngIf="editing" pButton pRipple type="button"
                       pSaveEditableRow icon="pi pi-check"
-                      (click)="onRowEditSave(product)"
+                      (click)="onRowEditSave(dayactivitiy)"
                       class="p-button-rounded p-button-text p-button-success p-mr-2"
               ></button>
               <button *ngIf="editing" pButton pRipple type="button"
                       pCancelEditableRow icon="pi pi-times"
-                      (click)="onRowEditCancel(product, ri)"
+                      (click)="onRowEditCancel(dayactivitiy, ri)"
                       class="p-button-rounded p-button-text p-button-danger"
               ></button>
               <button *ngIf="!editing" pButton pRipple type="button"
                       data-toggle="modal"
                       data-target="#exampleModal"
                       pInitEditableRow icon="pi pi-pencil"
-                      (click)="onRowEditInit(product, ri)"
+                      (click)="onRowEditInit(dayactivitiy, ri)"
                       class="p-button-rounded p-button-text"
               ></button>
 
@@ -120,36 +120,36 @@
                         <div class="form-group">
                           <label class="col-form-label">jour:</label>
                           <input class="form-control" type="text" name="code"
-                                 [(ngModel)]="this.dataApi.selectedProduct.jour ">
+                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.jour ">
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">immatriculation:</label>
                           <input class="form-control" name="name" type="text"
-                                 [(ngModel)]="this.dataApi.selectedProduct.immatriculation"
+                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.immatriculation"
                                  required>
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">kilometrage:</label>
                           <input class="form-control" name="name" type="text"
-                                 [(ngModel)]="this.dataApi.selectedProduct.kilometrage"
+                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.kilometrage"
                                  required>
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">debut:</label>
                           <input class="form-control" name="name" type="text"
-                                 [(ngModel)]="this.dataApi.selectedProduct.debut"
+                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.debut"
                                  required>
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">fin:</label>
                           <input class="form-control" name="name" type="text"
-                                 [(ngModel)]="this.dataApi.selectedProduct.fin"
+                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.fin"
                                  required>
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">pause:</label>
                           <input class="form-control" name="name" type="text"
-                                 [(ngModel)]="this.dataApi.selectedProduct.pause"
+                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.pause"
                                  required>
                         </div>
                       </form>
@@ -157,10 +157,10 @@
                     <div class="modal-footer">
 
                       <button type="button" class="p-button-success p-mr-2" pButton pRipple pSaveEditableRow
-                              (click)="onRowEditSave(this.dataApi.selectedProduct)" data-dismiss="modal">Save
+                              (click)="onRowEditSave(this.dataApi.selecteddayactivitiy)" data-dismiss="modal">Save
                       </button>
                       <button type="button" class="p-button-danger" pButton pRipple pCancelEditableRow data-dismiss="modal"
-                              (click)="onRowEditCancel(this.dataApi.selectedProduct,this.dataApi.selectedRow)">Cancel
+                              (click)="onRowEditCancel(this.dataApi.selecteddayactivitiy,this.dataApi.selectedRow)">Cancel
                       </button>
                     </div>
                   </div>
