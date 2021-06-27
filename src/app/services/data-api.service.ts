@@ -1,11 +1,11 @@
 import { BookInterface } from '../models/book';
-import { Timesheet } from '../models/timesheet';
+import {Dayactivity, Dayovertime, Timesheet} from '../models/timesheet';
 import { TIMESHEETS } from '../models/timesheet';
 import { map } from 'rxjs/internal/operators';
 import { Observable } from 'rxjs';
 import {Injectable} from '@angular/core';
 import {AngularFirestoreCollection, AngularFirestoreDocument,AngularFirestore} from '@angular/fire/firestore';
-import {Product} from '../models/products';
+import { Product} from '../models/products';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -24,7 +24,11 @@ export class DataApiService {
   private book: Observable<BookInterface>;
   public selectedBook: BookInterface = { id: null };
   public selectedProduct: Product = { id: null };
+  public selectedDayActivity: Dayactivity = { id: null };
+  public selectedDayOvertime: Dayovertime = {day: null};
   public timesheets: Timesheet[] = TIMESHEETS;
+  selectedActRow: number;
+  selectedOtRow: number;
   selectedRow: number;
 
   getMyTimesheets(user) {
