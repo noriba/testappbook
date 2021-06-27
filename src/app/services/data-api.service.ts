@@ -24,7 +24,7 @@ export class DataApiService {
   private book: Observable<BookInterface>;
   public selectedBook: BookInterface = { id: null };
   public selectedProduct: Product = { id: null };
-  public timesheets: Timesheet = TIMESHEETS;
+  public timesheets: Timesheet[] = TIMESHEETS;
   selectedRow: number;
 
   getMyTimesheets(user) {
@@ -35,7 +35,7 @@ export class DataApiService {
   getMyTimesheetsJSON() {
     return this.http.get<any>('assets/timesheets.json')
       .toPromise()
-      .then(res => <Timesheet>res.data)
+      .then(res => <Timesheet[]>res.data)
       .then(data => { return data; });
   }
 
