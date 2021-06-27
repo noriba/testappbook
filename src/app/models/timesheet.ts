@@ -97,7 +97,7 @@ TIMESHEETS = [
         'dayend': '2014-01-01T23:28:56.782Z',
         'pause': 20,
         'createdate': '2014-01-01T23:28:56.782Z',
-        'dayovertime': {'day': 'lundi', 'overtime': '', 'reason': '', 'overtimestatus': ''}
+        'dayovertime': {'day': 'Mercredi', 'overtime': '', 'reason': '', 'overtimestatus': ''}
       },
       {
         'id': 4,
@@ -108,7 +108,7 @@ TIMESHEETS = [
         'dayend': '2014-01-01T23:28:56.782Z',
         'pause': 20,
         'createdate': '2014-01-01T23:28:56.782Z',
-        'dayovertime': {'day': 'lundi', 'overtime': '', 'reason': '', 'overtimestatus': ''}
+        'dayovertime': {'day': 'Jeudi', 'overtime': '', 'reason': '', 'overtimestatus': ''}
       },
       {
         'id': 5,

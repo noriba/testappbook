@@ -30,7 +30,7 @@ import {Dayactivity, Timesheet} from '../../models/timesheet';
 export class Step2 implements OnInit , AfterViewInit {
 
 
-  constructor(private dataApi: DataApiService,
+  constructor(public dataApi: DataApiService,
               private authService: AuthService,
               private productService: ProductService,
               private router: Router,
@@ -49,7 +49,7 @@ export class Step2 implements OnInit , AfterViewInit {
   jours: string[];
   products: Product[];
   statuses: SelectItem[];
-  clonedProducts: { [s: string]: Product; } = {};
+  clonedDayActivities: { [s: string]: Dayactivity; } = {};
   timesheets: Timesheet[];
   dayactivities: Dayactivity[];
 
@@ -61,29 +61,26 @@ export class Step2 implements OnInit , AfterViewInit {
     this.timesheets = this.dataApi.getMyTimesheets("test");
     this.dayactivities = this.timesheets.filter(i=> i.id==1).pop().weekactivities;
     console.log("liste des act : "+JSON.stringify(this.dayactivities));
-
   }
 
-  onRowEditInit(product: Product, ri : number) {
+  onRowEditInit(dayactivity: Dayactivity, ri : number) {
     console.log("EDITING.....");
 
-    this.clonedProducts[product.id] = {...product};
-    //this.clonedProduct= product ;
-    this.dataApi.selectedProduct = this.clonedProducts[product.id];
-    this.dataApi.selectedRow = ri;
-    console.log("Selected product to editing ...  "+ JSON.stringify(Object.assign({}, product)) )
+    this.clonedDayActivities[dayactivity.id] = {...dayactivity};
+    this.dataApi.selectedDayActivity = this.clonedDayActivities[dayactivity.id];
+    this.dataApi.selectedActRow = ri;
+    console.log("Selected product to editing ...  "+
+      JSON.stringify(Object.assign({}, dayactivity)) )
   }
 
-  onRowEditSave(product: Product) {
-    console.log("SAVING..... "+ product.immatriculation);
-
-
+  onRowEditSave(dayactivity: Dayactivity) {
+    console.log("SAVING..... "+ dayactivity.numberplate);
   }
 
-  onRowEditCancel(product: Product, index: number) {
-    console.log("CANCELlING..... " + product.immatriculation);
-    this.products[index] = this.clonedProducts[product.id];
-    delete this.clonedProducts[product.id];
+  onRowEditCancel(dayactivity: Dayactivity, index: number) {
+    console.log("CANCELlING..... " + dayactivity.numberplate);
+    this.dayactivities[index] = this.clonedDayActivities[dayactivity.id];
+    delete this.clonedDayActivities[dayactivity.id];
   }
 
   ngAfterViewInit() {
@@ -115,7 +112,10 @@ export class Step2 implements OnInit , AfterViewInit {
       label: 'Personal',
       command: (event: any) => {
         this.activeIndex = 0;
-        this.messageService.add({severity: 'info', summary: 'First Step', detail: event.item.label});
+        this.messageService.add({
+          severity: 'info',
+          summary: 'First Step',
+          detail: event.item.label});
       }
     },
       {
