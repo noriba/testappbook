@@ -5,6 +5,7 @@ import {MessageService} from 'primeng/api';
 import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
 import {DataApiService} from '../../services/data-api.service';
 import {Dayactivity, Dayovertime, Timesheet} from '../../models/timesheet';
+import {Product} from '../../models/products';
 
 
 @Component({
@@ -17,12 +18,13 @@ export class Step3 implements OnInit, AfterViewInit {
   private timesheets: Timesheet[];
   private timesheet: Timesheet;
   private dayactivities: Dayactivity[];
-  private dayovertimes: Dayovertime[] = [];
-  dayNames: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  dayovertimes: Dayovertime[] = [];
+  clonedDayOvertimes: { [s: string]: Dayovertime; } = {};
+
 
   constructor(
     public ticketService: TicketService,
-    private dataApi: DataApiService,
+    public dataApi: DataApiService,
     private router: Router) {
   }
 
@@ -30,12 +32,51 @@ export class Step3 implements OnInit, AfterViewInit {
     //this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets = data);
     this.timesheets = this.dataApi.getMyTimesheets('test');
     this.timesheet = this.timesheets.filter(i => i.id == 1).shift();
-
     this.dayactivities = this.timesheet.weekactivities;
-    this.dayactivities.forEach(i => this.dayovertimes.push(i.dayovertime));
-    //console.log("liste des heures supp : "+this.dayovertimes);
-    console.log('liste des heures supp : ' + JSON.stringify(this.dayovertimes));
+    this.dayactivities.forEach(i => {
 
+      // TypeScript
+      const moment=require("moment");
+      let startDate=moment("2020-09-16 08:39:27");
+      const endDate=moment();
+
+
+      const duration=moment.duration(endDate.diff(startDate))
+      console.log(duration.asSeconds());
+      console.log(duration.asHours());
+
+      var aa = duration.asHours();
+      const today = new Date();
+      const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+
+// Explicitly convert Date to Number
+      const pastDaysOfYear = ( Number(today) - Number(firstDayOfYear) );
+
+      //let overtime = i.dayend - i.daystart
+      this.dayovertimes.push(i.dayovertime);
+    });
+    console.log('liste des heures supp : ' + JSON.stringify(this.dayovertimes));
+  }
+
+  onRowEditInit(dayovertime: Dayovertime, ri : number) {
+    console.log("EDITING.....");
+    this.clonedDayOvertimes[dayovertime.day] = {...dayovertime};
+    this.dataApi.selectedDayOvertime = this.clonedDayOvertimes[dayovertime.day];
+    console.log("selectedDayOvertime :  "+ JSON.stringify(this.dataApi.selectedDayOvertime));
+
+    this.dataApi.selectedOtRow = ri;
+    console.log("Selected product to editing ...  "+
+      JSON.stringify(Object.assign({}, dayovertime)) )
+  }
+
+  onRowEditSave(dayovertime: Dayovertime) {
+    console.log("SAVING..... "+ dayovertime.reason);
+  }
+
+  onRowEditCancel(dayovertime: Dayovertime, index: number) {
+    console.log("CANCELlING..... " + dayovertime.reason);
+    this.dayovertimes[index] = this.clonedDayOvertimes[dayovertime.day];
+    delete this.clonedDayOvertimes[dayovertime.day];
   }
 
   ngAfterViewInit() {

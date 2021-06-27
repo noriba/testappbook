@@ -23,84 +23,84 @@
             <th style="width:8rem"></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-dayactivitiy let-editing="editing" let-ri="rowIndex">
-          <tr [pEditableRow]="dayactivitiy">
+        <ng-template pTemplate="body" let-dayactivity let-editing="editing" let-ri="rowIndex">
+          <tr [pEditableRow]="dayactivity">
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="dayactivitiy.day">
+                  <input pInputText type="text" [(ngModel)]="dayactivity.day">
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{dayactivitiy.day}}
+                  {{dayactivity.day}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="dayactivitiy.numberplate" required>
+                  <input pInputText type="text" [(ngModel)]="dayactivity.numberplate" required>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{dayactivitiy.numberplate}}
+                  {{dayactivity.numberplate}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="dayactivitiy.mileage" required>
+                  <input pInputText type="text" [(ngModel)]="dayactivity.mileage" required>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{dayactivitiy.mileage}}
+                  {{dayactivity.mileage}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="dayactivitiy.daystart" required>
+                  <input pInputText type="text" [(ngModel)]="dayactivity.daystart" required>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{dayactivitiy.daystart}}
+                  {{dayactivity.daystart}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="dayactivitiy.dayend" required>
+                  <input pInputText type="text" [(ngModel)]="dayactivity.dayend" required>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{dayactivitiy.dayend}}
+                  {{dayactivity.dayend}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td>
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="dayactivitiy.pause" required>
+                  <input pInputText type="text" [(ngModel)]="dayactivity.pause" required>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{dayactivitiy.pause}}
+                  {{dayactivity.pause}}
                 </ng-template>
               </p-cellEditor>
             </td>
             <td style="text-align:center">
               <button *ngIf="editing" pButton pRipple type="button"
                       pSaveEditableRow icon="pi pi-check"
-                      (click)="onRowEditSave(dayactivitiy)"
+                      (click)="onRowEditSave(dayactivity)"
                       class="p-button-rounded p-button-text p-button-success p-mr-2"
               ></button>
               <button *ngIf="editing" pButton pRipple type="button"
                       pCancelEditableRow icon="pi pi-times"
-                      (click)="onRowEditCancel(dayactivitiy, ri)"
+                      (click)="onRowEditCancel(dayactivity, ri)"
                       class="p-button-rounded p-button-text p-button-danger"
               ></button>
               <button *ngIf="!editing" pButton pRipple type="button"
                       data-toggle="modal"
                       data-target="#exampleModal"
                       pInitEditableRow icon="pi pi-pencil"
-                      (click)="onRowEditInit(dayactivitiy, ri)"
+                      (click)="onRowEditInit(dayactivity, ri)"
                       class="p-button-rounded p-button-text"
               ></button>
 
@@ -119,37 +119,37 @@
                       <form class="formModal">
                         <div class="form-group">
                           <label class="col-form-label">jour:</label>
-                          <input class="form-control" type="text" name="code"
-                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.jour ">
+                          <input class="form-control" type="text" name="day"
+                                 [(ngModel)]="this.dataApi.selectedDayActivity.day ">
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">immatriculation:</label>
-                          <input class="form-control" name="name" type="text"
-                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.immatriculation"
+                          <input class="form-control" name="numberplate" type="text"
+                                 [(ngModel)]="this.dataApi.selectedDayActivity.numberplate"
                                  required>
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">kilometrage:</label>
-                          <input class="form-control" name="name" type="text"
-                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.kilometrage"
+                          <input class="form-control" name="mileage" type="text"
+                                 [(ngModel)]="this.dataApi.selectedDayActivity.mileage"
                                  required>
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">debut:</label>
-                          <input class="form-control" name="name" type="text"
-                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.debut"
+                          <input class="form-control" name="daystart" type="text"
+                                 [(ngModel)]="this.dataApi.selectedDayActivity.daystart"
                                  required>
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">fin:</label>
-                          <input class="form-control" name="name" type="text"
-                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.fin"
+                          <input class="form-control" name="dayend" type="text"
+                                 [(ngModel)]="this.dataApi.selectedDayActivity.dayend"
                                  required>
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">pause:</label>
-                          <input class="form-control" name="name" type="text"
-                                 [(ngModel)]="this.dataApi.selecteddayactivitiy.pause"
+                          <input class="form-control" name="pause" type="text"
+                                 [(ngModel)]="this.dataApi.selectedDayActivity.pause"
                                  required>
                         </div>
                       </form>
@@ -157,10 +157,10 @@
                     <div class="modal-footer">
 
                       <button type="button" class="p-button-success p-mr-2" pButton pRipple pSaveEditableRow
-                              (click)="onRowEditSave(this.dataApi.selecteddayactivitiy)" data-dismiss="modal">Save
+                              (click)="onRowEditSave(this.dataApi.selectedDayActivity)" data-dismiss="modal">Save
                       </button>
                       <button type="button" class="p-button-danger" pButton pRipple pCancelEditableRow data-dismiss="modal"
-                              (click)="onRowEditCancel(this.dataApi.selecteddayactivitiy,this.dataApi.selectedRow)">Cancel
+                              (click)="onRowEditCancel(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)">Cancel
                       </button>
                     </div>
                   </div>
