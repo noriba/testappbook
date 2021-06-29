@@ -5,7 +5,8 @@ import {MessageService} from 'primeng/api';
 import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
 import {DataApiService} from '../../services/data-api.service';
 import {Dayactivity, Dayovertime, Timesheet} from '../../models/timesheet';
-import {Product} from '../../models/products';
+import DateTime from 'luxon/src/datetime.js';
+import Duration from 'luxon/src/duration.js';
 
 
 @Component({
@@ -20,6 +21,8 @@ export class Step3 implements OnInit, AfterViewInit {
   private dayactivities: Dayactivity[];
   dayovertimes: Dayovertime[] = [];
   clonedDayOvertimes: { [s: string]: Dayovertime; } = {};
+  private weekhoursplanned: number;
+  private dayratehours: number;
 
 
   constructor(
@@ -30,51 +33,55 @@ export class Step3 implements OnInit, AfterViewInit {
 
   ngOnInit() {
     //this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets = data);
+
     this.timesheets = this.dataApi.getMyTimesheets('test');
     this.timesheet = this.timesheets.filter(i => i.id == 1).shift();
+    this.weekhoursplanned = this.timesheet.weekhoursplanned;
     this.dayactivities = this.timesheet.weekactivities;
+    this.dayratehours = this.weekhoursplanned / this.dayactivities.length;
+
     this.dayactivities.forEach(i => {
 
-      // TypeScript
-      const moment=require("moment");
-      let startDate=moment("2020-09-16 08:39:27");
-      const endDate=moment();
+      const date1 = DateTime.fromISO(i.daystart);
+      const date2 = DateTime.fromISO(i.dayend).minus({minutes: i.pause});
+// nombre d'heures de travail
+      const diff = date2.diff(date1, ['hours']).toObject();
+      const dayminutes = Duration.fromObject(diff).as('minutes');
+      const dayhours = Duration.fromObject(diff).as('hours');
+      const hsupp = dayhours - this.dayratehours;
+      if (hsupp > 0) {
+        i.dayovertime.overtime = dayhours - this.dayratehours;
+      } else {
+        i.dayovertime.overtime = 0;
+      }
 
+      console.log('hsupp : ' + hsupp);
+      console.log('diff : ' + diff);
+      console.log('diff2 : ' + dayminutes);
+      console.log('diff3 : ' + dayhours);
 
-      const duration=moment.duration(endDate.diff(startDate))
-      console.log(duration.asSeconds());
-      console.log(duration.asHours());
-
-      var aa = duration.asHours();
-      const today = new Date();
-      const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-
-// Explicitly convert Date to Number
-      const pastDaysOfYear = ( Number(today) - Number(firstDayOfYear) );
-
-      //let overtime = i.dayend - i.daystart
       this.dayovertimes.push(i.dayovertime);
     });
     console.log('liste des heures supp : ' + JSON.stringify(this.dayovertimes));
   }
 
-  onRowEditInit(dayovertime: Dayovertime, ri : number) {
-    console.log("EDITING.....");
+  onRowEditInit(dayovertime: Dayovertime, ri: number) {
+    console.log('EDITING.....');
     this.clonedDayOvertimes[dayovertime.day] = {...dayovertime};
     this.dataApi.selectedDayOvertime = this.clonedDayOvertimes[dayovertime.day];
-    console.log("selectedDayOvertime :  "+ JSON.stringify(this.dataApi.selectedDayOvertime));
+    console.log('selectedDayOvertime :  ' + JSON.stringify(this.dataApi.selectedDayOvertime));
 
     this.dataApi.selectedOtRow = ri;
-    console.log("Selected product to editing ...  "+
-      JSON.stringify(Object.assign({}, dayovertime)) )
+    console.log('Selected product to editing ...  ' +
+      JSON.stringify(Object.assign({}, dayovertime)));
   }
 
   onRowEditSave(dayovertime: Dayovertime) {
-    console.log("SAVING..... "+ dayovertime.reason);
+    console.log('SAVING..... ' + dayovertime.reason);
   }
 
   onRowEditCancel(dayovertime: Dayovertime, index: number) {
-    console.log("CANCELlING..... " + dayovertime.reason);
+    console.log('CANCELlING..... ' + dayovertime.reason);
     this.dayovertimes[index] = this.clonedDayOvertimes[dayovertime.day];
     delete this.clonedDayOvertimes[dayovertime.day];
   }

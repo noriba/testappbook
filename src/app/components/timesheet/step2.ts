@@ -50,16 +50,15 @@ export class Step2 implements OnInit , AfterViewInit {
   products: Product[];
   statuses: SelectItem[];
   clonedDayActivities: { [s: string]: Dayactivity; } = {};
-  timesheets: Timesheet[];
+  timesheets: Timesheet;
   dayactivities: Dayactivity[];
 
   ngOnInit() {
     this.setsteps();
     this.getCurrentUser();
-    this.productService.getProductsSmall().then(data => this.products= data);
-    this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets=data);
-    this.timesheets = this.dataApi.getMyTimesheets("test");
-    this.dayactivities = this.timesheets.filter(i=> i.id==1).pop().weekactivities;
+   // this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets=data);
+    this.timesheets = this.dataApi.temporaryTimesheet;
+    this.dayactivities = this.timesheets.weekactivities;
     console.log("liste des act : "+JSON.stringify(this.dayactivities));
   }
 

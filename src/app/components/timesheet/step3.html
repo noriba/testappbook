@@ -18,9 +18,7 @@
         <tr [pEditableRow]="dayovertime">
           <td>
             <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input pInputText type="text" [(ngModel)]="dayovertime.day" required>
-              </ng-template>
+
               <ng-template pTemplate="output">
                 {{dayovertime.day}}
               </ng-template>
@@ -28,9 +26,7 @@
           </td>
           <td>
             <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input pInputText type="text" [(ngModel)]="dayovertime.overtime" required>
-              </ng-template>
+
               <ng-template pTemplate="output">
                 {{dayovertime.overtime}}
               </ng-template>
@@ -91,18 +87,14 @@
                   <div class="modal-body">
                     <form class="formModal">
 
-                      <div class="form-group">
-                        <label class="col-form-label">Jour :</label>
-                        <input class="form-control" name="day" type="text"
-                               [(ngModel)]="this.dataApi.selectedDayOvertime.day"
-                               required>
+                      <div class="form-group ">
+                        <label class="col-form-label d-block text-left">Jour :  {{this.dataApi.selectedDayOvertime.day}}</label>
+
+
+                        <label class="col-form-label d-block text-left ">Heures supplementaires : {{this.dataApi.selectedDayOvertime.overtime}}</label>
+
                       </div>
-                      <div class="form-group">
-                        <label class="col-form-label">Heures supplementaires :</label>
-                        <input class="form-control" name="overtime" type="text"
-                               [(ngModel)]="this.dataApi.selectedDayOvertime.overtime"
-                               required>
-                      </div>
+
                       <div class="form-group">
                         <label class="col-form-label">Raison :</label>
                         <input class="form-control" name="reason" type="text"
