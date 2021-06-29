@@ -1,30 +1,35 @@
-import { BookInterface } from '../models/book';
-import {Dayactivity, Dayovertime, Timesheet} from '../models/timesheet';
-import { TIMESHEETS } from '../models/timesheet';
-import { map } from 'rxjs/internal/operators';
-import { Observable } from 'rxjs';
+import {BookInterface} from '../models/book';
+import {Dayactivity, Dayovertime, Timesheet, TIMESHEETS} from '../models/timesheet';
+import {map} from 'rxjs/internal/operators';
+import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {AngularFirestoreCollection, AngularFirestoreDocument,AngularFirestore} from '@angular/fire/firestore';
-import { Product} from '../models/products';
-import { HttpClient } from '@angular/common/http';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {Product} from '../models/products';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataApiService {
 
+
   constructor(private afs: AngularFirestore,
-              private http: HttpClient) { }
+              private http: HttpClient) {
+  }
+
+
 
   private booksCollection: AngularFirestoreCollection<BookInterface>;
+  private timesheetsCollection: AngularFirestoreCollection<Timesheet>;
   private booksList: Observable<BookInterface[]>;
   private books: Observable<BookInterface[]>;
   private booksOffers: Observable<BookInterface[]>;
   private bookDoc: AngularFirestoreDocument<BookInterface>;
   private book: Observable<BookInterface>;
-  public selectedBook: BookInterface = { id: null };
-  public selectedProduct: Product = { id: null };
-  public selectedDayActivity: Dayactivity = { id: null };
+  public selectedBook: BookInterface = {id: null};
+  public selectedProduct: Product = {id: null};
+  public temporaryTimesheet: Timesheet = {statusmanager: undefined, weekactivities: [], id: null, userUid : null};
+  public selectedDayActivity: Dayactivity = {id: null};
   public selectedDayOvertime: Dayovertime = {day: null};
   public timesheets: Timesheet[] = TIMESHEETS;
   selectedActRow: number;
@@ -32,15 +37,21 @@ export class DataApiService {
   selectedRow: number;
 
   getMyTimesheets(user) {
-    console.log("Timesheets fromn api "+ JSON.stringify(this.timesheets));
+    console.log('Timesheets fromn api ' + JSON.stringify(this.timesheets));
     return this.timesheets;
+  }
+
+  updateMyTimesheet(id, timesheet) {
+
   }
 
   getMyTimesheetsJSON() {
     return this.http.get<any>('assets/timesheets.json')
       .toPromise()
       .then(res => <Timesheet[]>res.data)
-      .then(data => { return data; });
+      .then(data => {
+        return data;
+      });
   }
 
   getAllBooks() {
@@ -60,14 +71,13 @@ export class DataApiService {
     this.booksCollection = this.afs.collection<BookInterface>('books');
     return this.booksList = this.booksCollection.snapshotChanges()
       .pipe(map(changes => {
-        return changes.map( action => {
+        return changes.map(action => {
           const data = action.payload.doc.data() as BookInterface;
           data.id = action.payload.doc.data().id;
           return data;
         }).filter(data => data.userUid == user);
       }));
   }
-
 
 
   getOneBook(idBook: string) {
@@ -81,8 +91,8 @@ export class DataApiService {
           const data = action.payload.data() as BookInterface;
           data.id = action.payload.data().id;
           return data;
-      }
-    }));
+        }
+      }));
   }
 
   getAllBooksOffers() {
@@ -105,9 +115,19 @@ export class DataApiService {
 
       this.booksCollection.add(book)
         .then(userData => {
-        }).catch(err => console.log(reject(err)))
+        }).catch(err => console.log(reject(err)));
 
-    })
+    });
+  }
+
+  addTimesheet(timesheet: Timesheet) {
+    return new Promise((resolve, reject) => {
+
+      this.timesheetsCollection.add(timesheet)
+        .then(userData => {
+        }).catch(err => console.log(reject(err)));
+
+    });
   }
 
   updateBook(book: BookInterface) {
@@ -118,11 +138,17 @@ export class DataApiService {
       console.log('err', err.message);
     });
   }
+
   deleteBook(idBook: string) {
     this.bookDoc = this.afs.doc<BookInterface>(`books/${idBook}`);
     return this.bookDoc.delete().then((res) => {
     }).catch(err => {
       console.log('err', err.message);
     });
+  }
+
+  createNewtemporaryTimesheet(timesheet : Timesheet) {
+    console.log("Temporary timesheet created :"+ timesheet)
+    //this.temporaryTimesheet= timesheet;
   }
 }
