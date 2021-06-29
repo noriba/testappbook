@@ -13,39 +13,46 @@ import {DataApiService} from '../../services/data-api.service';
 })
 export class Step4 implements OnInit , AfterViewInit{
 
-  paymentInformation: any;
   @ViewChild(BreadcrumbComponent, { static: false }) child: BreadcrumbComponent;
-  private timesheets: Timesheet[];
   private timesheet: Timesheet;
   weekhoursplanned: number;
    dayactivities: Dayactivity[];
    weekovertime: number = 0;
    weekhours: number = 0 ;
+  msgError: string;
+  isError: any;
+  private timesheets: Timesheet[];
+  private alltimesheets: Timesheet[];
+
 
   constructor(
-    public ticketService: TicketService,
     public dataApi: DataApiService,
     private router: Router) {
   }
 
   ngOnInit() {
     //this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets = data);
-
-    this.timesheets = this.dataApi.getMyTimesheets('test');
-    this.timesheet = this.timesheets.filter(i => i.id == 1).shift();
+    //this.timesheets = this.dataApi.getMyTimesheets('test');
+    //this.timesheet = this.timesheets.filter(i => i.id == 1).shift();
+    this.timesheet = this.dataApi.temporaryTimesheet;
     this.weekhoursplanned = this.timesheet.weekhoursplanned;
     this.dayactivities = this.timesheet.weekactivities;
     this.dayactivities.forEach(i=> {
-      console.log(i.day+" "+this.weekovertime +" heures");
-      return this.weekovertime += i.dayovertime.overtime;
+      this.weekovertime += i.dayovertime.overtime;
+      console.log(i.day+" >> "+this.weekovertime +" heures supp");
+      return this.weekovertime ;
     });
+    console.log("Vous avez cumulé cette semaine >> "+this.weekovertime +" heures supp");
+    this.weekhours = (this.weekhoursplanned/ 5)* this.dayactivities.length +this.weekovertime;
+
+    console.log("Vous avez cumulé cette semaine >> "+this.weekhours+" heures travaillées");
+    this.dataApi.temporaryTimesheet.weekhoursdone = this.weekhours;
+    this.dataApi.temporaryTimesheet.statusmanager.comment= "hello";
+    this.dataApi.temporaryTimesheet.statusmanager.signature= "hello";
+    this.dataApi.temporaryTimesheet.statusmanager.signaturedate= "hello";
+    this.dataApi.temporaryTimesheet.statusmanager.status= true;
 
 
-
-    this.weekhours = this.weekhoursplanned+this.weekovertime;
-
-    console.log(this.weekovertime);
-    console.log(this.weekhours);
   }
 
   ngAfterViewInit() {
@@ -57,7 +64,33 @@ export class Step4 implements OnInit , AfterViewInit{
   }
 
   nextStepPlease(){
-    this.ticketService.ticketInformation.paymentInformation = this.paymentInformation;
-    this.router.navigate(['timesheet.ts']);
+    let timesheet = this.dataApi.temporaryTimesheet;
+    if (timesheet.id == null) {
+      console.log('id == null ::: calling createNewTimesheet()...');
+      this.dataApi.createNewTimesheet(timesheet)
+        .then(()=>{
+          this.dataApi.temporaryTimesheet = null;
+        })
+        .catch(err => {
+          this.isError = true;
+          this.msgError = err.message;
+          console.log('error createNewTimesheet() ::: ' + err.message);
+        });
+    } else {
+      // Update
+      this.dataApi.updateTimesheet()
+        .then(()=>{
+        })
+        .catch(err => {
+          this.isError = true;
+          this.msgError = err.message;
+          console.log('error createNewTimesheet() ::: ' + err.message);
+        });
+
+    }
+
+
+
+    this.router.navigate(['timesheet']);
   }
 }

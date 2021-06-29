@@ -19,7 +19,7 @@ import {Product} from '../../models/products';
 import {ProductService} from '../../services/product.service';
 import {Observable} from 'rxjs/internal/Observable';
 import {ReplaySubject} from 'rxjs';
-import {Dayactivity, Timesheet} from '../../models/timesheet';
+import {Day, Dayactivity, Timesheet} from '../../models/timesheet';
 
 
 @Component({
@@ -35,10 +35,20 @@ export class Step2 implements OnInit , AfterViewInit {
               private productService: ProductService,
               private router: Router,
               private messageService: MessageService) {
+    this.days = [
+      'Lundi',
+      'Mardi',
+      'Mercredi',
+      'Jeudi',
+      'Vendredi',
+      'Samedi',
+      'Dimanche'
+    ];
   }
 
   @ViewChild(BreadcrumbComponent, { static: false }) child: BreadcrumbComponent;
-
+  days : string[];
+day:string;
   private isAdmin: any;
   private userUid: string;
   USERS: any;
@@ -60,6 +70,7 @@ export class Step2 implements OnInit , AfterViewInit {
     this.timesheets = this.dataApi.temporaryTimesheet;
     this.dayactivities = this.timesheets.weekactivities;
     console.log("liste des act : "+JSON.stringify(this.dayactivities));
+    console.log("temp timesheet : "+JSON.stringify(this.timesheets));
   }
 
   onRowEditInit(dayactivity: Dayactivity, ri : number) {
@@ -136,6 +147,7 @@ export class Step2 implements OnInit , AfterViewInit {
 
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
+      console.log("------------------------Connected USER----------------------"+ auth.uid);
       if (auth) {
         this.userUid = auth.uid;
         this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
@@ -163,4 +175,11 @@ export class Step2 implements OnInit , AfterViewInit {
   }
 
 
+  createNewActivity(data)  {
+
+    this.dataApi.createNewActivity(data.value)
+    console.log("new activity to create :"+ JSON.stringify(data.value));
+
+
+  }
 }

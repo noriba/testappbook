@@ -4,5 +4,55 @@
     <button class="ml-2" pButton type="button" label="Nouvelle Feuille de temps >" (click)="nextStepPlease()"></button>
   </div>
 
+  <div class="table-responsive ">
+
+    <table class="table table-hover ">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Prenom</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Site</th>
+        <th scope="col">Semaine</th>
+        <th scope="col">Heures travaillées</th>
+        <th scope="col">Regime horaire</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let timesheet of myTimesheets; index as i">
+        <th  scope="row">{{i+1}}</th>
+        <td>{{timesheet.firstname}}</td>
+        <td>{{timesheet.lastname}}</td>
+        <td>{{timesheet.site}}</td>
+        <td>{{timesheet.week}}</td>
+        <td>{{timesheet.weekhoursdone}}</td>
+        <td>{{timesheet.weekhoursplanned}}</td>
+        <td *ngIf="timesheet.userUid == userUid || isAdmin == true; else noOwner">
+          <button class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#modalBook"
+                  (click)="onPreUpdateTimesheet(timesheet)">Update</button>
+        </td>
+
+        <ng-template #noOwner>
+          <td>
+            <button class="btn btn-secondary" disabled="true">Update</button>
+          </td>
+        </ng-template>
+
+        <td *ngIf="isAdmin == true; else noAdmin">
+          <button class="btn btn-danger" (click)="onDeleteTimesheet(timesheet.id)">Delete</button>
+        </td>
+        <ng-template #noAdmin>
+          <td>
+            <button class="btn btn-danger" disabled="true">Delete</button>
+          </td>
+        </ng-template>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
 </section>
 

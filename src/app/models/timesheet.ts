@@ -1,6 +1,6 @@
 export interface Timesheet {
-  id: number;
-  userUid: string;
+  id?: number;
+  userUid?: string;
   year?: number;
   matricule?: string;
   firstname?: string;
@@ -13,11 +13,11 @@ export interface Timesheet {
   weekactivities: Dayactivity[];
   weekhoursdone?: number;
   weekhoursplanned?: number;
-  statusmanager: Statusmanager;
+  statusmanager?: Statusmanager;
 }
 
 export interface Dayactivity {
-  id: number;
+  id?: number;
   day?: string;
   numberplate?: string;
   mileage?: number;
@@ -28,12 +28,6 @@ export interface Dayactivity {
   dayovertime?: Dayovertime;
 }
 
-export interface Statusmanager {
-  status?: boolean;
-  comment?: string;
-  signaturedate?: string;
-  signature?: string;
-}
 
 export interface Dayovertime {
   day?: string;
@@ -42,6 +36,16 @@ export interface Dayovertime {
   overtimestatus?: boolean;
 }
 
+export interface Statusmanager {
+  status?: boolean;
+  comment?: string;
+  signaturedate?: string;
+  signature?: string;
+}
+export interface Day {
+  name: string,
+  code: string
+}
 
 export let TIMESHEETS;
 TIMESHEETS = [
