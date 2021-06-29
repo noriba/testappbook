@@ -1,5 +1,6 @@
 export interface Timesheet {
   id: number;
+  userUid: string;
   year?: number;
   matricule?: string;
   firstname?: string;
@@ -36,7 +37,7 @@ export interface Statusmanager {
 
 export interface Dayovertime {
   day?: string;
-  overtime?: string;
+  overtime?: number;
   reason?: string;
   overtimestatus?: boolean;
 }
@@ -46,6 +47,7 @@ export let TIMESHEETS;
 TIMESHEETS = [
   {
     'id': 1,
+    'userUid': '',
     'year': 2021,
     'matricule': 'azerty',
     'firstname': 'rachid',
@@ -61,13 +63,13 @@ TIMESHEETS = [
         'day': 'lundi',
         'numberplate': '46ANWWW59',
         'mileage': 14,
-        'daystart': '2014-01-01T23:28:56.782Z',
-        'dayend': '2014-01-01T23:28:56.782Z',
+        'daystart': '2014-01-01T03:28:56.782Z',
+        'dayend': '2014-01-01T14:28:56.782Z',
         'pause': 20,
         'createdate': '2014-01-01T23:28:56.782Z',
         'dayovertime': {
           'day': 'lundi',
-          'overtime': '',
+          'overtime': 0,
           'reason': '',
           'overtimestatus': ''
         }
@@ -78,12 +80,12 @@ TIMESHEETS = [
         'numberplate': '46ANWWW59',
         'mileage': 14,
         'daystart': '2014-01-01T23:28:56.782Z',
-        'dayend': '2014-01-01T23:28:56.782Z',
+        'dayend': '2014-01-02T08:28:56.782Z',
         'pause': 20,
         'createdate': '2014-01-01T23:28:56.782Z',
         'dayovertime': {
           'day': 'Mardi',
-          'overtime': '2014-01-01T23:28:56.782Z',
+          'overtime': 0,
           'reason': 'j\'avais la chiasse cousin',
           'overtimestatus': true
         }
@@ -97,7 +99,7 @@ TIMESHEETS = [
         'dayend': '2014-01-01T23:28:56.782Z',
         'pause': 20,
         'createdate': '2014-01-01T23:28:56.782Z',
-        'dayovertime': {'day': 'Mercredi', 'overtime': '', 'reason': '', 'overtimestatus': ''}
+        'dayovertime': {'day': 'Mercredi', 'overtime': 0, 'reason': '', 'overtimestatus': ''}
       },
       {
         'id': 4,
@@ -108,7 +110,7 @@ TIMESHEETS = [
         'dayend': '2014-01-01T23:28:56.782Z',
         'pause': 20,
         'createdate': '2014-01-01T23:28:56.782Z',
-        'dayovertime': {'day': 'Jeudi', 'overtime': '', 'reason': '', 'overtimestatus': ''}
+        'dayovertime': {'day': 'Jeudi', 'overtime': 0, 'reason': '', 'overtimestatus': ''}
       },
       {
         'id': 5,
@@ -119,7 +121,7 @@ TIMESHEETS = [
         'dayend': '2014-01-01T23:28:56.782Z',
         'pause': 20,
         'createdate': '2014-01-01T23:28:56.782Z',
-        'dayovertime': {'day': 'Vendredi', 'overtime': '', 'reason': '', 'overtimestatus': ''}
+        'dayovertime': {'day': 'Vendredi', 'overtime': 0, 'reason': '', 'overtimestatus': ''}
       },
       {
         'id': 6,
@@ -130,7 +132,7 @@ TIMESHEETS = [
         'dayend': '2014-01-01T23:28:56.782Z',
         'pause': 20,
         'createdate': '2014-01-01T23:28:56.782Z',
-        'dayovertime': {'day': 'Samedi', 'overtime': '', 'reason': '', 'overtimestatus': ''}
+        'dayovertime': {'day': 'Samedi', 'overtime': 0, 'reason': '', 'overtimestatus': ''}
       },
       {
         'id': 7,
@@ -141,7 +143,7 @@ TIMESHEETS = [
         'dayend': '2014-01-01T23:28:56.782Z',
         'pause': 20,
         'createdate': '2014-01-01T23:28:56.782Z',
-        'dayovertime': {'day': 'Dimanche', 'overtime': '', 'reason': '', 'overtimestatus': ''}
+        'dayovertime': {'day': 'Dimanche', 'overtime': 0, 'reason': '', 'overtimestatus': ''}
       }
     ],
     'weekhoursdone': 45,

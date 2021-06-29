@@ -1,4 +1,4 @@
-import {Component,OnInit} from '@angular/core';
+import {Component,OnInit,Input} from '@angular/core';
 import { TicketService } from '../../stepsdemo/ticketservice';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
@@ -13,6 +13,9 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {StepsModule} from 'primeng/steps';
+import {Timesheet} from '../../models/timesheet';
+import {NgForm} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -21,20 +24,23 @@ import {StepsModule} from 'primeng/steps';
 })
 export class Step1 implements OnInit , AfterViewInit {
 
-  constructor(private dataApi: DataApiService,
+  constructor(public dataApi: DataApiService,
               private authService: AuthService,
               private router: Router,
               private messageService: MessageService) {  }
 
   @ViewChild(BreadcrumbComponent, {static: false}) child: BreadcrumbComponent ;
+  @ViewChild('myForm') ngForm: NgForm;
+  @Input() userUid: string;
+
 
   private isAdmin: any;
-  private userUid: string;
   USERS: any;
   items: MenuItem[];
   steps: MenuItem[];
   home: MenuItem;
   activeIndex: number ;
+  data: Timesheet;
 
   ngAfterViewInit() {
     this.child.activeIndex= 0;
@@ -49,8 +55,20 @@ export class Step1 implements OnInit , AfterViewInit {
     this.router.navigate(['timesheet.ts']);
   }
 
-  nextStepPlease(){
+  nextStepPlease(data : NgForm) :void {
+    this.createNewTimesheet(data);
     this.router.navigate(['step2']);
+
+
+
+  }
+
+  createNewTimesheet(data: NgForm){
+   // console.log(":::::::::::::::On va creer ces données :::::: "+JSON.stringify(data) );
+    console.log(":::::::::::::::current user :::::: "+this.userUid );
+      data.value.userUid = this.userUid;
+      this.dataApi.createNewtemporaryTimesheet(data.value)
+
 
   }
 
@@ -119,5 +137,26 @@ export class Step1 implements OnInit , AfterViewInit {
     });
   }
 
+  powers = ['Really Smart', 'Super Flexible',
+    'Super Hot', 'Weather Changer'];
+
+  model = new Hero(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');
+
+  submitted = false;
+
+  onSubmit() { this.submitted = true; }
+
+  newHero() {
+    this.model = new Hero(42, '', '');
+  }
+}
+export class Hero {
+
+  constructor(
+    public id: number,
+    public name: string,
+    public power: string,
+    public alterEgo?: string
+  ) {  }
 
 }
