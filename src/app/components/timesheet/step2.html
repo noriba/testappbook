@@ -2,18 +2,86 @@
 
   <app-breadcrumb></app-breadcrumb>
 
-  <button class="btn btn-primary p-m-2"
-          data-target="#exampleModal"
-          data-toggle="modal"
-          form="formModal"
-          type="button"
-  >Nouvelle Journée +
-  </button>
-  <div class="float-right">
-    <button class="btn btn-primary m-2 m-xl-2 " data-toggle="modal" data-target="#formModal2">New Book</button>
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" data-whatever="">Nouvelle Journée +</button>
+
+  <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form #myForm="ngForm" (ngSubmit)="createNewActivity(myForm)">
+      <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel1">New message</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="col-form-label">jour:</label>
+       <!--     <p-dropdown [options]="days"
+                        [(ngModel)]="day"
+                        formControlName="day"
+                        name="day"
+                      ></p-dropdown>
+-->
+            <select class="custom-select" name="day" ngModel>
+              <option *ngFor="let day of days" [ngValue]="day">{{day}}</option>
+            </select>
+<!--
+            <input ngModel class="form-control" name="day"
+                   type="text">-->
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">immatriculation:</label>
+            <input ngModel class="form-control"
+                   name="numberplate"
+                   required
+                   type="text">
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">kilometrage:</label>
+            <input ngModel class="form-control"
+                   name="mileage"
+                   required
+                   type="text">
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">debut:</label>
+            <input ngModel class="form-control"
+                   name="daystart"
+                   required
+                   type="text">
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">fin:</label>
+            <input ngModel class="form-control"
+                   name="dayend"
+                   required
+                   type="text">
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">pause:</label>
+            <input ngModel class="form-control" name="pause"
+                   required
+                   type="text">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="createNewActivity(myForm)">Send message</button>
+        </div>
+      </div>
+    </div>
+    </form>
   </div>
+
+
+
+
   <p-card>
+
     <p-table [value]="dayactivities" dataKey="id" editMode="row">
+
       <ng-template pTemplate="header">
         <tr>
           <th>Jour</th>
@@ -186,6 +254,7 @@
           </td>
         </tr>
       </ng-template>
+
     </p-table>
 
     <ng-template pTemplate="footer">
@@ -195,73 +264,6 @@
     </ng-template>
 
   </p-card>
-  <form id="formModal2">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel2">Activitée du jour</h5>
-          <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form class="formModal">
-            <div class="form-group">
-              <label class="col-form-label">jour:</label>
-              <input [(ngModel)]="this.dataApi.selectedDayActivity.day " class="form-control" name="day"
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">immatriculation:</label>
-              <input [(ngModel)]="this.dataApi.selectedDayActivity.numberplate" class="form-control"
-                     name="numberplate"
-                     required
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">kilometrage:</label>
-              <input [(ngModel)]="this.dataApi.selectedDayActivity.mileage" class="form-control"
-                     name="mileage"
-                     required
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">debut:</label>
-              <input [(ngModel)]="this.dataApi.selectedDayActivity.daystart" class="form-control"
-                     name="daystart"
-                     required
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">fin:</label>
-              <input [(ngModel)]="this.dataApi.selectedDayActivity.dayend" class="form-control"
-                     name="dayend"
-                     required
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">pause:</label>
-              <input [(ngModel)]="this.dataApi.selectedDayActivity.pause" class="form-control" name="pause"
-                     required
-                     type="text">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
 
-          <button (click)="onRowEditSave(this.dataApi.selectedDayActivity)" class="p-button-success p-mr-2"
-                  data-dismiss="modal" pButton pRipple
-                  pSaveEditableRow type="button">Save
-          </button>
-          <button (click)="onRowEditCancel(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)"
-                  class="p-button-danger" data-dismiss="modal" pButton pCancelEditableRow
-                  pRipple
-                  type="button">
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
 
 </div>

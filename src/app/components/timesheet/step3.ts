@@ -18,7 +18,7 @@ export class Step3 implements OnInit, AfterViewInit {
   @ViewChild(BreadcrumbComponent, {static: false}) child: BreadcrumbComponent;
   private timesheets: Timesheet[];
   private timesheet: Timesheet;
-  private dayactivities: Dayactivity[];
+  private dayactivities: Dayactivity[] = [];
   dayovertimes: Dayovertime[] = [];
   clonedDayOvertimes: { [s: string]: Dayovertime; } = {};
   private weekhoursplanned: number;
@@ -34,25 +34,35 @@ export class Step3 implements OnInit, AfterViewInit {
   ngOnInit() {
     //this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets = data);
 
-    this.timesheets = this.dataApi.getMyTimesheets('test');
-    this.timesheet = this.timesheets.filter(i => i.id == 1).shift();
+    //this.timesheets = this.dataApi.getMyTimesheets('test');
+    //this.timesheet = this.timesheets.filter(i => i.id == 1).shift();
+    this.timesheet = this.dataApi.temporaryTimesheet;
     this.weekhoursplanned = this.timesheet.weekhoursplanned;
     this.dayactivities = this.timesheet.weekactivities;
-    this.dayratehours = this.weekhoursplanned / this.dayactivities.length;
+    console.log('Step3 ::: weekhoursplanned ' + typeof this.weekhoursplanned);
 
-    this.dayactivities.forEach(i => {
+    // taux horaire theorique sur 5 jours
+    this.dayratehours = this.weekhoursplanned / 5;
 
-      const date1 = DateTime.fromISO(i.daystart);
-      const date2 = DateTime.fromISO(i.dayend).minus({minutes: i.pause});
+    this.computeOvertimes();
+    console.log('liste des heures supp : ' + JSON.stringify(this.dayovertimes));
+  }
+
+  private computeOvertimes() {
+    this.dayactivities.forEach(activity => {
+
+      const date1 = DateTime.fromISO(activity.daystart);
+      const date2 = DateTime.fromISO(activity.dayend).minus({minutes: activity.pause});
 // nombre d'heures de travail
       const diff = date2.diff(date1, ['hours']).toObject();
       const dayminutes = Duration.fromObject(diff).as('minutes');
       const dayhours = Duration.fromObject(diff).as('hours');
       const hsupp = dayhours - this.dayratehours;
+      activity.dayovertime = {overtime: 0, day: activity.day};
       if (hsupp > 0) {
-        i.dayovertime.overtime = dayhours - this.dayratehours;
+        activity.dayovertime.overtime = hsupp;
       } else {
-        i.dayovertime.overtime = 0;
+        activity.dayovertime.overtime = 0;
       }
 
       console.log('hsupp : ' + hsupp);
@@ -60,9 +70,8 @@ export class Step3 implements OnInit, AfterViewInit {
       console.log('diff2 : ' + dayminutes);
       console.log('diff3 : ' + dayhours);
 
-      this.dayovertimes.push(i.dayovertime);
+      this.dayovertimes.push(activity.dayovertime);
     });
-    console.log('liste des heures supp : ' + JSON.stringify(this.dayovertimes));
   }
 
   onRowEditInit(dayovertime: Dayovertime, ri: number) {
@@ -99,6 +108,6 @@ export class Step3 implements OnInit, AfterViewInit {
   }
 
   getValue(activity: Dayovertime) {
-    return JSON.stringify(activity.overtime);
+    // return JSON.stringify(activity.overtime);
   }
 }

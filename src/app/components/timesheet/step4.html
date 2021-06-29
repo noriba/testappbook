@@ -10,8 +10,14 @@
     <p>Vous avez travaillé {{weekhours}} heures</p>
     <p>dont {{weekovertime}} d'heures supplementaires</p>
     <ng-template pTemplate="footer">
-        <button class="ml-2 fixed-bottom" pButton type="button" label="< Last Step" (click)="lastStepPlease()"></button>
-        <button class="ml-2 bg-success" pButton type="button" label="Terminée >" (click)="nextStepPlease()"></button>
+        <button class="ml-2 fixed-bottom"
+                pButton type="button"
+                label="< Last Step" (click)="lastStepPlease()">
+        </button>
+        <button class="ml-2 bg-success"
+                pButton type="button"
+                label="Terminée >" (click)="nextStepPlease()">
+        </button>
 
     </ng-template>
   </p-card>
