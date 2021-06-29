@@ -19,17 +19,17 @@
         <form #myForm="ngForm" (ngSubmit)="nextStepPlease(myForm)">
           <div class="">
             <div class="row col-lg-12 my-2 ">
-              <input type="hidden" name="userUid"  [value]="userUid">
+              <input type="hidden" name="userUid" [value]="userUid">
               <div class=" col-lg-8 mb-2 ">
                 <div class="p-inputgroup ">
                   <span class="col-4 col-lg-4 p-inputgroup-addon ">Année</span>
-                  <input class="col-8 col-lg-8" name="year"  ngModel placeholder="" type="text">
+                  <input class="col-8 col-lg-8" name="year" ngModel placeholder="" type="number">
                 </div>
               </div>
               <div class=" col-lg-4 ">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-6 p-inputgroup-addon">Semaine</span>
-                  <input class="col-8 col-lg-6" name="week"  ngModel placeholder="" type="text">
+                  <input class="col-8 col-lg-6" name="week" ngModel placeholder="" type="number">
                 </div>
               </div>
             </div>
@@ -37,14 +37,14 @@
               <div class="col-lg-8 mb-2">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-4 p-inputgroup-addon">Matricule</span>
-                  <input class="col-5 col-lg-5 mr-1" name="matricule"  ngModel placeholder="" type="text">
-                  <input class="col-3 col-lg-3"   placeholder="" type="text">
+                  <input class="col-5 col-lg-5 mr-1" name="matricule" ngModel placeholder="" type="text">
+                  <input class="col-3 col-lg-3" placeholder="" type="text">
                 </div>
               </div>
               <div class="col-lg-4 ">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-6 p-inputgroup-addon">Début</span>
-                  <input class="col-8 col-lg-6" name="weekstart"  ngModel placeholder="" type="text">
+                  <input class="col-8 col-lg-6" name="weekstart" ngModel placeholder="" type="text">
                 </div>
               </div>
             </div>
@@ -52,14 +52,14 @@
               <div class="col-lg-8 mb-2">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-4 p-inputgroup-addon">Nom Prénom</span>
-                  <input class="col-5 col-lg-5 mr-1" name="firstname"  ngModel placeholder="" type="text">
-                  <input class="col-3 col-lg-3" name="lastname"  ngModel placeholder="" type="text">
+                  <input class="col-5 col-lg-5 mr-1" name="firstname" ngModel placeholder="" type="text">
+                  <input class="col-3 col-lg-3" name="lastname" ngModel placeholder="" type="text">
                 </div>
               </div>
               <div class="col-lg-4 ">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-6 p-inputgroup-addon">Fin</span>
-                  <input class="col-8 col-lg-6" name="weekend"  ngModel placeholder="" type="text">
+                  <input class="col-8 col-lg-6" name="weekend" ngModel placeholder="" type="text">
                 </div>
               </div>
             </div>
@@ -69,7 +69,7 @@
                 <div class=" mb-2 mb-lg-3 ">
                   <div class="p-inputgroup">
                     <span class="col-4 col-lg-4 p-inputgroup-addon">Site</span>
-                    <input class="col-8 col-lg-8" name="site"   placeholder="" type="text">
+                    <input class="col-8 col-lg-8" name="site" ngModel placeholder="" type="text">
                   </div>
                 </div>
                 <div class="mb-2">
@@ -77,19 +77,16 @@
                     <span class="col-4 col-lg-4 p-inputgroup-addon">Contrat</span>
                     <div class="col-8 col-lg-8 py-2 px-4 form-check-inline">
                       <div class="my-auto  p-field-radiobutton">
-                        <p-radioButton name="contracttype" ngModel value="Los Angeles"
-                                       inputId="city2"></p-radioButton>
-                        <label >CDI</label>
+                        <input type="radio" name="contracttype" value="CDI" ngModel>
+                        <label>CDI</label>
                       </div>
                       <div class="my-auto  p-field-radiobutton">
-                        <p-radioButton name="contracttype" ngModel value="New York"
-                                       inputId="city3"></p-radioButton>
-                        <label >CDD</label>
+                        <input type="radio" name="contracttype" value="CDD" ngModel>
+                        <label>CDD</label>
                       </div>
                       <div class="my-auto  p-field-radiobutton">
-                        <p-radioButton name="contracttype" ngModel value="San Francisco"
-                                       inputId="city4"></p-radioButton>
-                        <label >INT</label>
+                        <input type="radio" name="contracttype" value="INT" ngModel>
+                        <label>INT</label>
                       </div>
                     </div>
                   </div>
@@ -97,19 +94,18 @@
               </div>
               <div class="col-lg-4 p-inputgroup">
                 <span class="col-4 col-lg-6 p-inputgroup-addon">Régime horaire</span>
-                <input class="col-8 col-lg-6" name="weekhoursplanned" ngModel  placeholder="" type="text">
+                <input class="col-8 col-lg-6" name="weekhoursplanned" ngModel placeholder="" type="number">
               </div>
             </div>
           </div>
-            <button class="ml-2 fixed-bottom" pButton type="submit" label="< Last Step"
-                    (click)="lastStepPlease()"></button>
-            <button class="ml-2" pButton type="submit" label="Next Step >"
-                    ></button>
+          <button class="ml-2 fixed-bottom" pButton type="submit" label="< Last Step"
+                  (click)="lastStepPlease()"></button>
+          <button class="ml-2" pButton type="submit" label="Next Step >"
+          ></button>
 
         </form>
 
       </p-card>
-
 
 
     </div>
