@@ -7,20 +7,24 @@ import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} 
 import {Product} from '../models/products';
 import {HttpClient} from '@angular/common/http';
 import {v4 as uuidv4} from 'uuid';
+import {UserData} from '../models/userdata';
+
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataApiService {
+  private temporaryUserData: UserData;
 
   constructor(private afs: AngularFirestore,
               private http: HttpClient) {
   }
 
-  private timesheet: Observable<Timesheet>;
   private timesheetList: Observable<Timesheet[]>;
+  private userDataList: Observable<UserData[]>;
   private timesheetsCollection: AngularFirestoreCollection<Timesheet>;
+  private userDataCollection: AngularFirestoreCollection<UserData>;
   private timesheetDoc: AngularFirestoreDocument<Timesheet>;
   public temporaryTimesheet: Timesheet = {
     weekhoursplanned: 0,
@@ -185,13 +189,28 @@ export class DataApiService {
       this.timesheetsCollection.add(timesheet)
         .then(userData => {
           console.log('success');
+ /*         Object.keys(this.temporaryTimesheet).forEach(key => {
+            delete this.temporaryTimesheet[key];
+          });*/
+          console.log(this.temporaryTimesheet);
         })
         .catch(err => console.log(reject(err)));
     });
   }
 
+  resetTemporaryTimesheet(){
+  const temporaryTimesheet: Timesheet = {
+      weekhoursplanned: 0,
+      statusmanager: {},
+      weekactivities: [],
+      id: null,
+      userUid: null
+    };
+  this.temporaryTimesheet = temporaryTimesheet;
+  }
 
   createNewtemporaryTimesheet(timesheet: Timesheet) {
+    this.resetTemporaryTimesheet();
     this.temporaryTimesheet = {...this.temporaryTimesheet, ...timesheet};
     console.log('Temporary timesheet created :' + JSON.stringify(this.temporaryTimesheet));
   }
@@ -202,6 +221,8 @@ export class DataApiService {
     console.log('current timesheet acts :' + JSON.stringify(this.temporaryTimesheet.weekactivities));
     this.temporaryTimesheet.weekactivities?.push(activity);
   }
+
+
 
   getAllTimesheets() {
     this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
@@ -215,5 +236,34 @@ export class DataApiService {
         });
       }));
   }
+
+  //---------------------------------------------------------------------
+
+  getMyUserData(user) {
+    this.userDataCollection = this.afs.collection<UserData>('userdatas');
+    return this.userDataList = this.userDataCollection.snapshotChanges()
+      .pipe(map(changes => {
+        return changes.map(action => {
+          const data = action.payload.doc.data() as UserData;
+          data.id = action.payload.doc.data().id;
+          return data;
+        }).filter(data => data.userUid == user);
+      }));
+  }
+
+  createNewUserData(userData: UserData) {
+
+    let uuid = uuidv4();
+    userData.id = uuid;
+    return new Promise((resolve, reject) => {
+      this.userDataCollection.add(userData)
+        .then(userData => {
+          console.log('success');
+          console.log(this.temporaryUserData);
+        })
+        .catch(err => console.log(reject(err)));
+    });
+  }
+
 
 }

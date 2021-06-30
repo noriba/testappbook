@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, OnChanges} from '@angular/core';
 import {TicketService} from '../../stepsdemo/ticketservice';
 import {Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
@@ -13,7 +13,7 @@ import Duration from 'luxon/src/duration.js';
   templateUrl: './step3.html',
   providers: [MessageService]
 })
-export class Step3 implements OnInit, AfterViewInit {
+export class Step3 implements OnInit {
 
   @ViewChild(BreadcrumbComponent, {static: false}) child: BreadcrumbComponent;
   private timesheets: Timesheet[];
@@ -31,7 +31,11 @@ export class Step3 implements OnInit, AfterViewInit {
     private router: Router) {
   }
 
+
+
   ngOnInit() {
+    Promise.resolve(null).then(() => this.child.activeIndex=2);
+
     //this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets = data);
 
     //this.timesheets = this.dataApi.getMyTimesheets('test');
@@ -69,7 +73,7 @@ export class Step3 implements OnInit, AfterViewInit {
       console.log('diff : ' + diff);
       console.log('diff2 : ' + dayminutes);
       console.log('diff3 : ' + dayhours);
-
+      //desynchronisation entre dayoveertimes et dayactivities
       this.dayovertimes.push(activity.dayovertime);
     });
   }
@@ -85,8 +89,16 @@ export class Step3 implements OnInit, AfterViewInit {
       JSON.stringify(Object.assign({}, dayovertime)));
   }
 
-  onRowEditSave(dayovertime: Dayovertime) {
+  onRowEditSave(dayovertime: Dayovertime, index: number) {
+    this.dataApi.temporaryTimesheet.weekactivities.filter(d=> d.day == dayovertime.day).map(d=>d.dayovertime={...dayovertime} ) ;
+
+    this.dayovertimes[index] = {...dayovertime};
+    delete this.clonedDayOvertimes[dayovertime.day];
+
     console.log('SAVING..... ' + dayovertime.reason);
+    console.log('selected temp :  ' + JSON.stringify(this.dataApi.temporaryTimesheet.weekactivities));
+    console.log('selected actual :  ' + JSON.stringify(this.dayovertimes[index]));
+
   }
 
   onRowEditCancel(dayovertime: Dayovertime, index: number) {
@@ -95,9 +107,6 @@ export class Step3 implements OnInit, AfterViewInit {
     delete this.clonedDayOvertimes[dayovertime.day];
   }
 
-  ngAfterViewInit() {
-    this.child.activeIndex = 2;
-  }
 
   lastStepPlease() {
     this.router.navigate(['step2']);

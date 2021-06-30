@@ -14,8 +14,10 @@
              <button (click)="openPDF()" class="btn btn-success btn-block">Download PDF</button>
            </div>
      -->
-      <p-card>
-        <h5>Identité</h5>
+      <p-card header="Identité">
+        <ng-template pTemplate="header">
+
+        </ng-template>
         <form #myForm="ngForm" (ngSubmit)="nextStepPlease(myForm)">
           <div class="">
             <div class="row col-lg-12 my-2 ">
@@ -23,13 +25,13 @@
               <div class=" col-lg-8 mb-2 ">
                 <div class="p-inputgroup ">
                   <span class="col-4 col-lg-4 p-inputgroup-addon ">Année</span>
-                  <input class="col-8 col-lg-8" name="year" ngModel placeholder="" type="number">
+                  <input class="col-8 col-lg-8" name="year" ngModel placeholder="" type="number" required >
                 </div>
               </div>
               <div class=" col-lg-4 ">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-6 p-inputgroup-addon">Semaine</span>
-                  <input class="col-8 col-lg-6" name="week" ngModel placeholder="" type="number">
+                  <input class="col-8 col-lg-6" name="week" ngModel placeholder="" type="number" required >
                 </div>
               </div>
             </div>
@@ -37,14 +39,14 @@
               <div class="col-lg-8 mb-2">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-4 p-inputgroup-addon">Matricule</span>
-                  <input class="col-5 col-lg-5 mr-1" name="matricule" ngModel placeholder="" type="text">
+                  <input class="col-5 col-lg-5 mr-1" name="matricule" ngModel placeholder="" type="text" required >
                   <input class="col-3 col-lg-3" placeholder="" type="text">
                 </div>
               </div>
               <div class="col-lg-4 ">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-6 p-inputgroup-addon">Début</span>
-                  <input class="col-8 col-lg-6" name="weekstart" ngModel placeholder="" type="text">
+                  <input class="col-8 col-lg-6" name="weekstart" ngModel placeholder="" type="text" required >
                 </div>
               </div>
             </div>
@@ -52,14 +54,14 @@
               <div class="col-lg-8 mb-2">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-4 p-inputgroup-addon">Nom Prénom</span>
-                  <input class="col-5 col-lg-5 mr-1" name="firstname" ngModel placeholder="" type="text">
+                  <input class="col-5 col-lg-5 mr-1" name="firstname" ngModel placeholder="" type="text" required >
                   <input class="col-3 col-lg-3" name="lastname" ngModel placeholder="" type="text">
                 </div>
               </div>
               <div class="col-lg-4 ">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-6 p-inputgroup-addon">Fin</span>
-                  <input class="col-8 col-lg-6" name="weekend" ngModel placeholder="" type="text">
+                  <input class="col-8 col-lg-6" name="weekend" ngModel placeholder="" type="text" required >
                 </div>
               </div>
             </div>
@@ -69,7 +71,7 @@
                 <div class=" mb-2 mb-lg-3 ">
                   <div class="p-inputgroup">
                     <span class="col-4 col-lg-4 p-inputgroup-addon">Site</span>
-                    <input class="col-8 col-lg-8" name="site" ngModel placeholder="" type="text">
+                    <input class="col-8 col-lg-8" name="site" ngModel placeholder="" type="text" required >
                   </div>
                 </div>
                 <div class="mb-2">
@@ -94,15 +96,17 @@
               </div>
               <div class="col-lg-4 p-inputgroup">
                 <span class="col-4 col-lg-6 p-inputgroup-addon">Régime horaire</span>
-                <input class="col-8 col-lg-6" name="weekhoursplanned" ngModel placeholder="" type="number">
+                <input class="col-8 col-lg-6" name="weekhoursplanned" ngModel placeholder="" type="number" required >
               </div>
             </div>
           </div>
-          <button class="ml-2 fixed-bottom" pButton type="submit" label="< Last Step"
-                  (click)="lastStepPlease()"></button>
-          <button class="ml-2" pButton type="submit" label="Next Step >"
-          ></button>
 
+          <button class="ml-2 fixed-bottom" pButton
+                  type="button" label="< Précedent"
+                  (click)="lastStepPlease()"></button>
+          <button class="ml-2" pButton type="submit" label="Suivant >"
+                  [disabled]="myForm.form.invalid"
+          ></button>
         </form>
 
       </p-card>
