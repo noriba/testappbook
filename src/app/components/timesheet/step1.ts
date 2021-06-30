@@ -1,4 +1,4 @@
-import {Component,OnInit,Input} from '@angular/core';
+import {Component,OnInit,Input,SimpleChanges } from '@angular/core';
 import { TicketService } from '../../stepsdemo/ticketservice';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import {AuthService} from '../../services/auth.service';
 import {Subscription} from 'rxjs';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
-import {ViewChild, ViewChildren, ContentChildren, ContentChild, AfterViewInit } from '@angular/core';
+import {ViewChild, ViewChildren, ContentChildren, ContentChild, AfterViewInit, OnChanges} from '@angular/core';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {RadioButtonModule} from 'primeng/radiobutton';
@@ -22,7 +22,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   templateUrl: './step1.html',
   providers: [MessageService]
 })
-export class Step1 implements OnInit , AfterViewInit {
+export class Step1 implements OnInit {
 
   constructor(public dataApi: DataApiService,
               private authService: AuthService,
@@ -42,25 +42,21 @@ export class Step1 implements OnInit , AfterViewInit {
   activeIndex: number ;
   data: Timesheet;
 
-  ngAfterViewInit() {
-    this.child.activeIndex= 0;
 
-  }
 
   ngOnInit() {
+    Promise.resolve(null).then(() => this.child.activeIndex=0);
+
     this.getCurrentUser();
   }
 
   lastStepPlease(){
-    this.router.navigate(['timesheet.ts']);
+    this.router.navigate(['timesheet']);
   }
 
   nextStepPlease(data : NgForm) :void {
     this.createNewTimesheet(data);
     this.router.navigate(['step2']);
-
-
-
   }
 
   createNewTimesheet(data: NgForm){
@@ -68,8 +64,6 @@ export class Step1 implements OnInit , AfterViewInit {
     console.log(":::::::::::::::current user :::::: "+this.userUid );
       data.value.userUid = this.userUid;
       this.dataApi.createNewtemporaryTimesheet(data.value)
-
-
   }
 
   setBreadCrumb() {
@@ -137,26 +131,9 @@ export class Step1 implements OnInit , AfterViewInit {
     });
   }
 
-  powers = ['Really Smart', 'Super Flexible',
-    'Super Hot', 'Weather Changer'];
 
-  model = new Hero(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');
 
-  submitted = false;
 
-  onSubmit() { this.submitted = true; }
 
-  newHero() {
-    this.model = new Hero(42, '', '');
-  }
-}
-export class Hero {
-
-  constructor(
-    public id: number,
-    public name: string,
-    public power: string,
-    public alterEgo?: string
-  ) {  }
 
 }

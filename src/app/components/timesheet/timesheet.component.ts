@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 import {MenuItem, MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {Timesheet} from '../../models/timesheet';
+import {Subject} from 'rxjs';
 
 
 @Component({
@@ -19,12 +20,11 @@ export class TimesheetComponent implements OnInit {
   constructor(private dataApi: DataApiService,
               private authService: AuthService,
               private router: Router,
-              private messageService: MessageService) {
-
-  }
+              private messageService: MessageService) {  }
 
   isAdmin: any;
   userUid: string;
+  userUidSub= new Subject<string>();
   USERS: any;
   items: MenuItem[];
   steps: MenuItem[];
@@ -41,13 +41,23 @@ export class TimesheetComponent implements OnInit {
       console.log('userid = ' + userid.uid);
       this.getMyTimesheets(userid.uid);
     });*/
-    this.authService.getUser().then(userid=> this.getMyTimesheets(userid))
+    this.authService.currentUser$.subscribe(userid=> {
+      console.log(userid.uid);
+      this.userUidSub.next(userid.uid);
+      //this.getMyTimesheets(userid.uid);
+    })
+
+    this.getMyTimesheets(this.userUidSub);
   }
 
   getMyTimesheets(userid) {
-
-    this.dataApi.getMyTimesheets(userid).subscribe((res => res));
-
+    userid.subscribe(user=> {
+     return  this.dataApi
+       .getMyTimesheets(user)
+       .subscribe(timesheet => {
+        this.myTimesheets = timesheet;
+      });
+    })
 
   }
 

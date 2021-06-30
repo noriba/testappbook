@@ -44,8 +44,8 @@ export class AuthService {
 
   }
 
-  getUser(): Promise<any> {
-    return this.afsAuth.authState.pipe().toPromise();
+  public get currentUser$(): Observable<firebase.User | undefined> {
+    return this.afsAuth.authState.pipe(map(user => user));
   }
 
   // this fonction is use to get the information of the curent user, we store them in curentUser
