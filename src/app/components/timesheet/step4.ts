@@ -79,7 +79,7 @@ export class Step4 implements OnInit {
         });
     } else {
       // Update
-      this.dataApi.updateTimesheet()
+      this.dataApi.updateTimesheet(timesheet)
         .then(() => {
         })
         .catch(err => {

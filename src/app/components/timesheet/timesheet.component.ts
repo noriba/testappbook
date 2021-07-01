@@ -48,7 +48,11 @@ export class TimesheetComponent implements OnInit {
     })
 
     this.getMyTimesheets(this.userUidSub);
+    this.getCurrentUser();
+
   }
+
+
 
   getMyTimesheets(userid) {
     userid.subscribe(user=> {
@@ -56,8 +60,11 @@ export class TimesheetComponent implements OnInit {
        .getMyTimesheets(user)
        .subscribe(timesheet => {
         this.myTimesheets = timesheet;
-      });
+         console.log("Timeseehts list :::"+ JSON.stringify(this.myTimesheets));
+
+       });
     })
+
 
   }
 
@@ -96,23 +103,22 @@ export class TimesheetComponent implements OnInit {
     ];
   }
 
+
+
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
-        //this.userUid = auth.uid;
+        this.userUid = auth.uid;
         this.authService
           .isUserAdmin(this.userUid)
           .subscribe(userRole => {
             this.isAdmin = Object
               .assign({}, userRole.roles)
               .hasOwnProperty('admin');
+            console.log("ADMINISTRATEUR :::" + this.isAdmin)
           });
       }
     });
-
-    //this.userUid.subscribe(user => this.getMyTimesheets(user));
-
-
   }
 
   openPDF(): void {
@@ -133,8 +139,10 @@ export class TimesheetComponent implements OnInit {
   }
 
   onDeleteTimesheet(idTimesheet: string): void {
-    const confirmacion = confirm('Are you sure?');
-    if (confirmacion) {
+    console.log("Timeseehts ID to delete  :::"+ idTimesheet);
+
+    const confirmation = true;
+    if (confirmation) {
       this.dataApi.deleteTimesheet(idTimesheet).then((res) => {
       }).catch(err => {
         console.log('err', err.message);
