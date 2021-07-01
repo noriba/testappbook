@@ -8,7 +8,7 @@ import {Product} from '../models/products';
 import {HttpClient} from '@angular/common/http';
 import {v4 as uuidv4} from 'uuid';
 import {UserData} from '../models/userdata';
-
+import {Entity,FirestoreCrudService} from './firestore-crud.service';
 
 
 @Injectable({
@@ -19,7 +19,10 @@ export class DataApiService {
 
   constructor(private afs: AngularFirestore,
               private http: HttpClient) {
+    this.crudService = new FirestoreCrudService<Timesheet>(afs, 'timesheet');
+
   }
+  private crudService: FirestoreCrudService<Timesheet>;
 
   private timesheetList: Observable<Timesheet[]>;
   private userDataList: Observable<UserData[]>;
@@ -83,6 +86,8 @@ export class DataApiService {
         return changes.map(action => {
           const data = action.payload.doc.data() as BookInterface;
           data.id = action.payload.doc.data().id;
+          console.log('data.id ::: ' + data.id);
+
           return data;
         }).filter(data => data.userUid == user);
       }));
@@ -130,17 +135,21 @@ export class DataApiService {
   deleteBook(idBook: string) {
     this.bookDoc = this.afs.doc<BookInterface>(`books/${idBook}`);
     return this.bookDoc.delete().then((res) => {
+      console.log('Document successfully deleted!');
+
     }).catch(err => {
       console.log('err', err.message);
     });
   }
 
   addBook(book: BookInterface) {
-    let uuid = uuidv4();
-    book.id = uuid;
     return new Promise((resolve, reject) => {
       this.booksCollection.add(book)
         .then(userData => {
+          console.log('userData.id ::: ' + userData.id);
+          console.log('userData.id ::: ' + typeof userData);
+          book.id=userData.id;
+          this.updateBook(book);
         })
         .catch(err => console.log(reject(err)));
     });
@@ -149,11 +158,25 @@ export class DataApiService {
 //---------------------------------------------------------------------------
 
   deleteTimesheet(idTimesheet: string) {
-    this.timesheetDoc = this.afs.doc<Timesheet>(`timesheets/${idTimesheet}`);
+
+    //const res = await this.afs.doc<Timesheet>(`timesheets/${idTimesheet}`)
+    this.timesheetDoc = this.afs.collection<Timesheet>(`timesheets`).doc(idTimesheet);
     return this.timesheetDoc.delete().then((res) => {
+      console.log('Document successfully deleted!');
     }).catch(err => {
       console.log('err', err.message);
     });
+  }
+
+  delete(data: string) {
+    return this.crudService.delete(
+      'ZhygDcEwnwjh242alexJ'
+    );
+  }
+
+  add(data: Timesheet) {
+    //let uuid = uuidv4();
+    return this.crudService.add(data);
   }
 
   getMyTimesheets(user) {
@@ -163,13 +186,17 @@ export class DataApiService {
         return changes.map(action => {
           const data = action.payload.doc.data() as Timesheet;
           data.id = action.payload.doc.data().id;
+          console.log(action);
+          console.log(data);
+
           return data;
         }).filter(data => data.userUid == user);
       }));
   }
 
-  updateTimesheet() {
-    let idTimesheet = this.temporaryTimesheet.id;
+  updateTimesheet(timesheet :Timesheet) {
+    //let idTimesheet = this.temporaryTimesheet.id;
+    let idTimesheet = timesheet.id;
     this.timesheetDoc = this.afs.doc<Timesheet>(`timesheets/${idTimesheet}`);
     return this.timesheetDoc.update(this.temporaryTimesheet)
       .then((res) => {
@@ -183,30 +210,30 @@ export class DataApiService {
     // return    this.afs.collection('timesheets').add(timesheet).then(function(docRef) {
     //   return docRef.id;
     // });
-    let uuid = uuidv4();
-    timesheet.id = uuid;
+     //let uuid = uuidv4();
+     //timesheet.id = uuid;
     return new Promise((resolve, reject) => {
       this.timesheetsCollection.add(timesheet)
         .then(userData => {
           console.log('success');
- /*         Object.keys(this.temporaryTimesheet).forEach(key => {
-            delete this.temporaryTimesheet[key];
-          });*/
+          console.log('userData.id ::: ' + userData.id);
+          timesheet.id=userData.id;
           console.log(this.temporaryTimesheet);
+          this.updateTimesheet(timesheet);
         })
         .catch(err => console.log(reject(err)));
     });
   }
 
   resetTemporaryTimesheet(){
-  const temporaryTimesheet: Timesheet = {
+  let tempTimesheet: Timesheet = {
       weekhoursplanned: 0,
       statusmanager: {},
       weekactivities: [],
       id: null,
       userUid: null
     };
-  this.temporaryTimesheet = temporaryTimesheet;
+  this.temporaryTimesheet = tempTimesheet;
   }
 
   createNewtemporaryTimesheet(timesheet: Timesheet) {

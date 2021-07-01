@@ -27,8 +27,12 @@ export class MyBooksComponent implements OnInit {
       if (auth) {
         this.userUid= auth.uid;
         this.getMyBooks(this.userUid);
-        this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
-          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
+        this.authService
+          .isUserAdmin(this.userUid)
+          .subscribe(userRole => {
+          this.isAdmin = Object
+            .assign({}, userRole.roles)
+            .hasOwnProperty('admin');
         })
       }
     })
@@ -41,8 +45,8 @@ export class MyBooksComponent implements OnInit {
   }
 
   onDeleteBook(idBook: string): void {
-    const confirmacion = confirm('Are you sure?');
-    if (confirmacion) {
+    const confirmation = confirm('Are you sure?');
+    if (confirmation) {
       this.dataApi.deleteBook(idBook);
     }
   }
