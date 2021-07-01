@@ -1,5 +1,8 @@
-export interface Timesheet {
-  id?: number;
+import { Entity } from '../services/firestore-crud.service';
+
+
+export class Timesheet implements Entity  {
+  id?: string;
   userUid?: string;
   year?: number;
   matricule?: string;
@@ -17,7 +20,7 @@ export interface Timesheet {
 }
 
 export interface Dayactivity {
-  id?: number;
+  id?: string;
   day?: string;
   numberplate?: string;
   mileage?: number;

@@ -9,26 +9,33 @@ import {map} from 'rxjs/internal/operators/map';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  private userUid: string;
 
   constructor(private authService: AuthService, private afsAuth: AngularFireAuth) { }
    app_name: string = 'BookStore';
    isLogged: boolean = false;
+   isAdmin : boolean;
 
   ngOnInit() {
     this.getCurrentUser();
   }
 
+
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
-        console.log('user logged');
-        this.isLogged = true;
-      } else {
-        console.log('NO user logged');
-        this.isLogged = false;
-        this.afsAuth.authState.pipe(map(authState =>   !!authState   ))
+        this.isLogged= true;
+        this.userUid = auth.uid;
+        this.authService
+          .isUserAdmin(this.userUid)
+          .subscribe(userRole => {
+            this.isAdmin = Object
+              .assign({}, userRole.roles)
+              .hasOwnProperty('admin');
+            console.log("ADMINISTRATEUR :::" + this.isAdmin)
+          });
+      }else          this.isLogged= false;
 
-      }
     });
   }
 
