@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   private userUid: string;
 
   constructor(private authService: AuthService, private afsAuth: AngularFireAuth) { }
-   app_name: string = 'BookStore';
+   app_name: string = 'VRP Manager';
    isLogged: boolean = false;
    isAdmin : boolean;
 

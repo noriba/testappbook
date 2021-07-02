@@ -101,7 +101,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onLoginRedirect(): void {
-    this.router.navigate(['admin/list-books']);
+    this.router.navigate(['timesheet']);
   }
 
 }
