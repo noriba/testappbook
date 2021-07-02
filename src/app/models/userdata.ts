@@ -18,6 +18,8 @@ export interface UserData {
   vancode?: string;
   depotcode?: string;
   secteurcode?: string;
+  password?: string;
+  photoUrl?: string;
   roles: Roles;
 }
 

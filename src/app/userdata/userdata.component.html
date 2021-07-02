@@ -1,0 +1,55 @@
+<section class="row ">
+  <div class="container ">
+
+    <div class="float-right">
+      <button class="btn btn-primary my-2 my-xl-2 "
+              data-toggle="modal" data-target="#modalUserData">Nouveau collaborateur</button>
+    </div>
+    <div class=" table-responsive">
+
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Jacket</th>
+          <th scope="col">Titulo</th>
+          <th scope="col">Autor</th>
+          <th scope="col">Idioma</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Oferta</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let UserData of allUserDatas; index as i">
+          <th scope="row">{{i + 1}}</th>
+          <td class=""><img class=" img-fluid " src="{{UserData.portada}}"></td>
+          <td>{{UserData.titulo}}</td>
+          <td>{{UserData.autor}}</td>
+          <td>{{UserData.idioma}}</td>
+          <td>{{UserData.precio}}</td>
+          <td>{{UserData.oferta == 1 ? 'Sí' : 'No'}}</td>
+          <td *ngIf="UserData.userUid == userUid || isAdmin == true; else noOwner">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalUserData"
+                    (click)="onPreUpdateUserData(UserData)">Update
+            </button>
+          </td>
+
+          <ng-template #noOwner><td>
+            <button class="btn btn-secondary" disabled="true">Update</button></td>
+          </ng-template>
+
+          <td *ngIf="isAdmin == true; else noAdmin">
+            <button class="btn btn-danger" (click)="onDeleteUserData(UserData.id)">Delete</button>
+          </td>
+          <ng-template #noAdmin>
+            <td>
+              <button class="btn btn-danger" disabled="true">Delete</button></td>
+          </ng-template>
+        </tr>
+        </tbody>
+      </table>
+      <app-modal [userUid]="userUid"></app-modal>
+
+    </div>
+  </div>
+</section>
