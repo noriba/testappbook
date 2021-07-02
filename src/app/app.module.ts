@@ -69,6 +69,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
 import {ContextMenuModule} from 'primeng/contextmenu';
 import {DialogModule} from 'primeng/dialog';
 import {ProgressBarModule} from 'primeng/progressbar';
+import { UserDataComponent } from './userdata/userdata.component';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import {ProgressBarModule} from 'primeng/progressbar';
     RegisterComponent,
     Page404Component,
     MyBooksComponent,
-    TimesheetComponent
+    TimesheetComponent,
+    UserDataComponent
   ],
   imports: [
     HttpClientModule,

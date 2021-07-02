@@ -68,7 +68,7 @@ export class RegisterComponent implements OnInit {
             }).then(() => {
               console.log("onAddUser ::: userData = "+ user.photoURL);
 
-              this.router.navigate(['admin/list-books']);
+              this.router.navigate(['timesheet']);
             }).catch((error) =>{
               this.msgError = error;
               console.log('error', error)
