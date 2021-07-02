@@ -21,7 +21,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let timesheet of myTimesheets; index as i">
+      <tr *ngFor="let timesheet of allTimesheets; index as i">
         <th  scope="row">{{i+1}}</th>
         <td>{{timesheet.firstname}}</td>
         <td>{{timesheet.lastname}}</td>
@@ -33,21 +33,21 @@
           <button class="btn btn-primary"
                   data-toggle="modal"
                   data-target="#modalBook"
-                  (click)="onPreUpdateTimesheet(timesheet)">Update</button>
+                  (click)="onPreUpdateTimesheet(timesheet)">Modifier</button>
         </td>
 
         <ng-template #noOwner>
           <td>
-            <button class="btn btn-secondary" disabled="true">Update</button>
+            <button class="btn btn-secondary" disabled="true">Modifier</button>
           </td>
         </ng-template>
 
         <td *ngIf="isAdmin == true; else noAdmin">
-          <button class="btn btn-danger" (click)="onDeleteTimesheet(timesheet.id)">Delete</button>
+          <button class="btn btn-danger" (click)="onDeleteTimesheet(timesheet.id)">Supprimer</button>
         </td>
         <ng-template #noAdmin>
           <td>
-            <button class="btn btn-danger" disabled="true">Delete</button>
+            <button class="btn btn-danger" disabled="true">Supprimer</button>
           </td>
         </ng-template>
       </tr>

@@ -48,6 +48,6 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginRedirect(): void {
-    this.router.navigate(['my-books']);
+    this.router.navigate(['timesheet']);
   }
 }
