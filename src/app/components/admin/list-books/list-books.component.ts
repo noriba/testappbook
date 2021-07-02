@@ -31,6 +31,7 @@ export class ListBooksComponent implements OnInit {
       }
     })
   }
+
   getListBooks() {
     this.dataApi.getAllBooks()
       .subscribe(books => {

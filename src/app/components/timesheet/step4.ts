@@ -68,10 +68,13 @@ export class Step4 implements OnInit {
     if (timesheet.id == null) {
       console.log('id == null ::: calling createNewTimesheet()...');
       this.dataApi.createNewTimesheet(timesheet)
-        .then(() => {
+        .then(() => {res=>
+          console.log('success createNewTimesheet() ::: ' + res.message);
+
+          this.dataApi.resetTemporaryTimesheet();
         })
         .catch(err => {
-          console.log(err.message +"   " + this.dataApi.temporaryTimesheet);
+          //console.log(err.message +"   " + this.dataApi.temporaryTimesheet);
 
           this.isError = true;
           this.msgError = err.message;

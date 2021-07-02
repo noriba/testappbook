@@ -1,4 +1,3 @@
-import {HomeComponent} from './components/home/home.component';
 import {OffersComponent} from 'src/app/components/offers/offers.component';
 import {DetailsBookComponent} from './components/details-book/details-book.component';
 import {ListBooksComponent} from './components/admin/list-books/list-books.component';
@@ -23,11 +22,11 @@ import {MyBreadcrumbedComponent} from './components/my-breadcrumbed.component';
 import {MyBreadcrumbed2Component} from './components/my-breadcrumbed-2.component';
 import {BreadcrumbInitializedGuard} from './guards/breadcrumbInitialized.guard';
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
-import {StepComponent, StepsComponent} from './components/breadcrumb/wizard.module';
+import {StepsComponent} from './components/breadcrumb/wizard.module';
 
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: LoginComponent},
   {path: 'offers', component: OffersComponent, canActivate: [AuthGuard]},
   {path: 'book/:id', component: DetailsBookComponent},
   {path: 'admin/list-books', component: ListBooksComponent, canActivate: [AuthGuard]},
@@ -43,12 +42,15 @@ const routes: Routes = [
   {path: 'steps', component: StepsComponent},
   {path: 'user/profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'data-table', component: DataTableComponent},
-  {    path: 'data-table', component: DataTableComponent  },
-  {    path: 'step', component: BreadcrumbComponent  },
-  {    path: 'prime', component: ParentComponent,
+  {path: 'data-table', component: DataTableComponent},
+  {path: 'step', component: BreadcrumbComponent},
+  {
+    path: 'prime', component: ParentComponent,
     children: [{
-      path: 'file-tree', component: FileTreeComponent  }, {
-      path: 'breadcrumb', component: MyBreadcrumbedComponent    }, {
+      path: 'file-tree', component: FileTreeComponent
+    }, {
+      path: 'breadcrumb', component: MyBreadcrumbedComponent
+    }, {
       path: 'breadcrumb2', component: MyBreadcrumbed2Component, canActivate: [BreadcrumbInitializedGuard], data: {
         crumbs: [
           {label: 'Home', routerLink: '/'},

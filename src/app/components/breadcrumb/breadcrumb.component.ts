@@ -55,7 +55,6 @@ export class BreadcrumbComponent implements OnInit {
               private route: ActivatedRoute,
               private cd: ChangeDetectorRef) {
 
-    console.log(':::::::::::::::::: BreadcrumbCOMP construction :::::::::::::::::::')
   }
 
   @Output() activeIndexChange: EventEmitter<number> = new EventEmitter();
@@ -67,8 +66,6 @@ export class BreadcrumbComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(':::::::::::::::::: BreadcrumbCOMP init :::::::::::::::::::');
-    //this.crumbs$ = this.breadservice.getCrumbs();
     this.setsteps();
   }
 
@@ -77,7 +74,6 @@ export class BreadcrumbComponent implements OnInit {
   nextStepPlease() {
     this.messageService.add({severity: 'success', summary: 'Etape validée'});
     this.length = Object.keys(this.steps$).length;
-    console.log('size of crumbs$ : ' + this.length + '  && value of index : ' + this.activeIndex);
     let x = this.length - 1;
     if (this.activeIndex < x && this.activeIndex >= 0) {
       this.activeIndex++;
@@ -89,7 +85,6 @@ export class BreadcrumbComponent implements OnInit {
 
   lastStepPlease() {
     this.length = Object.keys(this.steps$).length;
-    console.log('size of crumbs$ : ' + this.length + '  && value of index : ' + this.activeIndex);
 
     let x = this.length - 1;
     if (this.activeIndex <= x && this.activeIndex > 0) {
@@ -116,8 +111,6 @@ export class BreadcrumbComponent implements OnInit {
 
   nextStepPlease2() {
     this.crumbs$.subscribe(x => this.length = Object.keys(x).length);
-    console.log('size of crumbs$ ' + this.length);
-    console.log('value of index ' + this.activeIndex);
     let x = this.length - 1;
     if (this.activeIndex < x && this.activeIndex >= 0) {
       let lists = this.elRef2.nativeElement.querySelectorAll('span:first-child');
@@ -128,12 +121,9 @@ export class BreadcrumbComponent implements OnInit {
         this.renderer.setStyle(lists[this.activeIndex], 'background', '#ffffff');
         this.renderer.setStyle(lists[this.activeIndex], 'opacity', '1');
       }      //console.log("data ::: "+     console.log(Object.keys(this.crumbs$._event).length));
-      //console.log("data ::: "+     console.log(Object.keys(this.crumbs$._event).length));
-      console.log(Object.keys(this.crumbs$).length);
       this.activeIndex++;
 
     }
-    console.log('last step ' + this.crumbs$.subscribe());
 
   }
 
@@ -149,7 +139,6 @@ export class BreadcrumbComponent implements OnInit {
         this.renderer.setStyle(lists[this.activeIndex + 1], 'background', '#ffffff');
         this.renderer.setStyle(lists[this.activeIndex + 1], 'opacity', '10');
       }
-      console.log(Object.keys(this.crumbs$).length);
       this.activeIndex--;
 
     }

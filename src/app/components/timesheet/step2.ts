@@ -54,7 +54,7 @@ export class Step2 implements OnInit {
 
   ngOnInit() {
     Promise.resolve(null).then(() => this.child.activeIndex = 1);
-    this.setsteps();
+
     this.getCurrentUser();
     // this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets=data);
     this.timesheets = this.dataApi.temporaryTimesheet;
@@ -142,7 +142,6 @@ export class Step2 implements OnInit {
 
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
-      console.log('------------------------Connected USER----------------------' + auth.uid);
       if (auth) {
         this.userUid = auth.uid;
         this.authService.isUserAdmin(this.userUid).subscribe(userRole => {

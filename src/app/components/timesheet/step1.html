@@ -21,17 +21,20 @@
         <form #myForm="ngForm" (ngSubmit)="nextStepPlease(myForm)">
           <div class="">
             <div class="row col-lg-12 my-2 ">
-              <input type="hidden" name="userUid" [value]="userUid">
+              <div class="p-inputgroup ">
+                <input type="hidden" name="userUid" [(ngModel)]="userUid" required></div>
               <div class=" col-lg-8 mb-2 ">
                 <div class="p-inputgroup ">
                   <span class="col-4 col-lg-4 p-inputgroup-addon ">Année</span>
-                  <input class="col-8 col-lg-8" name="year" ngModel placeholder="" type="number" required >
+                  <input class="col-8 col-lg-8" name="year" [(ngModel)]="this.timesheet.year"
+                         placeholder="" type="number" required >
                 </div>
               </div>
               <div class=" col-lg-4 ">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-6 p-inputgroup-addon">Semaine</span>
-                  <input class="col-8 col-lg-6" name="week" ngModel placeholder="" type="number" required >
+                  <input class="col-8 col-lg-6" name="week" [(ngModel)]="this.timesheet.week"
+                         placeholder="" type="number" required >
                 </div>
               </div>
             </div>
@@ -39,14 +42,16 @@
               <div class="col-lg-8 mb-2">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-4 p-inputgroup-addon">Matricule</span>
-                  <input class="col-5 col-lg-5 mr-1" name="matricule" ngModel placeholder="" type="text" required >
+                  <input class="col-5 col-lg-5 mr-1" name="matricule" [(ngModel)]="this.timesheet.matricule"
+                         placeholder="" type="text" required >
                   <input class="col-3 col-lg-3" placeholder="" type="text">
                 </div>
               </div>
               <div class="col-lg-4 ">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-6 p-inputgroup-addon">Début</span>
-                  <input class="col-8 col-lg-6" name="weekstart" ngModel placeholder="" type="text" required >
+                  <input class="col-8 col-lg-6" name="weekstart" [(ngModel)]="this.timesheet.weekstart"
+                         placeholder="" type="text" required >
                 </div>
               </div>
             </div>
@@ -54,14 +59,17 @@
               <div class="col-lg-8 mb-2">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-4 p-inputgroup-addon">Nom Prénom</span>
-                  <input class="col-5 col-lg-5 mr-1" name="firstname" ngModel placeholder="" type="text" required >
-                  <input class="col-3 col-lg-3" name="lastname" ngModel placeholder="" type="text">
+                  <input class="col-5 col-lg-5 mr-1" name="firstname" [(ngModel)]="this.timesheet.firstname"
+                         placeholder="" type="text" required >
+                  <input class="col-3 col-lg-3" name="lastname" [(ngModel)]="this.timesheet.lastname"
+                         placeholder="" type="text" required>
                 </div>
               </div>
               <div class="col-lg-4 ">
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-6 p-inputgroup-addon">Fin</span>
-                  <input class="col-8 col-lg-6" name="weekend" ngModel placeholder="" type="text" required >
+                  <input class="col-8 col-lg-6" name="weekend" [(ngModel)]="this.timesheet.weekend"
+                         placeholder="" type="text" required >
                 </div>
               </div>
             </div>
@@ -71,7 +79,8 @@
                 <div class=" mb-2 mb-lg-3 ">
                   <div class="p-inputgroup">
                     <span class="col-4 col-lg-4 p-inputgroup-addon">Site</span>
-                    <input class="col-8 col-lg-8" name="site" ngModel placeholder="" type="text" required >
+                    <input class="col-8 col-lg-8" name="site" [(ngModel)]="this.timesheet.site"
+                           placeholder="" type="text" required >
                   </div>
                 </div>
                 <div class="mb-2">
@@ -96,7 +105,7 @@
               </div>
               <div class="col-lg-4 p-inputgroup">
                 <span class="col-4 col-lg-6 p-inputgroup-addon">Régime horaire</span>
-                <input class="col-8 col-lg-6" name="weekhoursplanned" ngModel placeholder="" type="number" required >
+                <input class="col-8 col-lg-6" name="weekhoursplanned" [(ngModel)]="this.timesheet.weekhoursplanned"  placeholder="" type="number" required >
               </div>
             </div>
           </div>
