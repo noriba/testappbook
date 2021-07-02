@@ -25,6 +25,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 })
 export class Step1 implements OnInit {
   private timesheet: Timesheet;
+  private userInfo: firebase.User;
 
   constructor(public dataApi: DataApiService,
               private authService: AuthService,
@@ -51,6 +52,8 @@ export class Step1 implements OnInit {
 
     this.timesheet = this.dataApi.temporaryTimesheet;
     this.getCurrentUser();
+    //this.timesheet.lastname= this.userInfo.displayName;
+
   }
 
   lastStepPlease(){
@@ -122,6 +125,8 @@ export class Step1 implements OnInit {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
         this.userUid = auth.uid;
+        this.userInfo = auth;
+        console.log("USER infos ::: ",auth);
         this.authService
           .isUserAdmin(this.userUid)
           .subscribe(userRole => {
@@ -151,7 +156,10 @@ export class Step1 implements OnInit {
   }
 
 
+getUserInfo(){
 
+
+}
 
 
 
