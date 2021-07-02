@@ -7,7 +7,7 @@
           <div class="card">
             <div class="card-body text-center">
               <form #formRegister="ngForm" (ngSubmit)="onAddUser()">
-                <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+                <h1 class="h3 mb-3 font-weight-normal">Créer un compte</h1>
                 <div class="alert alert-danger" role="alert" *ngIf="isError">
                   {{msgError}}
                 </div>
@@ -15,20 +15,23 @@
                   <input type="email" name="email" class="form-control" placeholder="Email" [(ngModel)]="email" required minlength="8">
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="email.touched && !email.valid">
-                  <div *ngIf="email.errors.required">Email is required</div>
-                  <div *ngIf="email.errors.minlength">Email must be at least 8 characters</div>
+                  <div *ngIf="email.errors.required">Email requis</div>
+                  <div *ngIf="email.errors.minlength">Email doit avoir au moin 8 caractères</div>
                 </div>
                 <div class="form-group">
                   <input type="password" name="password" class="form-control" placeholder="Password" [(ngModel)]="password" required minlength="5"
                     maxlength="10">
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="password.touched && !password.valid">
-                  <div *ngIf="password.errors.required">Password is required</div>
-                  <div *ngIf="password.errors.minlength">Password must be at least 5 characters</div>
+                  <div *ngIf="password.errors.required">Mot de passe requis</div>
+                  <div *ngIf="password.errors.minlength">Mot de passe doit avoir au moin 5 caractères</div>
                 </div>
                 <div class="form-group">
-                  <h5>Seleccionar image:</h5>
-                  <input type="file" accept=".png, .jpg" (change)="onUpload($event)">
+                  <h5>Sélectionner une image:</h5>
+                  <label for="file-upload" class="custom-file-upload">
+                    <i class="fa fa-cloud-upload"></i> Custom Upload
+                  </label>
+                  <input id="file-upload"  type="file" accept=".png, .jpg" size="60" (change)="onUpload($event)" style="color:transparent;" onchange="this.style.color = 'black';">
                 </div>
                 <div class="progress">
                   <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success"
@@ -40,12 +43,12 @@
                 </div>
                 <br>
                 <input #imageUser type="hidden" [value]="urlImage | async">
-                <button *ngIf="urlImage | async; else btnDisabled" type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
+                <button *ngIf="urlImage | async; else btnDisabled" type="submit" class="btn btn-lg btn-primary btn-block">Créer un compte</button>
                 <ng-template #btnDisabled>
                   <button type="submit" disabled=true class="btn btn-lg btn-secondary btn-block">Register</button>
                 </ng-template>
                 <div class="form-group">
-                  <a routerLink="/user/login" class="form-control login-user">Do you have account?</a>
+                  <a routerLink="/user/login" class="form-control login-user">Vous avez déja un compte ?</a>
                 </div>
                 <div class="form-group">
                   <button class="btn btn-block btn-social btn-facebook" (click)="onLoginFacebook()">
