@@ -18,11 +18,13 @@ import {NgForm} from '@angular/forms';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
+
 @Component({
   templateUrl: './step1.html',
   providers: [MessageService]
 })
 export class Step1 implements OnInit {
+  private timesheet: Timesheet;
 
   constructor(public dataApi: DataApiService,
               private authService: AuthService,
@@ -47,6 +49,7 @@ export class Step1 implements OnInit {
   ngOnInit() {
     Promise.resolve(null).then(() => this.child.activeIndex=0);
 
+    this.timesheet = this.dataApi.temporaryTimesheet;
     this.getCurrentUser();
   }
 
@@ -55,15 +58,27 @@ export class Step1 implements OnInit {
   }
 
   nextStepPlease(data : NgForm) :void {
-    this.createNewTimesheet(data);
+    console.log("Selected timesheet ::: "+JSON.stringify(this.dataApi.selectedTimesheet));
+    !this.dataApi.selectedTimesheet.lastname? this.createNewTimesheet(data) : this.updateTimesheet(data);
     this.router.navigate(['step2']);
   }
 
+  updateTimesheet(data: NgForm) {
+    //this.router.navigate(['step2']);
+    console.log(":::::updateTimesheet::::::::::current user :::::: "+this.userUid );
+    data.value.userUid = this.userUid;
+    //this.dataApi.createNewtemporaryTimesheet(data.value)
+  }
+
+
   createNewTimesheet(data: NgForm){
    // console.log(":::::::::::::::On va creer ces données :::::: "+JSON.stringify(data) );
-    console.log(":::::::::::::::current user :::::: "+this.userUid );
-      data.value.userUid = this.userUid;
-      this.dataApi.createNewtemporaryTimesheet(data.value)
+    console.log("::::::createNewTimesheet:::::::::current user :::::: "+this.userUid );
+    this.dataApi.resetTemporaryTimesheet();
+    console.log('Temporary timesheet reset :' + JSON.stringify(this.dataApi.temporaryTimesheet));
+
+    data.value.userUid = this.userUid;
+    this.dataApi.createNewtemporaryTimesheet(data.value)
   }
 
   setBreadCrumb() {
@@ -107,8 +122,12 @@ export class Step1 implements OnInit {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
         this.userUid = auth.uid;
-        this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
-          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
+        this.authService
+          .isUserAdmin(this.userUid)
+          .subscribe(userRole => {
+          this.isAdmin = Object
+            .assign({}, userRole.roles)
+            .hasOwnProperty('admin');
         });
       }
     });

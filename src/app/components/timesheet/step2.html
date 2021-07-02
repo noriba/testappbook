@@ -8,11 +8,13 @@
     <ng-template pTemplate="header">
     </ng-template>
 
-    <button pButton type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#exampleModal1" data-whatever="">
+    <button pButton type="button" class="btn btn-primary mb-4" data-toggle="modal"
+            data-target="#exampleModal1" data-whatever="">
       Nouvelle Journée +
     </button>
 
-    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
          aria-hidden="true">
       <form #myForm="ngForm" (ngSubmit)="createNewActivity(myForm)">
         <div class="modal-dialog" role="document">
@@ -26,18 +28,9 @@
             <div class="modal-body">
               <div class="form-group">
                 <label class="col-form-label">Jour:</label>
-                <!--     <p-dropdown [options]="days"
-                                 [(ngModel)]="day"
-                                 formControlName="day"
-                                 name="day"
-                               ></p-dropdown>
-         -->
                 <select class="custom-select" name="day" ngModel>
                   <option *ngFor="let day of days" [ngValue]="day">{{day}}</option>
                 </select>
-                <!--
-                            <input ngModel class="form-control" name="day"
-                                   type="text">-->
               </div>
               <div class="form-group">
                 <label class="col-form-label">Immatriculation:</label>
@@ -51,27 +44,27 @@
                 <input ngModel class="form-control"
                        name="mileage"
                        required
-                       type="text">
+                       type="number">
               </div>
               <div class="form-group">
                 <label class="col-form-label">Début:</label>
                 <input ngModel class="form-control"
                        name="daystart"
                        required
-                       type="text">
+                       type="time">
               </div>
               <div class="form-group">
                 <label class="col-form-label">Fin:</label>
                 <input ngModel class="form-control"
                        name="dayend"
                        required
-                       type="text">
+                       type="time">
               </div>
               <div class="form-group">
                 <label class="col-form-label">Pause:</label>
                 <input ngModel class="form-control" name="pause"
                        required
-                       type="text">
+                       type="number">
               </div>
             </div>
             <div class="modal-footer">
@@ -124,7 +117,7 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input [(ngModel)]="dayactivity.mileage" pInputText required type="text">
+                <input [(ngModel)]="dayactivity.mileage" pInputText required type="number">
               </ng-template>
               <ng-template pTemplate="output">
                 {{dayactivity.mileage}}
@@ -134,7 +127,7 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input [(ngModel)]="dayactivity.daystart" pInputText required type="text">
+                <input [(ngModel)]="dayactivity.daystart" pInputText required type="time">
               </ng-template>
               <ng-template pTemplate="output">
                 {{dayactivity.daystart}}
@@ -144,7 +137,7 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input [(ngModel)]="dayactivity.dayend" pInputText required type="text">
+                <input [(ngModel)]="dayactivity.dayend" pInputText required type="time">
               </ng-template>
               <ng-template pTemplate="output">
                 {{dayactivity.dayend}}
@@ -154,7 +147,7 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input [(ngModel)]="dayactivity.pause" pInputText required type="text">
+                <input [(ngModel)]="dayactivity.pause" pInputText required type="time">
               </ng-template>
               <ng-template pTemplate="output">
                 {{dayactivity.pause}}
@@ -162,7 +155,7 @@
             </p-cellEditor>
           </td>
           <td style="text-align:center">
-            <button (click)="onRowEditSave(dayactivity)" *ngIf="editing"
+            <button (click)="onRowEditSave(dayactivity,this.dataApi.selectedActRow)" *ngIf="editing"
                     class="p-button-rounded p-button-text p-button-success p-mr-2" icon="pi pi-check"
                     pButton pRipple
                     pSaveEditableRow
@@ -265,7 +258,7 @@
     <ng-template pTemplate="footer">
       <button (click)="lastStepPlease()" class="ml-2 fixed-bottom" label="< Précedent" pButton type="button"></button>
 
-      <button [disabled]="!dataApi.temporaryTimesheet.weekactivities.length? true: null"
+      <button [disabled]="!dataApi.temporaryTimesheet.weekactivities"
               (click)="nextStepPlease()" class="ml-2" label="Suivant >"
               pButton type="button"></button>
     </ng-template>

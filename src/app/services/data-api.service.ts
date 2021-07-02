@@ -15,32 +15,21 @@ import {Entity,FirestoreCrudService} from './firestore-crud.service';
   providedIn: 'root'
 })
 export class DataApiService {
-  private temporaryUserData: UserData;
 
   constructor(private afs: AngularFirestore,
               private http: HttpClient) {
-    this.crudService = new FirestoreCrudService<Timesheet>(afs, 'timesheet');
 
   }
+
+  private userDataCollection: AngularFirestoreCollection<UserData>;
+  private temporaryUserData: UserData;
   private crudService: FirestoreCrudService<Timesheet>;
+  private userDataList: Observable<UserData[]>;
 
   private timesheetList: Observable<Timesheet[]>;
-  private userDataList: Observable<UserData[]>;
   private timesheetsCollection: AngularFirestoreCollection<Timesheet>;
-  private userDataCollection: AngularFirestoreCollection<UserData>;
   private timesheetDoc: AngularFirestoreDocument<Timesheet>;
-  public temporaryTimesheet: Timesheet = {
-    weekhoursplanned: 0,
-    statusmanager: {},
-    weekactivities: [],
-    id: null,
-    userUid: null
-  };
-  public selectedDayActivity: Dayactivity = {id: null};
-  public selectedDayOvertime: Dayovertime = {overtime: 0, day: null};
   public timesheets: Observable<Timesheet[]>;
-  selectedActRow: number;
-  selectedOtRow: number;
 
   private booksCollection: AngularFirestoreCollection<BookInterface>;
   private booksList: Observable<BookInterface[]>;
@@ -48,11 +37,24 @@ export class DataApiService {
   private booksOffers: Observable<BookInterface[]>;
   private bookDoc: AngularFirestoreDocument<BookInterface>;
   private book: Observable<BookInterface>;
+
+  public selectedDayActivity: Dayactivity = {id: null};
+  public selectedDayOvertime: Dayovertime = {overtime: 0, day: null};
+  selectedActRow: number;
+  selectedOtRow: number;
+  selectedRow: number;
   public selectedBook: BookInterface = {id: null};
   public selectedTimesheet: Timesheet = {weekactivities: [], id: null};
   public selectedProduct: Product = {id: null};
 
-  selectedRow: number;
+  public temporaryTimesheet: Timesheet = {
+    weekhoursplanned: 0,
+    statusmanager: {},
+    weekactivities: [],
+    id: null,
+    userUid: null
+  };
+
 
 
 // -----------------------------------------------------------------------
@@ -87,7 +89,6 @@ export class DataApiService {
           const data = action.payload.doc.data() as BookInterface;
           data.id = action.payload.doc.data().id;
           console.log('data.id ::: ' + data.id);
-
           return data;
         }).filter(data => data.userUid == user);
       }));
@@ -179,16 +180,32 @@ export class DataApiService {
     return this.crudService.add(data);
   }
 
+
+  getAllTimesheets() {
+    console.log("+++++++++++++ getAllTimesheets ::: timesheetsCollection ::: "+ JSON.stringify(this.timesheetsCollection)+" *************************")
+
+    this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
+    return this.timesheets = this.timesheetsCollection
+      .snapshotChanges()
+      .pipe(map(changes => {
+        return changes.map(action => {
+          const data = action.payload.doc.data() as Timesheet;
+          data.id = action.payload.doc.data().id;
+          return data;
+        });
+      }));
+  }
+
   getMyTimesheets(user) {
     this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
-    return this.timesheetList = this.timesheetsCollection.snapshotChanges()
+    return this.timesheetList = this.timesheetsCollection
+      .snapshotChanges()
       .pipe(map(changes => {
         return changes.map(action => {
           const data = action.payload.doc.data() as Timesheet;
           data.id = action.payload.doc.data().id;
           console.log(action);
           console.log(data);
-
           return data;
         }).filter(data => data.userUid == user);
       }));
@@ -212,6 +229,9 @@ export class DataApiService {
     // });
      //let uuid = uuidv4();
      //timesheet.id = uuid;
+    console.log('timesheet ::: ' + JSON.stringify(timesheet));
+    this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
+
     return new Promise((resolve, reject) => {
       this.timesheetsCollection.add(timesheet)
         .then(userData => {
@@ -237,32 +257,22 @@ export class DataApiService {
   }
 
   createNewtemporaryTimesheet(timesheet: Timesheet) {
-    this.resetTemporaryTimesheet();
-    this.temporaryTimesheet = {...this.temporaryTimesheet, ...timesheet};
+
+    this.temporaryTimesheet = { ...this.temporaryTimesheet,...timesheet};
     console.log('Temporary timesheet created :' + JSON.stringify(this.temporaryTimesheet));
   }
 
   createNewActivity(activity: Dayactivity) {
     console.log('new activity created :' + JSON.stringify(activity));
     console.log('current timesheet :' + JSON.stringify(this.temporaryTimesheet));
-    console.log('current timesheet acts :' + JSON.stringify(this.temporaryTimesheet.weekactivities));
     this.temporaryTimesheet.weekactivities?.push(activity);
+    console.log('current timesheet acts :' + JSON.stringify(this.temporaryTimesheet.weekactivities));
+
   }
 
 
 
-  getAllTimesheets() {
-    this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
-    return this.timesheets = this.timesheetsCollection
-      .snapshotChanges()
-      .pipe(map(changes => {
-        return changes.map(action => {
-          const data = action.payload.doc.data() as Timesheet;
-          data.id = action.payload.doc.data().id;
-          return data;
-        });
-      }));
-  }
+
 
   //---------------------------------------------------------------------
 
@@ -280,8 +290,6 @@ export class DataApiService {
 
   createNewUserData(userData: UserData) {
 
-    let uuid = uuidv4();
-    userData.id = uuid;
     return new Promise((resolve, reject) => {
       this.userDataCollection.add(userData)
         .then(userData => {

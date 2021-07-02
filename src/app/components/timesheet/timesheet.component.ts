@@ -6,7 +6,7 @@ import html2canvas from 'html2canvas';
 import {MenuItem, MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {Timesheet} from '../../models/timesheet';
-import {Subject} from 'rxjs';
+import {Subject,BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -17,55 +17,53 @@ import {Subject} from 'rxjs';
 })
 export class TimesheetComponent implements OnInit {
 
-  constructor(private dataApi: DataApiService,
-              private authService: AuthService,
-              private router: Router,
-              private messageService: MessageService) {  }
-
-  isAdmin: any;
+  isAdmin: boolean = false;
   userUid: string;
-  userUidSub= new Subject<string>();
+  userUidSub = new BehaviorSubject<string>('');
   USERS: any;
   items: MenuItem[];
   steps: MenuItem[];
   home: MenuItem;
   activeIndex: number;
-  myTimesheets: Timesheet[];
+  isAdminSub = new Subject<boolean>();
+  private isLogged: boolean;
+   allTimesheets: Timesheet[];
+
+  constructor(private dataApi: DataApiService,
+              private authService: AuthService,
+              private router: Router,
+              private messageService: MessageService) {
+  }
 
   ngOnInit() {
-    // this.userUid= JSON.parse(localStorage.getItem('user')).uid;
-    // this.getMyTimesheets(this.userUid);
-    // console.log(JSON.parse(localStorage.getItem('user')).uid );
 
-  /*  this.authService.isAuth().subscribe(userid => {
-      console.log('userid = ' + userid.uid);
-      this.getMyTimesheets(userid.uid);
-    });*/
-    this.authService.currentUser$.subscribe(userid=> {
+    this.authService.currentUser$.subscribe(userid => {
       console.log(userid.uid);
       this.userUidSub.next(userid.uid);
-      //this.getMyTimesheets(userid.uid);
-    })
+    });
 
-    this.getMyTimesheets(this.userUidSub);
     this.getCurrentUser();
-
   }
 
 
+  getAllTimesheets() {
+    console.log('Get All Timmesheets ::: ', this.isAdmin);
+    this.dataApi
+      .getAllTimesheets()
+      .subscribe(timesheets => {
+        this.allTimesheets = timesheets;
+        console.log('Timesheets list :::' + JSON.stringify(this.allTimesheets));
+      });
+  }
 
   getMyTimesheets(userid) {
-    userid.subscribe(user=> {
-     return  this.dataApi
-       .getMyTimesheets(user)
-       .subscribe(timesheet => {
-        this.myTimesheets = timesheet;
-         console.log("Timeseehts list :::"+ JSON.stringify(this.myTimesheets));
-
-       });
-    })
-
-
+    console.log('Get my Timesheets ::: ', this.isAdmin, "  userid= ", userid);
+      return this.dataApi
+        .getMyTimesheets(userid)
+        .subscribe(timesheets => {
+          this.allTimesheets = timesheets;
+          console.log('Timeseehts list :::' + JSON.stringify(this.allTimesheets));
+        });
   }
 
   lastStepPlease() {
@@ -73,6 +71,7 @@ export class TimesheetComponent implements OnInit {
   }
 
   nextStepPlease() {
+    this.dataApi.resetTemporaryTimesheet();
     this.router.navigate(['step1']);
   }
 
@@ -103,11 +102,10 @@ export class TimesheetComponent implements OnInit {
     ];
   }
 
-
-
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
+        this.isLogged = true;
         this.userUid = auth.uid;
         this.authService
           .isUserAdmin(this.userUid)
@@ -115,11 +113,23 @@ export class TimesheetComponent implements OnInit {
             this.isAdmin = Object
               .assign({}, userRole.roles)
               .hasOwnProperty('admin');
-            console.log("ADMINISTRATEUR :::" + this.isAdmin)
+            if (this.isAdmin) {
+              console.log('admin =' + this.isAdmin);
+
+              this.getAllTimesheets();
+            } else {
+              console.log('admin =' + this.isAdmin);
+
+              this.getMyTimesheets(this.userUidSub.value);
+            }
+            console.log('ADMINISTRATEUR 1 :::' + this.isAdmin);
           });
+      } else {
+        this.isLogged = false;
       }
     });
   }
+
 
   openPDF(): void {
     let DATA = document.getElementById('htmlData');
@@ -139,9 +149,9 @@ export class TimesheetComponent implements OnInit {
   }
 
   onDeleteTimesheet(idTimesheet: string): void {
-    console.log("Timeseehts ID to delete  :::"+ idTimesheet);
+    console.log('Timeseehts ID to delete  :::' + idTimesheet);
 
-    const confirmation = true;
+    const confirmation = confirm('Veuillez confirmer');;
     if (confirmation) {
       this.dataApi.deleteTimesheet(idTimesheet).then((res) => {
       }).catch(err => {
@@ -152,6 +162,10 @@ export class TimesheetComponent implements OnInit {
 
   onPreUpdateTimesheet(timesheet: Timesheet) {
     console.log('BOOK', timesheet);
+    this.dataApi.temporaryTimesheet = timesheet;
     this.dataApi.selectedTimesheet = Object.assign({}, timesheet);
+    this.router.navigate(['step1']);
   }
+
+
 }
