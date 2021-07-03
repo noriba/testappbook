@@ -7,6 +7,8 @@ import {MenuItem, MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {Timesheet} from '../../models/timesheet';
 import {Subject,BehaviorSubject } from 'rxjs';
+import {UserDataService} from '../../services/user-data.service';
+import {UserData} from '../../models/userdata';
 
 
 @Component({
@@ -28,9 +30,11 @@ export class TimesheetComponent implements OnInit {
   isAdminSub = new Subject<boolean>();
   private isLogged: boolean;
    allTimesheets: Timesheet[];
+  private currentUserDatas: UserData;
 
   constructor(private dataApi: DataApiService,
               private authService: AuthService,
+              private userDataService: UserDataService,
               private router: Router,
               private messageService: MessageService) {
   }
@@ -71,43 +75,17 @@ export class TimesheetComponent implements OnInit {
   }
 
   nextStepPlease() {
-    this.dataApi.resetTemporaryTimesheet();
+    this.dataApi.resetTemporaryTimesheet(this.currentUserDatas);
     this.router.navigate(['step1']);
   }
 
-
-  setsteps() {
-    this.steps = [{
-
-      label: 'Personal',
-      command: (event: any) => {
-        this.activeIndex = 0;
-        this.messageService.add({severity: 'info', summary: 'First Step', detail: event.item.label});
-      }
-    },
-      {
-        label: 'Seat',
-        command: (event: any) => {
-          this.activeIndex = 1;
-          this.messageService.add({severity: 'info', summary: 'Seat Selection', detail: event.item.label});
-        }
-      },
-      {
-        label: 'Confirmation',
-        command: (event: any) => {
-          this.activeIndex = 3;
-          this.messageService.add({severity: 'info', summary: 'Last Step', detail: event.item.label});
-        }
-      }
-    ];
-  }
 
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
         this.isLogged = true;
         this.userUid = auth.uid;
-        this.authService
+        this.userDataService
           .isUserAdmin(this.userUid)
           .subscribe(userRole => {
             this.isAdmin = Object
@@ -122,6 +100,7 @@ export class TimesheetComponent implements OnInit {
 
               this.getMyTimesheets(this.userUidSub.value);
             }
+            this.currentUserDatas = {...userRole};
             console.log('ADMINISTRATEUR 1 :::' + this.isAdmin);
           });
       } else {
@@ -168,4 +147,7 @@ export class TimesheetComponent implements OnInit {
   }
 
 
+  onSendTimesheet(id) {
+    
+  }
 }

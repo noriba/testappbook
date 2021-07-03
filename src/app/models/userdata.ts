@@ -3,7 +3,7 @@ import {Roles} from './roles';
 
 export interface UserData {
   id?: string;
-  userUid: string;
+  userUid?: string;
   firstname?: string;
   lastname?: string;
   matricule?: string;
@@ -18,9 +18,10 @@ export interface UserData {
   vancode?: string;
   depotcode?: string;
   sectorcode?: string;
+  weekhoursplanned?: number;
   password?: string;
   photoUrl?: string;
-  roles: Roles;
+  roles?: Roles;
 }
 
 let USERS;
