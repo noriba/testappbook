@@ -1,8 +1,10 @@
-<section class="row mt-2">
+<section class="row ">
   <div class="col-lg-md-4 text-right p-2">
 
-    <button class="ml-2 my-4" pButton type="button" label="Nouvelle Feuille de temps + "
-            (click)="nextStepPlease()"></button>
+    <button class="btn btn-primary my-2 my-xl-2 " pButton type="button"
+            label="Feuille de temps"
+            (click)="nextStepPlease()"><i class="pi pi-plus pr-2"> </i>
+    </button>
   </div>
 
   <div class="table-responsive ">
@@ -17,43 +19,59 @@
         <th scope="col">Semaine</th>
         <th scope="col">Heures travaillées</th>
         <th scope="col">Regime horaire</th>
+        <th ></th>
 
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let timesheet of allTimesheets; index as i">
-        <th  scope="row">{{i+1}}</th>
+        <th scope="row">{{i + 1}}</th>
         <td>{{timesheet.firstname}}</td>
         <td>{{timesheet.lastname}}</td>
         <td>{{timesheet.site}}</td>
         <td>{{timesheet.week}}</td>
         <td>{{timesheet.weekhoursdone}}</td>
         <td>{{timesheet.weekhoursplanned}}</td>
-        <td *ngIf="timesheet.userUid == userUid || isAdmin == true; else noOwner">
-          <button class="btn btn-primary"
-                  data-toggle="modal"
-                  data-target="#modalBook"
-                  (click)="onPreUpdateTimesheet(timesheet)">Modifier</button>
-        </td>
+        <td>
+          <button
+            *ngIf="timesheet.userUid == userUid || isAdmin == true; else noOwner"
+            class="btn btn-primary p-mr-2" pButton icon="pi pi-pencil"
+            data-toggle="modal"
+            data-target="#modalBook"
+            (click)="onPreUpdateTimesheet(timesheet)">
+          </button>
+          <ng-template #noOwner>
+            <button class="btn btn-secondary p-mr-2" pButton
+                    icon="pi pi-pencil" disabled="true">
+            </button>
+          </ng-template>
 
-        <ng-template #noOwner>
-          <td>
-            <button class="btn btn-secondary" disabled="true">Modifier</button>
-          </td>
-        </ng-template>
+          <button
+            *ngIf="isAdmin == true; else noAdmin"
+            class="btn btn-danger p-button-danger p-mr-2" pButton
+            icon="pi pi-times" (click)="onDeleteTimesheet(timesheet.id)">
+          </button>
+          <ng-template #noAdmin>
+            <button class="btn btn-danger p-mr-2" pButton
+                    icon="pi pi-times" disabled="true">
+            </button>
+          </ng-template>
 
-        <td *ngIf="isAdmin == true; else noAdmin">
-          <button class="btn btn-danger" (click)="onDeleteTimesheet(timesheet.id)">Supprimer</button>
+          <button
+
+            class="btn  p-button-success p-mr-2" pButton
+            icon="pi pi-envelope" (click)="onSendTimesheet(timesheet.id)">
+          </button>
+          <ng-template #noAdmin>
+            <button class="btn  p-button-success p-mr-2" pButton
+                    icon="pi pi-envelope" disabled="true">
+            </button>
+          </ng-template>
+
         </td>
-        <ng-template #noAdmin>
-          <td>
-            <button class="btn btn-danger" disabled="true">Supprimer</button>
-          </td>
-        </ng-template>
       </tr>
       </tbody>
     </table>
   </div>
-
 </section>
 

@@ -19,7 +19,10 @@ export class UserDataService {
   private userDatas: UserInterface[];
   private userDataList: Observable<UserData[]>;
   private userDataDoc: AngularFirestoreDocument;
-  public selectedUserData : UserData = {roles: undefined, userUid: '', id: null};
+  public selectedUserData : UserData = {
+    roles: undefined,
+    userUid: '',
+    id: null};
 
   constructor(private afs: AngularFirestore,
               private http: HttpClient) { }
@@ -80,5 +83,10 @@ export class UserDataService {
         })
         .catch(err => console.log(reject(err)));
     });
+  }
+
+  isUserAdmin(userid: string) {
+    return this.afs.doc<UserData>(`userdatas/${userid}`)
+      .valueChanges();
   }
 }

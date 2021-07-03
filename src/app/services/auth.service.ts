@@ -4,8 +4,8 @@ import {BehaviorSubject, Observable, of, Subject, Subscription} from 'rxjs';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {Injectable} from '@angular/core';
 import {auth} from 'firebase';
-import {UserInterface} from '../models/user';
 import * as firebase from 'firebase/app';
+import {UserData} from '../models/userdata';
 
 
 @Injectable({
@@ -18,7 +18,7 @@ export class AuthService {
   userData: any;
   subscription: Subscription | undefined;
   authStateGuard: any;
-  userRoles$: Observable<UserInterface>;
+  userRoles$: Observable<UserData>;
   private imageprofile: any;
   private fireAuthUser: firebase.User | null = null;
   private currentUser: any;
@@ -26,6 +26,7 @@ export class AuthService {
   private isLogged: boolean;
   private firebaseUser = new BehaviorSubject<firebase.User>(null);
   user$ = this.firebaseUser.asObservable();
+  userRef;
 
   constructor(
     private afsAuth: AngularFireAuth,
@@ -41,7 +42,7 @@ export class AuthService {
       .pipe(user => {
         this.changeLoggedInUser(user);
         if (user) {
-          return this.afs.doc<UserInterface>(`users/${user}`).valueChanges();
+          return this.afs.doc<UserData>(`userdatas/${user}`).valueChanges();
         } else {
           return of(null);
         }
@@ -64,11 +65,11 @@ export class AuthService {
     return this.afsAuth.authState.pipe(map(user => user));
   }
 
-  get isUserAdmin2(): Observable<UserInterface | undefined> {
+  get isUserAdmin2(): Observable<UserData | undefined> {
 
     let user = this.afsAuth.authState.pipe(map(user => user.uid));
 
-    return this.afs.doc<UserInterface>(`users/${user}`)
+    return this.afs.doc<UserData>(`userdatas/${user}`)
       .valueChanges()
       .pipe(map(user => user));
   }
@@ -97,13 +98,13 @@ export class AuthService {
   }
 
   isUserAdmin3(userid: string) {
-    return this.afs.doc<UserInterface>(`users/${userid}`)
+    return this.afs.doc<UserData>(`userdatas/${userid}`)
       .valueChanges()
       .pipe(map(user => this.isAdminSub.next(user.roles.admin)));
   }
 
   isUserAdmin(userid: string) {
-    return this.afs.doc<UserInterface>(`users/${userid}`)
+    return this.afs.doc<UserData>(`userdatas/${userid}`)
       .valueChanges();
   }
 
@@ -181,8 +182,8 @@ export class AuthService {
 
     return this.afsAuth.auth.signOut()
       .then(res => {
-      console.log('Succes onLogout() :: ' + res);
-    })
+        console.log('Succes onLogout() :: ' + res);
+      })
       .catch(error => {
         console.log('Error onLogout() :: ' + error);
       });
@@ -198,13 +199,28 @@ export class AuthService {
   updateUserData(user) {
     console.log('updateUserData ::: userData = ' + this.imageprofile);
 
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    const data: UserInterface = {
+    let userRef: AngularFirestoreDocument<any>;
+    userRef = this.afs.doc(`userdatas/${user.uid}`);
+    const data: UserData = {
       id: user.uid,
       email: user.email,
       roles: {
         editor: true
-      }
+      },
+      firstname: '',
+      lastname: '',
+      matricule: '',
+      contract: '',
+      site: '',
+      agency: '',
+      phonenumber: '',
+      function: '',
+      numberplate: '',
+      manager: '',
+      vancode: '',
+      depotcode: '',
+      sectorcode: '',
+      weekhoursplanned: 0,
     };
     console.log('updateUserData ::: userData = ' + this.imageprofile);
 

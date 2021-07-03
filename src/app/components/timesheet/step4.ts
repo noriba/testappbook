@@ -4,6 +4,7 @@ import {MessageService} from 'primeng/api';
 import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
 import {Dayactivity, Timesheet} from '../../models/timesheet';
 import {DataApiService} from '../../services/data-api.service';
+import {UserData} from '../../models/userdata';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class Step4 implements OnInit {
   private timesheet: Timesheet;
   private timesheets: Timesheet[];
   private alltimesheets: Timesheet[];
+  private currentUserDatas: UserData;
 
 
   constructor(
@@ -59,6 +61,7 @@ export class Step4 implements OnInit {
   }
 
 
+
   lastStepPlease() {
     this.router.navigate(['step3']);
   }
@@ -71,7 +74,7 @@ export class Step4 implements OnInit {
         .then(() => {res=>
           console.log('success createNewTimesheet() ::: ' + res.message);
 
-          this.dataApi.resetTemporaryTimesheet();
+          //this.dataApi.resetTemporaryTimesheet(this.currentUserDatas);
         })
         .catch(err => {
           //console.log(err.message +"   " + this.dataApi.temporaryTimesheet);
