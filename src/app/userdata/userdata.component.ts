@@ -10,8 +10,15 @@ import {UserDataService} from '../services/user-data.service';
   styleUrls: ['./userdata.component.css']
 })
 export class UserDataComponent implements OnInit {
+  private userDataCollection: any;
+  private inputImageUser: any;
+  private msgError: any;
+  private isError: boolean;
+  private btnClose: any;
 
-  constructor(private userDataService: UserDataService, private authService: AuthService) { }
+  constructor(
+    private userDataService: UserDataService,
+    private authService: AuthService) { }
 
   allUserDatas: UserData[];
   isAdmin: any ;
@@ -26,8 +33,12 @@ export class UserDataComponent implements OnInit {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
         this.userUid = auth.uid;
-        this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
-          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
+        this.authService
+          .isUserAdmin(this.userUid)
+          .subscribe(userRole => {
+          this.isAdmin = Object
+            .assign({}, userRole.roles)
+            .hasOwnProperty('admin');
         })
       }
     })
@@ -37,7 +48,9 @@ export class UserDataComponent implements OnInit {
     this.userDataService.getAllUserData()
       .subscribe(UserDatas => {
         this.allUserDatas = UserDatas;
+        console.log(this.allUserDatas);
       });
+
   }
 
   onDeleteUserData(idUserData: string): void {
@@ -52,4 +65,35 @@ export class UserDataComponent implements OnInit {
     this.userDataService.selectedUserData = Object.assign({}, UserData);
   }
 
+  createNewUserData(userData) {
+      if (userData.value.id == null) {
+        userData.value.userUid = this.userUid;
+        //userData.value.portada = this.inputImageUser.nativeElement.value;
+      this.userDataService.addUserData(userData.value)
+        .then(()=>{
+          userData.resetForm();
+          this.btnClose.nativeElement.click();
+        })
+        .catch(err => {
+          this.isError = true;
+          this.msgError = err.message;
+        });
+    } else {
+      // Update
+      //  userData.value.portada = this.inputImageUser.nativeElement.value;
+      this.userDataService.updateUserData(userData.value)
+        .then(()=>{
+          userData.resetForm();
+          this.btnClose.nativeElement.click();
+        })
+        .catch(err => {
+          this.isError = true;
+          this.msgError = err.message;
+          console.log('error onSaveBook() ::: ' + err.message);
+        });
+
+    }
+
+
+  }
 }
