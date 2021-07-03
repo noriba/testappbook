@@ -1,6 +1,5 @@
 import { Entity } from '../services/firestore-crud.service';
 
-
 export class Timesheet implements Entity  {
   id?: string;
   userUid?: string;
@@ -13,7 +12,7 @@ export class Timesheet implements Entity  {
   week?: number;
   weekstart?: number;
   weekend?: number;
-  weekactivities: Dayactivity[];
+  weekactivities?: Dayactivity[];
   weekhoursdone?: number;
   weekhoursplanned?: number;
   statusmanager?: Statusmanager;

@@ -8,7 +8,7 @@ import {Product} from '../models/products';
 import {HttpClient} from '@angular/common/http';
 import {v4 as uuidv4} from 'uuid';
 import {UserData} from '../models/userdata';
-import {Entity,FirestoreCrudService} from './firestore-crud.service';
+import {Entity, FirestoreCrudService} from './firestore-crud.service';
 
 
 @Injectable({
@@ -30,6 +30,7 @@ export class DataApiService {
   private timesheetsCollection: AngularFirestoreCollection<Timesheet>;
   private timesheetDoc: AngularFirestoreDocument<Timesheet>;
   public timesheets: Observable<Timesheet[]>;
+  private timesheet: Observable<Timesheet>;
 
   private booksCollection: AngularFirestoreCollection<BookInterface>;
   private booksList: Observable<BookInterface[]>;
@@ -54,7 +55,6 @@ export class DataApiService {
     id: null,
     userUid: null
   };
-
 
 
 // -----------------------------------------------------------------------
@@ -109,6 +109,21 @@ export class DataApiService {
       }));
   }
 
+  getOneTimesheet(id: string) {
+    this.timesheetDoc = this.afs.doc<Timesheet>(`timesheets/${id}`);
+    return this.timesheet = this.timesheetDoc
+      .snapshotChanges()
+      .pipe(map(action => {
+        if (action.payload.exists === false) {
+          return null;
+        } else {
+          const data = action.payload.data() as Timesheet;
+          data.id = action.payload.data().id;
+          return data;
+        }
+      }));
+  }
+
   getAllBooksOffers() {
     this.booksCollection = this.afs.collection('books', ref => ref.where('oferta', '==', '1'));
     return this.booksOffers = this.booksCollection
@@ -149,7 +164,7 @@ export class DataApiService {
         .then(userData => {
           console.log('userData.id ::: ' + userData.id);
           console.log('userData.id ::: ' + typeof userData);
-          book.id=userData.id;
+          book.id = userData.id;
           this.updateBook(book);
         })
         .catch(err => console.log(reject(err)));
@@ -168,8 +183,6 @@ export class DataApiService {
       console.log('err', err.message);
     });
   }
-
-
 
 
   getAllTimesheets() {
@@ -200,7 +213,7 @@ export class DataApiService {
       }));
   }
 
-  updateTimesheet(timesheet :Timesheet) {
+  updateTimesheet(timesheet: Timesheet) {
     //let idTimesheet = this.temporaryTimesheet.id;
     let idTimesheet = timesheet.id;
     this.timesheetDoc = this.afs.doc<Timesheet>(`timesheets/${idTimesheet}`);
@@ -216,8 +229,8 @@ export class DataApiService {
     // return    this.afs.collection('timesheets').add(timesheet).then(function(docRef) {
     //   return docRef.id;
     // });
-     //let uuid = uuidv4();
-     //timesheet.id = uuid;
+    //let uuid = uuidv4();
+    //timesheet.id = uuid;
     console.log('timesheet ::: ' + JSON.stringify(timesheet));
     this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
 
@@ -226,7 +239,7 @@ export class DataApiService {
         .then(userData => {
           console.log('success');
           console.log('userData.id ::: ' + userData.id);
-          timesheet.id=userData.id;
+          timesheet.id = userData.id;
           console.log(this.temporaryTimesheet);
           this.updateTimesheet(timesheet);
         })
@@ -234,20 +247,37 @@ export class DataApiService {
     });
   }
 
-  resetTemporaryTimesheet(){
-  let tempTimesheet: Timesheet = {
-      weekhoursplanned: 0,
+  getNumberOfWeek(): number {
+    const today = new Date();
+    const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+    const pastDaysOfYear = (today.valueOf() - firstDayOfYear.valueOf()) / 86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  }
+
+  resetTemporaryTimesheet(userData : UserData) {
+    console.log('Temporary timesheet created :' +
+      JSON.stringify(userData));
+
+    let tempTimesheet: Timesheet = {
+      year: new Date().getFullYear(),
+      week: this.getNumberOfWeek(),
+      matricule: userData?.matricule ,
+      firstname: userData?.firstname ,
+      lastname: userData?.lastname ,
+      site: userData?.site ,
+      contracttype: userData?.contract ,
+      weekhoursplanned: userData?.weekhoursplanned ,
       statusmanager: {},
       weekactivities: [],
       id: null,
-      userUid: null
+      userUid: userData?.userUid
     };
-  this.temporaryTimesheet = tempTimesheet;
+    this.temporaryTimesheet = tempTimesheet;
   }
 
   createNewtemporaryTimesheet(timesheet: Timesheet) {
 
-    this.temporaryTimesheet = { ...this.temporaryTimesheet,...timesheet};
+    this.temporaryTimesheet = {...this.temporaryTimesheet, ...timesheet};
     console.log('Temporary timesheet created :' + JSON.stringify(this.temporaryTimesheet));
   }
 
@@ -258,9 +288,6 @@ export class DataApiService {
     console.log('current timesheet acts :' + JSON.stringify(this.temporaryTimesheet.weekactivities));
 
   }
-
-
-
 
 
   //---------------------------------------------------------------------
@@ -288,7 +315,6 @@ export class DataApiService {
         .catch(err => console.log(reject(err)));
     });
   }
-
 
 
 }

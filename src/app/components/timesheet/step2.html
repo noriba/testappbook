@@ -3,7 +3,6 @@
   <app-breadcrumb></app-breadcrumb>
 
 
-
   <p-card header="Pointage de la semaine">
     <ng-template pTemplate="header">
     </ng-template>
@@ -69,7 +68,8 @@
             </div>
             <div class="modal-footer">
               <button pButton type="button" class="btn p-button-danger p-mr-2"
-                      data-dismiss="modal">Annuler</button>
+                      data-dismiss="modal">Annuler
+              </button>
               <button pButton type="button" class="btn p-button-success"
                       data-dismiss="modal" (click)="createNewActivity(myForm)">Valider
               </button>
@@ -234,13 +234,12 @@
                     </div>
                     <div class="modal-footer">
                       <button (click)="onRowEditCancel(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)"
-                              class="p-button-danger p-mr-2" data-dismiss="modal" pButton pCancelEditableRow
-                              pRipple
-                              type="button"> Annuler
+                              class="p-button-danger p-mr-2" data-dismiss="modal"  icon="pi pi-pencil"
+                              pButton pCancelEditableRow pRipple type="button"> Annuler
                       </button>
-                      <button (click)="onRowEditSave(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)" class="p-button-success p-mr-2"
-                              data-dismiss="modal" pButton pRipple
-                              pSaveEditableRow type="button">Valider
+                      <button (click)="onRowEditSave(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)"
+                              class="p-button-success p-mr-2"  icon="pi pi-pencil"
+                              data-dismiss="modal" pButton pRipple pSaveEditableRow type="button">Valider
                       </button>
 
                     </div>
@@ -256,11 +255,12 @@
     </p-table>
 
     <ng-template pTemplate="footer">
-      <button (click)="lastStepPlease()" class="ml-2 fixed-bottom" label="< Précedent" pButton type="button"></button>
+      <button (click)="lastStepPlease()" class="ml-2 fixed-bottom" label="Précedent"
+              pButton type="button"  icon="pi pi-angle-double-left" iconPos="left"></button>
 
       <button [disabled]="!dataApi.temporaryTimesheet.weekactivities"
-              (click)="nextStepPlease()" class="ml-2" label="Suivant >"
-              pButton type="button"></button>
+              (click)="nextStepPlease()" class="ml-2" label="Suivant"
+              pButton type="button" icon="pi pi-angle-double-right" iconPos="right"></button>
     </ng-template>
 
   </p-card>

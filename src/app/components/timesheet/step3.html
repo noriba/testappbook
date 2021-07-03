@@ -16,7 +16,13 @@
           <th style="width:8rem"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-dayovertime let-editing="editing" let-ri="rowIndex">
+      <ng-template pTemplate="body" *ngIf="!dayovertimes?.length">
+      <tr class="text-center">
+        Aucune données
+
+      </tr>
+      </ng-template>
+      <ng-template *ngIf="dayovertimes" pTemplate="body" let-dayovertime let-editing="editing" let-ri="rowIndex">
         <tr [pEditableRow]="dayovertime">
           <td>
             <p-cellEditor>
@@ -129,6 +135,7 @@
           </td>
         </tr>
       </ng-template>
+
     </p-table>
 
     <ng-template pTemplate="footer">

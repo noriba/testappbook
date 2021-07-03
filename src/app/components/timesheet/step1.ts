@@ -24,8 +24,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   providers: [MessageService]
 })
 export class Step1 implements OnInit {
-  private timesheet: Timesheet;
-  private userInfo: firebase.User;
+
 
   constructor(public dataApi: DataApiService,
               private authService: AuthService,
@@ -36,7 +35,8 @@ export class Step1 implements OnInit {
   @ViewChild('myForm') ngForm: NgForm;
   @Input() userUid: string;
 
-
+  timesheet: Timesheet;
+  private userInfo: firebase.User;
   private isAdmin: any;
   USERS: any;
   items: MenuItem[];
@@ -44,11 +44,15 @@ export class Step1 implements OnInit {
   home: MenuItem;
   activeIndex: number ;
   data: Timesheet;
-
+contracts: string[];
 
 
   ngOnInit() {
     Promise.resolve(null).then(() => this.child.activeIndex=0);
+    this.contracts=['CDI','CDD','INT'];
+
+    console.log("Selected timesheet ::: "+
+      JSON.stringify(this.dataApi.temporaryTimesheet));
 
     this.timesheet = this.dataApi.temporaryTimesheet;
     this.getCurrentUser();
@@ -61,14 +65,17 @@ export class Step1 implements OnInit {
   }
 
   nextStepPlease(data : NgForm) :void {
-    console.log("Selected timesheet ::: "+JSON.stringify(this.dataApi.selectedTimesheet));
-    !this.dataApi.selectedTimesheet.lastname? this.createNewTimesheet(data) : this.updateTimesheet(data);
+    console.log("Selected timesheet ::: "+
+      JSON.stringify(this.dataApi.selectedTimesheet));
+    !this.dataApi.selectedTimesheet.lastname?
+      this.createNewTimesheet(data) : this.updateTimesheet(data);
     this.router.navigate(['step2']);
   }
 
   updateTimesheet(data: NgForm) {
     //this.router.navigate(['step2']);
-    console.log(":::::updateTimesheet::::::::::current user :::::: "+this.userUid );
+    console.log(":::::updateTimesheet::::::::::current user :::::: "
+      +this.userUid );
     data.value.userUid = this.userUid;
     //this.dataApi.createNewtemporaryTimesheet(data.value)
   }
@@ -76,24 +83,17 @@ export class Step1 implements OnInit {
 
   createNewTimesheet(data: NgForm){
    // console.log(":::::::::::::::On va creer ces données :::::: "+JSON.stringify(data) );
-    console.log("::::::createNewTimesheet:::::::::current user :::::: "+this.userUid );
-    this.dataApi.resetTemporaryTimesheet();
-    console.log('Temporary timesheet reset :' + JSON.stringify(this.dataApi.temporaryTimesheet));
+    console.log("::::::createNewTimesheet:::::::::current user :::::: "
+      +this.userUid );
+   // this.dataApi.resetTemporaryTimesheet(this.currentUserDatas);
+    console.log('Temporary timesheet reset :'
+      + JSON.stringify(this.dataApi.temporaryTimesheet));
 
     data.value.userUid = this.userUid;
     this.dataApi.createNewtemporaryTimesheet(data.value)
   }
 
-  setBreadCrumb() {
-    this.items = [
-      {label: 'Computer'},
-      {label: 'Notebook'},
-      {label: 'Accessories'},
-      {label: 'Backpacks'},
-      {label: 'Item'}
-    ];
-    this.home = {icon: 'pi pi-home'};
-  }
+
 
   setsteps() {
     this.steps = [{
@@ -155,11 +155,6 @@ export class Step1 implements OnInit {
     });
   }
 
-
-getUserInfo(){
-
-
-}
 
 
 

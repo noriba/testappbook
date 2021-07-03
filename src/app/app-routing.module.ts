@@ -24,12 +24,14 @@ import {BreadcrumbInitializedGuard} from './guards/breadcrumbInitialized.guard';
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
 import {StepsComponent} from './components/breadcrumb/wizard.module';
 import {UserDataComponent} from './userdata/userdata.component';
+import {HomeComponent} from './components/home/home.component';
 
 
 const routes: Routes = [
 
   {path: '', component: TimesheetComponent,canActivate: [AuthGuard]},
   {path: '', component: LoginComponent},
+  {path: 'template', component: HomeComponent,canActivate: [AuthGuard]},
   {path: 'offers', component: OffersComponent, canActivate: [AuthGuard]},
   {path: 'book/:id', component: DetailsBookComponent},
   {path: 'userdata', component: UserDataComponent, canActivate: [AuthGuard]},
