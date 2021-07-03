@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/internal/operators';
 
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument} from '@angular/fire/firestore';
 import {UserInterface} from '../models/user';
 import {UserData} from '../models/userdata';
 import {BookInterface} from '../models/book';

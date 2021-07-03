@@ -78,15 +78,12 @@ export class AuthService {
   }
 
   getCurrentUser() {
-    debugger
     this.isAuth().subscribe(auth => {
-      debugger
       if (auth) {
         this.isLogged = true;
         this.userUid = auth.uid;
         this.isUserAdmin(this.userUid)
           .subscribe(userRole => {
-            debugger
             this.isAdmin = Object
               .assign({}, userRole.roles)
               .hasOwnProperty('admin');

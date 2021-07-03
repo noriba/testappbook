@@ -169,21 +169,10 @@ export class DataApiService {
     });
   }
 
-  delete(data: string) {
-    return this.crudService.delete(
-      'ZhygDcEwnwjh242alexJ'
-    );
-  }
 
-  add(data: Timesheet) {
-    //let uuid = uuidv4();
-    return this.crudService.add(data);
-  }
 
 
   getAllTimesheets() {
-    console.log("+++++++++++++ getAllTimesheets ::: timesheetsCollection ::: "+ JSON.stringify(this.timesheetsCollection)+" *************************")
-
     this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
     return this.timesheets = this.timesheetsCollection
       .snapshotChanges()

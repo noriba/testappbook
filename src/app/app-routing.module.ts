@@ -27,6 +27,8 @@ import {UserDataComponent} from './userdata/userdata.component';
 
 
 const routes: Routes = [
+
+  {path: '', component: TimesheetComponent,canActivate: [AuthGuard]},
   {path: '', component: LoginComponent},
   {path: 'offers', component: OffersComponent, canActivate: [AuthGuard]},
   {path: 'book/:id', component: DetailsBookComponent},
@@ -42,7 +44,6 @@ const routes: Routes = [
   {path: 'step4', component: Step4},
   {path: 'steps', component: StepsComponent},
   {path: 'user/profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'data-table', component: DataTableComponent},
   {path: 'data-table', component: DataTableComponent},
   {path: 'step', component: BreadcrumbComponent},
   {
