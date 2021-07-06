@@ -33,8 +33,10 @@
             </button>
           </td>
 
-          <ng-template #noOwner><td>
-              <button class="btn btn-secondary" disabled="true">Update</button></td>
+          <ng-template #noOwner>
+            <td>
+              <button class="btn btn-secondary" disabled="true">Update</button>
+            </td>
           </ng-template>
 
           <td *ngIf="isAdmin == true; else noAdmin">
@@ -42,7 +44,8 @@
           </td>
           <ng-template #noAdmin>
             <td>
-              <button class="btn btn-danger" disabled="true">Delete</button></td>
+              <button class="btn btn-danger" disabled="true">Delete</button>
+            </td>
           </ng-template>
         </tr>
         </tbody>

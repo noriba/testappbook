@@ -19,7 +19,7 @@
         <th scope="col">Semaine</th>
         <th scope="col">Heures travaillées</th>
         <th scope="col">Regime horaire</th>
-        <th ></th>
+        <th></th>
 
       </tr>
       </thead>
@@ -60,7 +60,7 @@
           <button
 
             class="btn  p-button-success p-mr-2" pButton
-            icon="pi pi-envelope" (click)="onSendTimesheet(timesheet.id)">
+            icon="pi pi-envelope" (click)="eventemit(timesheet)">
           </button>
           <ng-template #noAdmin>
             <button class="btn  p-button-success p-mr-2" pButton
@@ -74,4 +74,9 @@
     </table>
   </div>
 </section>
+<div *ngIf="true" >
+
+  <app-home ></app-home>
+
+</div>
 

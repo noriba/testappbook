@@ -61,7 +61,6 @@ export class Step4 implements OnInit {
   }
 
 
-
   lastStepPlease() {
     this.router.navigate(['step3']);
   }
@@ -71,8 +70,9 @@ export class Step4 implements OnInit {
     if (timesheet.id == null) {
       console.log('id == null ::: calling createNewTimesheet()...');
       this.dataApi.createNewTimesheet(timesheet)
-        .then(() => {res=>
-          console.log('success createNewTimesheet() ::: ' + res.message);
+        .then(() => {
+          res =>
+            console.log('success createNewTimesheet() ::: ' + res.message);
 
           //this.dataApi.resetTemporaryTimesheet(this.currentUserDatas);
         })

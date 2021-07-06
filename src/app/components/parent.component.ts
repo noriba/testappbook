@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/internal/Observable';
 
 import {BreadcrumbService} from '../services/breadcrumb.service';
 import {MenuItem} from 'primeng/api';
-import {BreadcrumbModule} from 'primeng/breadcrumb';
 
 @Component({
   selector: 'app-parent',
@@ -12,7 +11,7 @@ import {BreadcrumbModule} from 'primeng/breadcrumb';
 export class ParentComponent implements OnInit {
 
   crumbs$: Observable<MenuItem[]>;
-   breadcrumbsIn: Observable<MenuItem[]>;
+  breadcrumbsIn: Observable<MenuItem[]>;
   itemsModel: (
     { label: string; routerLink: string; disabled?: undefined; } |
     { label: string; routerLink: string; disabled: boolean; })[];
@@ -20,15 +19,16 @@ export class ParentComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor(private breadcrumb: BreadcrumbService) { }
+  constructor(private breadcrumb: BreadcrumbService) {
+  }
 
   ngOnInit() {
 
-    this.breadcrumbsIn = this.breadcrumb.getCrumbs()
+    this.breadcrumbsIn = this.breadcrumb.getCrumbs();
     this.crumbs$ = this.breadcrumb.crumbs$;
 
-    console.log("MenuItem List crumbs$ : "+ this.crumbs$)
-    console.log("MenuItem List breadcrumbsIn : "+ this.breadcrumbsIn)
+    console.log('MenuItem List crumbs$ : ' + this.crumbs$);
+    console.log('MenuItem List breadcrumbsIn : ' + this.breadcrumbsIn);
 
   }
 

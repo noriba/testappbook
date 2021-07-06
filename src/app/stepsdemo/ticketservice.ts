@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,23 +18,23 @@ export class TicketService {
       seat: null
     },
     paymentInformation: {
-      cardholderName:'',
-      cardholderNumber:'',
-      date:'',
-      cvv:'',
-      remember:false
+      cardholderName: '',
+      cardholderNumber: '',
+      date: '',
+      cvv: '',
+      remember: false
     },
-    contracts: [{type: 'cdi', key: 'CDI'},{type: 'cdd', key: 'CDD'},{type: 'int', key: 'INT'}],
+    contracts: [{type: 'cdi', key: 'CDI'}, {type: 'cdd', key: 'CDD'}, {type: 'int', key: 'INT'}],
     profile: {
-      year:'',
-      week:'',
-      start:'',
-      end:'',
-      lastname:'',
-      firstname:'',
-      matricule:'',
-      matriculem3:'',
-      site:'',
+      year: '',
+      week: '',
+      start: '',
+      end: '',
+      lastname: '',
+      firstname: '',
+      matricule: '',
+      matriculem3: '',
+      site: '',
       contract: 'cdi',
       hours: ''
     }

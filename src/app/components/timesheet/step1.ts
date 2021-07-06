@@ -1,22 +1,13 @@
-import {Component,OnInit,Input,SimpleChanges } from '@angular/core';
-import { TicketService } from '../../stepsdemo/ticketservice';
-import { Route } from '@angular/compiler/src/core';
-import { Router } from '@angular/router';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {MenuItem, MessageService} from 'primeng/api';
 import {DataApiService} from '../../services/data-api.service';
 import {AuthService} from '../../services/auth.service';
-import {Subscription} from 'rxjs';
-import {Breadcrumb} from 'primeng/breadcrumb';
 import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
-import {ViewChild, ViewChildren, ContentChildren, ContentChild, AfterViewInit, OnChanges} from '@angular/core';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {StepsModule} from 'primeng/steps';
 import {Timesheet} from '../../models/timesheet';
 import {NgForm} from '@angular/forms';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
 
 
 @Component({
@@ -29,9 +20,10 @@ export class Step1 implements OnInit {
   constructor(public dataApi: DataApiService,
               private authService: AuthService,
               private router: Router,
-              private messageService: MessageService) {  }
+              private messageService: MessageService) {
+  }
 
-  @ViewChild(BreadcrumbComponent, {static: false}) child: BreadcrumbComponent ;
+  @ViewChild(BreadcrumbComponent, {static: false}) child: BreadcrumbComponent;
   @ViewChild('myForm') ngForm: NgForm;
   @Input() userUid: string;
 
@@ -42,16 +34,16 @@ export class Step1 implements OnInit {
   items: MenuItem[];
   steps: MenuItem[];
   home: MenuItem;
-  activeIndex: number ;
+  activeIndex: number;
   data: Timesheet;
-contracts: string[];
+  contracts: string[];
 
 
   ngOnInit() {
-    Promise.resolve(null).then(() => this.child.activeIndex=0);
-    this.contracts=['CDI','CDD','INT'];
+    Promise.resolve(null).then(() => this.child.activeIndex = 0);
+    this.contracts = ['CDI', 'CDD', 'INT'];
 
-    console.log("Selected timesheet ::: "+
+    console.log('Selected timesheet ::: ' +
       JSON.stringify(this.dataApi.temporaryTimesheet));
 
     this.timesheet = this.dataApi.temporaryTimesheet;
@@ -60,39 +52,38 @@ contracts: string[];
 
   }
 
-  lastStepPlease(){
+  lastStepPlease() {
     this.router.navigate(['timesheet']);
   }
 
-  nextStepPlease(data : NgForm) :void {
-    console.log("Selected timesheet ::: "+
+  nextStepPlease(data: NgForm): void {
+    console.log('Selected timesheet ::: ' +
       JSON.stringify(this.dataApi.selectedTimesheet));
-    !this.dataApi.selectedTimesheet.lastname?
+    !this.dataApi.selectedTimesheet.lastname ?
       this.createNewTimesheet(data) : this.updateTimesheet(data);
     this.router.navigate(['step2']);
   }
 
   updateTimesheet(data: NgForm) {
     //this.router.navigate(['step2']);
-    console.log(":::::updateTimesheet::::::::::current user :::::: "
-      +this.userUid );
+    console.log(':::::updateTimesheet::::::::::current user :::::: '
+      + this.userUid);
     data.value.userUid = this.userUid;
     //this.dataApi.createNewtemporaryTimesheet(data.value)
   }
 
 
-  createNewTimesheet(data: NgForm){
-   // console.log(":::::::::::::::On va creer ces données :::::: "+JSON.stringify(data) );
-    console.log("::::::createNewTimesheet:::::::::current user :::::: "
-      +this.userUid );
-   // this.dataApi.resetTemporaryTimesheet(this.currentUserDatas);
+  createNewTimesheet(data: NgForm) {
+    // console.log(":::::::::::::::On va creer ces données :::::: "+JSON.stringify(data) );
+    console.log('::::::createNewTimesheet:::::::::current user :::::: '
+      + this.userUid);
+    // this.dataApi.resetTemporaryTimesheet(this.currentUserDatas);
     console.log('Temporary timesheet reset :'
       + JSON.stringify(this.dataApi.temporaryTimesheet));
 
     data.value.userUid = this.userUid;
-    this.dataApi.createNewtemporaryTimesheet(data.value)
+    this.dataApi.createNewtemporaryTimesheet(data.value);
   }
-
 
 
   setsteps() {
@@ -126,14 +117,14 @@ contracts: string[];
       if (auth) {
         this.userUid = auth.uid;
         this.userInfo = auth;
-        console.log("USER infos ::: ",auth);
+        console.log('USER infos ::: ', auth);
         this.authService
           .isUserAdmin(this.userUid)
           .subscribe(userRole => {
-          this.isAdmin = Object
-            .assign({}, userRole.roles)
-            .hasOwnProperty('admin');
-        });
+            this.isAdmin = Object
+              .assign({}, userRole.roles)
+              .hasOwnProperty('admin');
+          });
       }
     });
   }
@@ -154,8 +145,6 @@ contracts: string[];
       PDF.save('angular-demo.pdf');
     });
   }
-
-
 
 
 }

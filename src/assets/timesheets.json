@@ -12,8 +12,8 @@
       "weekstart": 1,
       "weekend": 7,
       "weekactivities": [
-        {        "id":1,
-
+        {
+          "id": 1,
           "day": "lundi",
           "numberplate": "46ANWWW59",
           "mileage": 14,
@@ -22,8 +22,8 @@
           "pause": 20,
           "createdate": "2014-01-01T23:28:56.782Z"
         },
-        {        "id":2,
-
+        {
+          "id": 2,
           "day": "Mardi",
           "numberplate": "46ANWWW59",
           "mileage": 14,
@@ -32,8 +32,8 @@
           "pause": 20,
           "createdate": "2014-01-01T23:28:56.782Z"
         },
-        {        "id":3,
-
+        {
+          "id": 3,
           "day": "Mercredi",
           "numberplate": "46ANWWW59",
           "mileage": 14,
@@ -42,8 +42,8 @@
           "pause": 20,
           "createdate": "2014-01-01T23:28:56.782Z"
         },
-        {        "id":4,
-
+        {
+          "id": 4,
           "day": "Jeudi",
           "numberplate": "46ANWWW59",
           "mileage": 14,
@@ -52,8 +52,8 @@
           "pause": 20,
           "createdate": "2014-01-01T23:28:56.782Z"
         },
-        {        "id":5,
-
+        {
+          "id": 5,
           "day": "Vendredi",
           "numberplate": "46ANWWW59",
           "mileage": 14,
@@ -62,8 +62,8 @@
           "pause": 20,
           "createdate": "2014-01-01T23:28:56.782Z"
         },
-        {        "id":6,
-
+        {
+          "id": 6,
           "day": "Samedi",
           "numberplate": "46ANWWW59",
           "mileage": 14,
@@ -73,8 +73,7 @@
           "createdate": "2014-01-01T23:28:56.782Z"
         },
         {
-          "id":7,
-
+          "id": 7,
           "day": "Dimanche",
           "numberplate": "46ANWWW59",
           "mileage": 14,

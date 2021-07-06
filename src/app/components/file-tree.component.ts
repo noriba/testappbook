@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BreadcrumbService} from '../services/breadcrumb.service';
 import {TreeNode} from 'primeng/api';
 
@@ -10,7 +10,8 @@ import {TreeNode} from 'primeng/api';
 export class FileTreeComponent implements OnInit {
   files: TreeNode[];
 
-  constructor(private breadcrumb: BreadcrumbService) {}
+  constructor(private breadcrumb: BreadcrumbService) {
+  }
 
   reducePath = (nodes: TreeNode[], path: string) => {
     const split = path.split('/');
@@ -45,7 +46,7 @@ export class FileTreeComponent implements OnInit {
         children: this.reducePath(n.children, split.slice(1).join('/'))
       });
     });
-  }
+  };
 
   ngOnInit() {
     const f = [

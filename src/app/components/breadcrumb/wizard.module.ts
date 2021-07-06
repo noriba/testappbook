@@ -1,14 +1,14 @@
 import {
+  AfterContentInit,
   Component,
   ContentChildren,
-  QueryList,
-  AfterContentInit,
-  OnChanges,
-  SimpleChanges,
   EventEmitter,
   Input,
+  NgModule,
+  OnChanges,
   Output,
-  NgModule
+  QueryList,
+  SimpleChanges
 } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import {CommonModule} from '@angular/common';
