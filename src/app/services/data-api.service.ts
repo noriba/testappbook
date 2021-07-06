@@ -6,15 +6,18 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {Product} from '../models/products';
 import {HttpClient} from '@angular/common/http';
-import {v4 as uuidv4} from 'uuid';
 import {UserData} from '../models/userdata';
-import {Entity, FirestoreCrudService} from './firestore-crud.service';
+import {FirestoreCrudService} from './firestore-crud.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataApiService {
+  selectedTimesheetDayActivities: Dayactivity[];
+  selectedTimesheetSumHoursDone: any;
+  selectedTimesheetSumOvertimes: number;
+  selectedTimesheetDayovertimes: Dayovertime[]= [];
 
   constructor(private afs: AngularFirestore,
               private http: HttpClient) {
@@ -254,19 +257,19 @@ export class DataApiService {
     return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
   }
 
-  resetTemporaryTimesheet(userData : UserData) {
+  resetTemporaryTimesheet(userData: UserData) {
     console.log('Temporary timesheet created :' +
       JSON.stringify(userData));
 
     let tempTimesheet: Timesheet = {
       year: new Date().getFullYear(),
       week: this.getNumberOfWeek(),
-      matricule: userData?.matricule ,
-      firstname: userData?.firstname ,
-      lastname: userData?.lastname ,
-      site: userData?.site ,
-      contracttype: userData?.contract ,
-      weekhoursplanned: userData?.weekhoursplanned ,
+      matricule: userData?.matricule,
+      firstname: userData?.firstname,
+      lastname: userData?.lastname,
+      site: userData?.site,
+      contracttype: userData?.contract,
+      weekhoursplanned: userData?.weekhoursplanned,
       statusmanager: {},
       weekactivities: [],
       id: null,

@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from 'rxjs';
-import {Subject} from 'rxjs';
-import {BehaviorSubject} from 'rxjs';
 import {MenuItem} from 'primeng/api';
 import {Observable} from 'rxjs/internal/Observable';
 
@@ -24,8 +22,8 @@ export class BreadcrumbService {
   setCrumbs(items: MenuItem[]) {
     console.log(':::::::::::::::::: BreadcrumbService :::::::::::::::::::');
 
-    this.crumbs.subscribe()
-   // this.crumbs.subscribe(x=> {console.log('crumbs datas 1 =' +JSON.stringify(x))});
+    this.crumbs.subscribe();
+    // this.crumbs.subscribe(x=> {console.log('crumbs datas 1 =' +JSON.stringify(x))});
     this.crumbs.next(items);
     /*    (items || []).map(item => {
            const data = Object.assign({}, item, {
@@ -36,8 +34,8 @@ export class BreadcrumbService {
        ); */
     console.log('items datas =' + this.crumbs$);
     //console.log('crumbs datas =' + JSON.stringify(this.crumbs.observers));
-   // this.crumbs$.subscribe(x=>console.log('crumbs datas 2 =' +x));
-   // this.crumbs.next(items);
+    // this.crumbs$.subscribe(x=>console.log('crumbs datas 2 =' +x));
+    // this.crumbs.next(items);
 
     //this.crumbs.next();
   }

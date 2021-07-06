@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild, OnChanges} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TicketService} from '../../stepsdemo/ticketservice';
 import {Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
@@ -32,9 +32,8 @@ export class Step3 implements OnInit {
   }
 
 
-
   ngOnInit() {
-    Promise.resolve(null).then(() => this.child.activeIndex=2);
+    Promise.resolve(null).then(() => this.child.activeIndex = 2);
 
     //this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets = data);
 
@@ -90,7 +89,7 @@ export class Step3 implements OnInit {
   }
 
   onRowEditSave(dayovertime: Dayovertime, index: number) {
-    this.dataApi.temporaryTimesheet.weekactivities.filter(d=> d.day == dayovertime.day).map(d=>d.dayovertime={...dayovertime} ) ;
+    this.dataApi.temporaryTimesheet.weekactivities.filter(d => d.day == dayovertime.day).map(d => d.dayovertime = {...dayovertime});
 
     this.dayovertimes[index] = {...dayovertime};
     delete this.clonedDayOvertimes[dayovertime.day];

@@ -6,7 +6,6 @@
       <app-breadcrumb></app-breadcrumb>
 
 
-
       <div class="card my-4 ">
         <h5>Addons</h5>
         <div class="">
@@ -75,21 +74,21 @@
                 <div class="p-inputgroup">
                   <span class="col-4 col-lg-4 p-inputgroup-addon">Contrat</span>
                   <div class="col-8 col-lg-8 py-2 px-4 form-check-inline">
-<!--                    <div class="my-auto  p-field-radiobutton">
-                      <p-radioButton type="text" id="cdi" name="cdi"  [binary]="true"
-                                     [(ngModel)]="profile.contract"        [ngClass]="profile.contract==='cdi'? true : false" inputId=""></p-radioButton>
-                      <label for="city2">CDI</label>
-                    </div>
-                    <div class="my-auto  p-field-radiobutton">
-                      <p-radioButton type="text" id="cdd" name="cdd"  [binary]="true"
-                                     [(ngModel)]="profile.contract"          [ngClass]="profile.contract ==='cdd'? true : false" inputId=""></p-radioButton>
-                      <label for="city3">CDD</label>
-                    </div>
-                    <div class="my-auto  p-field-radiobutton">
-                      <p-radioButton type="text" id="int" name="int" [binary]="true"
-                                     [(ngModel)]="profile.contract" [ngClass]="profile.contract ==='int'" inputId=""></p-radioButton>
-                      <label for="city4">INT</label>
-                    </div>-->
+                    <!--                    <div class="my-auto  p-field-radiobutton">
+                                          <p-radioButton type="text" id="cdi" name="cdi"  [binary]="true"
+                                                         [(ngModel)]="profile.contract"        [ngClass]="profile.contract==='cdi'? true : false" inputId=""></p-radioButton>
+                                          <label for="city2">CDI</label>
+                                        </div>
+                                        <div class="my-auto  p-field-radiobutton">
+                                          <p-radioButton type="text" id="cdd" name="cdd"  [binary]="true"
+                                                         [(ngModel)]="profile.contract"          [ngClass]="profile.contract ==='cdd'? true : false" inputId=""></p-radioButton>
+                                          <label for="city3">CDD</label>
+                                        </div>
+                                        <div class="my-auto  p-field-radiobutton">
+                                          <p-radioButton type="text" id="int" name="int" [binary]="true"
+                                                         [(ngModel)]="profile.contract" [ngClass]="profile.contract ==='int'" inputId=""></p-radioButton>
+                                          <label for="city4">INT</label>
+                                        </div>-->
                     <div *ngFor="let contract of contracts" class="p-field-checkbox">
                       <p-radioButton [inputId]="contract.key" name="contract" [value]="contract"
                                      [(ngModel)]="profile.contract"
@@ -110,10 +109,10 @@
         </div>
       </div>
 
-        <div class="p-grid p-nogutter p-justify-end">
-          <p-button type="text" id="" label="Next" (onClick)="nextPage()" icon="pi pi-angle-right"
-                    iconPos="right"></p-button>
-        </div>
+      <div class="p-grid p-nogutter p-justify-end">
+        <p-button type="text" id="" label="Next" (onClick)="nextPage()" icon="pi pi-angle-right"
+                  iconPos="right"></p-button>
+      </div>
 
     </div>
 

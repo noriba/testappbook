@@ -1,7 +1,6 @@
-import { Injectable, Query } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import * as cloneDeep from 'lodash/cloneDeep';
 // We need a function that will turn our JS Objects into an Object
 // that Firestore can work with
@@ -21,7 +20,8 @@ export class FirestoreCrudService<T extends Entity> {
   /* We need to ask for the AngularFirestore Injectable
    * and a Collection Name to use in Firestore
    */
-  private collectionName ;
+  private collectionName;
+
   constructor(private afs: AngularFirestore, collectionName: string) {
     // We then create the reference to this Collection
     this.collectionName = collectionName;
@@ -73,7 +73,7 @@ export class FirestoreCrudService<T extends Entity> {
           if (doc.payload.exists) {
             const data = doc.payload.data() as T;
             const payloadId = doc.payload.id;
-            return { id: payloadId, ...data };
+            return {id: payloadId, ...data};
           }
         })
       );
@@ -94,8 +94,9 @@ export class FirestoreCrudService<T extends Entity> {
       })
     );
   }
-  listByCondition( query: (ref: any)  => any ): Observable<T[]> {
-    return this.afs.collection(this.collectionName,  (ref) =>query(ref)).snapshotChanges().pipe(
+
+  listByCondition(query: (ref: any) => any): Observable<T[]> {
+    return this.afs.collection(this.collectionName, (ref) => query(ref)).snapshotChanges().pipe(
       // Again we want to build a Typed JS Object from the Document
       map(changes => {
         return changes.map(a => {

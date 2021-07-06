@@ -1,4 +1,5 @@
-<div data-toggle="modal" data-target="#modal" class="modal fade" id="modalBook" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div data-toggle="modal" data-target="#modal" class="modal fade" id="modalBook" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -18,7 +19,8 @@
           <input type="hidden" name="userUid" [value]="userUid">
           <div class="form-group">
             <label for="titulo" class="col-form-label">Titulo:</label>
-            <input id="titulo" type="text" class="form-control" name="titulo" [(ngModel)]="this.dataApi.selectedBook.titulo">
+            <input id="titulo" type="text" class="form-control" name="titulo"
+                   [(ngModel)]="this.dataApi.selectedBook.titulo">
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -30,13 +32,15 @@
             </div>
             <div class="form-group col-md-6">
               <label for="precio">Precio</label>
-              <input id="precio" type="text" name="precio" class="form-control" placeholder="0,00€" [(ngModel)]="this.dataApi.selectedBook.precio">
+              <input id="precio" type="text" name="precio" class="form-control" placeholder="0,00€"
+                     [(ngModel)]="this.dataApi.selectedBook.precio">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="autor">Autor</label>
-              <input id="autor" type="text" name="autor" class="form-control" placeholder="Autor" [(ngModel)]="this.dataApi.selectedBook.autor">
+              <input id="autor" type="text" name="autor" class="form-control" placeholder="Autor"
+                     [(ngModel)]="this.dataApi.selectedBook.autor">
             </div>
             <div class="form-group col-md-6">
               <label for="oferta">Oferta</label>
@@ -48,25 +52,29 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="portada">Portada</label>
-                <input id="portada" type="file"  accept=".png, .jpg" (change)="onUpload($event)" name="portada" class="form-control" placeholder="Portada" [(ngModel)]="this.dataApi.selectedBook.portada">
-                <div class="progress">
-                <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success"
+              <label for="portada">Portada</label>
+              <input id="portada" type="file" accept=".png, .jpg" (change)="onUpload($event)" name="portada"
+                     class="form-control" placeholder="Portada" [(ngModel)]="this.dataApi.selectedBook.portada">
+              <div class="progress">
+                <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'"
+                     class="progress-bar progress-bar-striped bg-success"
                      role="progressbar" [style.width]="(uploadPercent | async) +'%'">
                 </div>
-                  <input #imageBook type="hidden" [value]="urlImage | async">
+                <input #imageBook type="hidden" [value]="urlImage | async">
 
-                </div>
+              </div>
             </div>
             <div class="form-group col-md-6">
               <label for="link_amazon">Link Amazon</label>
-              <input id="link_amazon" type="text" name="link_amazon" class="form-control" placeholder="Link amazon" [(ngModel)]="this.dataApi.selectedBook.link_amazon">
+              <input id="link_amazon" type="text" name="link_amazon" class="form-control" placeholder="Link amazon"
+                     [(ngModel)]="this.dataApi.selectedBook.link_amazon">
             </div>
 
           </div>
           <div class="form-group">
             <label for="descripcion" class="col-form-label">Descripcion:</label>
-            <textarea id="descripcion" class="form-control" name="descripcion" [(ngModel)]="this.dataApi.selectedBook.descripcion"></textarea>
+            <textarea id="descripcion" class="form-control" name="descripcion"
+                      [(ngModel)]="this.dataApi.selectedBook.descripcion"></textarea>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" #btnClose data-dismiss="modal">Close</button>

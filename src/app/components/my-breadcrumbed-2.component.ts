@@ -19,7 +19,7 @@ export class MyBreadcrumbed2Component {
 
     console.log(':::::::::::::::::: MyBreadcrumbed2Component :::::::::::::::::::');
 
-    this.crumbs$ = this.breadservice.getCrumbs()
+    this.crumbs$ = this.breadservice.getCrumbs();
 
     //console.log('crumbs datas =' + JSON.stringify(this.breadservice.crumbs$));
 

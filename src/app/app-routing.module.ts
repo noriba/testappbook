@@ -1,6 +1,5 @@
 import {OffersComponent} from 'src/app/components/offers/offers.component';
 import {DetailsBookComponent} from './components/details-book/details-book.component';
-import {ListBooksComponent} from './components/admin/list-books/list-books.component';
 import {LoginComponent} from 'src/app/components/users/login/login.component';
 import {RegisterComponent} from 'src/app/components/users/register/register.component';
 import {ProfileComponent} from 'src/app/components/users/profile/profile.component';
@@ -29,9 +28,9 @@ import {HomeComponent} from './components/home/home.component';
 
 const routes: Routes = [
 
-  {path: '', component: TimesheetComponent,canActivate: [AuthGuard]},
+  {path: '', component: TimesheetComponent, canActivate: [AuthGuard]},
   {path: '', component: LoginComponent},
-  {path: 'template', component: HomeComponent,canActivate: [AuthGuard]},
+  {path: 'template', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'offers', component: OffersComponent, canActivate: [AuthGuard]},
   {path: 'book/:id', component: DetailsBookComponent},
   {path: 'userdata', component: UserDataComponent, canActivate: [AuthGuard]},

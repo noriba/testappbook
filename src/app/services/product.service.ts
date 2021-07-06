@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {Product} from '../models/products';
-import {Timesheet} from '../models/timesheet';
 
 
 @Injectable({
@@ -10,66 +9,73 @@ import {Timesheet} from '../models/timesheet';
 export class ProductService {
 
   status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
-  jours: string[] = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi','Dimanche'];
+  jours: string[] = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
 
   productNames: string[] = [
-    "Bamboo Watch",
-    "Black Watch",
-    "Blue Band",
-    "Blue T-Shirt",
-    "Bracelet",
-    "Brown Purse",
-    "Chakra Bracelet",
-    "Galaxy Earrings",
-    "Game Controller",
-    "Gaming Set",
-    "Gold Phone Case",
-    "Green Earbuds",
-    "Green T-Shirt",
-    "Grey T-Shirt",
-    "Headphones",
-    "Light Green T-Shirt",
-    "Lime Band",
-    "Mini Speakers",
-    "Painted Phone Case",
-    "Pink Band",
-    "Pink Purse",
-    "Purple Band",
-    "Purple Gemstone Necklace",
-    "Purple T-Shirt",
-    "Shoes",
-    "Sneakers",
-    "Teal T-Shirt",
-    "Yellow Earbuds",
-    "Yoga Mat",
-    "Yoga Set",
+    'Bamboo Watch',
+    'Black Watch',
+    'Blue Band',
+    'Blue T-Shirt',
+    'Bracelet',
+    'Brown Purse',
+    'Chakra Bracelet',
+    'Galaxy Earrings',
+    'Game Controller',
+    'Gaming Set',
+    'Gold Phone Case',
+    'Green Earbuds',
+    'Green T-Shirt',
+    'Grey T-Shirt',
+    'Headphones',
+    'Light Green T-Shirt',
+    'Lime Band',
+    'Mini Speakers',
+    'Painted Phone Case',
+    'Pink Band',
+    'Pink Purse',
+    'Purple Band',
+    'Purple Gemstone Necklace',
+    'Purple T-Shirt',
+    'Shoes',
+    'Sneakers',
+    'Teal T-Shirt',
+    'Yellow Earbuds',
+    'Yoga Mat',
+    'Yoga Set',
   ];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getProductsSmall() {
     return this.http.get<any>('assets/products-small.json')
       .toPromise()
       .then(res => <Product[]>res.data)
-      .then(data => { return data; });
+      .then(data => {
+        return data;
+      });
   }
 
   getProducts() {
     return this.http.get<any>('assets/products.json')
       .toPromise()
       .then(res => <Product[]>res.data)
-      .then(data => { return data; });
+      .then(data => {
+        return data;
+      });
   }
 
   getProductsWithOrdersSmall() {
     return this.http.get<any>('assets/products-orders-small.json')
       .toPromise()
       .then(res => <Product[]>res.data)
-      .then(data => { return data; });
+      .then(data => {
+        return data;
+      });
   }
 
   generatePrduct(): Product {
-    const product: Product =  {
+    const product: Product = {
       id: this.generateId(),
       immatriculation: this.generateName(),
       kilometrage: this.generateQuantity(),
@@ -82,8 +88,8 @@ export class ProductService {
   }
 
   generateId() {
-    let text = "";
-    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let text = '';
+    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     for (var i = 0; i < 5; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -97,11 +103,11 @@ export class ProductService {
   }
 
   generatePrice() {
-    return Math.floor(Math.random() * Math.floor(299)+1);
+    return Math.floor(Math.random() * Math.floor(299) + 1);
   }
 
   generateQuantity() {
-    return Math.floor(Math.random() * Math.floor(75)+1);
+    return Math.floor(Math.random() * Math.floor(75) + 1);
   }
 
   generateStatus() {
@@ -109,6 +115,6 @@ export class ProductService {
   }
 
   generateRating() {
-    return Math.floor(Math.random() * Math.floor(5)+1);
+    return Math.floor(Math.random() * Math.floor(5) + 1);
   }
 }
