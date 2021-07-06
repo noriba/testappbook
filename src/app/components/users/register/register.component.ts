@@ -1,10 +1,9 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
-import { Router } from '@angular/router';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { finalize } from 'rxjs/operators';
-import { Observable } from 'rxjs/internal/Observable';
-
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AuthService} from '../../../services/auth.service';
+import {Router} from '@angular/router';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {finalize} from 'rxjs/operators';
+import {Observable} from 'rxjs/internal/Observable';
 
 
 @Component({
@@ -13,12 +12,14 @@ import { Observable } from 'rxjs/internal/Observable';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-    fb: string;
+  fb: string;
 
-  constructor(private router: Router, private authService: AuthService, private storage: AngularFireStorage) { }
+  constructor(private router: Router, private authService: AuthService, private storage: AngularFireStorage) {
+  }
+
   @ViewChild('imageUser') inputImageUser: ElementRef;
 
-  public email: string  = '';
+  public email: string = '';
   public password: string = '';
 
   uploadPercent: Observable<number>;
@@ -36,7 +37,7 @@ export class RegisterComponent implements OnInit {
     filePath: '',
     ref: '',
     task: ''
-  }
+  };
 
 
   onUpload(event) {
@@ -45,15 +46,15 @@ export class RegisterComponent implements OnInit {
     this.imageLoad.filePath = `uploads/profile_${this.imageLoad.id}`;
     this.imageLoad.ref = this.storage.ref(this.imageLoad.filePath);
     this.imageLoad.task = this.storage.upload(this.imageLoad.filePath, this.imageLoad.file);
-    try{
+    try {
       this.uploadPercent = this.imageLoad.task.percentageChanges();
       this.imageLoad.task.snapshotChanges()
         .pipe(finalize(() => this.urlImage = this.imageLoad.ref.getDownloadURL()))
         .subscribe();
-      console.log('Subió imagen')
-    }catch (error){
+      console.log('Subió imagen');
+    } catch (error) {
       this.msgError = error;
-      console.log("Error in load image"+ error);
+      console.log('Error in load image' + error);
     }
   }
 
@@ -66,20 +67,21 @@ export class RegisterComponent implements OnInit {
               displayName: '',
               photoURL: this.inputImageUser.nativeElement.value
             }).then(() => {
-              console.log("onAddUser ::: userData = "+ user.photoURL);
+              console.log('onAddUser ::: userData = ' + user.photoURL);
 
               this.router.navigate(['timesheet']);
-            }).catch((error) =>{
+            }).catch((error) => {
               this.msgError = error;
-              console.log('error', error)
+              console.log('error', error);
             });
           }
         });
       }).catch(err => {
       this.msgError = err;
-      console.log('err', err.message)
+      console.log('err', err.message);
     });
   }
+
   onLoginGoogle(): void {
     this.authService.loginGoogleUser()
       .then((res) => {
@@ -87,16 +89,17 @@ export class RegisterComponent implements OnInit {
       }).catch(err => {
       this.msgError = err;
 
-      console.log('err', err.message)
+      console.log('err', err.message);
     });
   }
+
   onLoginFacebook(): void {
     this.authService.loginFacebookUser()
       .then((res) => {
         this.onLoginRedirect();
       }).catch(err => {
       this.msgError = err;
-      console.log('err', err.message)
+      console.log('err', err.message);
     });
   }
 

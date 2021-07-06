@@ -7,10 +7,11 @@ import {BreadcrumbService} from '../services/breadcrumb.service';
 })
 export class BreadcrumbInitializedGuard implements CanActivate {
 
-  constructor(private service: BreadcrumbService) { }
+  constructor(private service: BreadcrumbService) {
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log("-------------- GUARD ACTIVATED --------------")
+    console.log('-------------- GUARD ACTIVATED --------------');
     const crumbs = route.data['crumbs'];
     this.service.setCrumbs(crumbs);
     return true;

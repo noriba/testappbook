@@ -1,15 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/internal/operators';
 
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  AngularFirestoreDocument} from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {UserInterface} from '../models/user';
 import {UserData} from '../models/userdata';
-import {BookInterface} from '../models/book';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +15,15 @@ export class UserDataService {
   private userDatas: UserInterface[];
   private userDataList: Observable<UserData[]>;
   private userDataDoc: AngularFirestoreDocument;
-  public selectedUserData : UserData = {
+  public selectedUserData: UserData = {
     roles: undefined,
     userUid: '',
-    id: null};
+    id: null
+  };
 
   constructor(private afs: AngularFirestore,
-              private http: HttpClient) { }
+              private http: HttpClient) {
+  }
 
   getMyUserData(user) {
     this.userDataCollection = this.afs.collection<UserData>('userdatas');
@@ -78,7 +76,7 @@ export class UserDataService {
         .then(userData => {
           console.log('userData.id ::: ' + userData.id);
           console.log('userData.id ::: ' + typeof userData);
-          user.id=userData.id;
+          user.id = userData.id;
           this.updateUserData(user);
         })
         .catch(err => console.log(reject(err)));

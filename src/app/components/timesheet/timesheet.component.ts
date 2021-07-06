@@ -6,10 +6,12 @@ import html2canvas from 'html2canvas';
 import {MenuItem, MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {Timesheet} from '../../models/timesheet';
-import {Subject,BehaviorSubject } from 'rxjs';
+import {BehaviorSubject,Observable, Subject} from 'rxjs';
 import {UserDataService} from '../../services/user-data.service';
 import {UserData} from '../../models/userdata';
-
+import {TemplateEventEmitterService} from '../../services/template-event-emitter.service';
+import DateTime from 'luxon/src/datetime.js';
+import Duration from 'luxon/src/duration.js';
 
 @Component({
   selector: 'app-timesheet',
@@ -29,13 +31,15 @@ export class TimesheetComponent implements OnInit {
   activeIndex: number;
   isAdminSub = new Subject<boolean>();
   private isLogged: boolean;
-   allTimesheets: Timesheet[];
+  allTimesheets: Timesheet[];
   private currentUserDatas: UserData;
+  display: boolean = false;
 
   constructor(private dataApi: DataApiService,
               private authService: AuthService,
               private userDataService: UserDataService,
               private router: Router,
+              public templateEventEmitterService: TemplateEventEmitterService,
               private messageService: MessageService) {
   }
 
@@ -61,13 +65,13 @@ export class TimesheetComponent implements OnInit {
   }
 
   getMyTimesheets(userid) {
-    console.log('Get my Timesheets ::: ', this.isAdmin, "  userid= ", userid);
-      return this.dataApi
-        .getMyTimesheets(userid)
-        .subscribe(timesheets => {
-          this.allTimesheets = timesheets;
-          console.log('Timeseehts list :::' + JSON.stringify(this.allTimesheets));
-        });
+    console.log('Get my Timesheets ::: ', this.isAdmin, '  userid= ', userid);
+    return this.dataApi
+      .getMyTimesheets(userid)
+      .subscribe(timesheets => {
+        this.allTimesheets = timesheets;
+        console.log('Timeseehts list :::' + JSON.stringify(this.allTimesheets));
+      });
   }
 
   lastStepPlease() {
@@ -111,26 +115,38 @@ export class TimesheetComponent implements OnInit {
 
 
   openPDF(): void {
+
+    // let DATA = document.getElementById('htmlData');
     let DATA = document.getElementById('htmlData');
+    // DATA.style.visibility='visible';
 
-    html2canvas(DATA).then(canvas => {
 
-      let fileWidth = 208;
-      let fileHeight = canvas.height * fileWidth / canvas.width;
+    html2canvas(DATA, {
+        onclone: function (clonedDoc) {
 
-      const FILEURI = canvas.toDataURL('image/png');
-      let PDF = new jsPDF('p', 'mm', 'a4');
-      let position = 0;
-      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+          // I made the div hidden and here I am changing it to visible
+          clonedDoc.getElementById('htmlData').style.visibility = 'visible';
+        }
+      }
+    ).then(canvas => {
 
-      PDF.save('angular-demo.pdf');
+      // The following code is to create a pdf file for the taken screenshot
+      var pdf = new jsPDF('l', 'pt', [canvas.width, canvas.height]);
+      var imgData = canvas.toDataURL('PNG', 1.0);
+      pdf.addImage(imgData, 0, 0, (canvas.width), (canvas.height));
+      pdf.save('converteddoc.pdf');
+
     });
+
+
   }
+
 
   onDeleteTimesheet(idTimesheet: string): void {
     console.log('Timeseehts ID to delete  :::' + idTimesheet);
 
-    const confirmation = confirm('Veuillez confirmer');;
+    const confirmation = confirm('Veuillez confirmer');
+    ;
     if (confirmation) {
       this.dataApi.deleteTimesheet(idTimesheet).then((res) => {
       }).catch(err => {
@@ -147,7 +163,41 @@ export class TimesheetComponent implements OnInit {
   }
 
 
-  onSendTimesheet(id) {
-    
+  onSendTimesheet(timesheet: Timesheet) {
+    console.log(timesheet.id);
+    this.display = true;
+    this.dataApi.selectedTimesheet = Object.assign({}, timesheet);
+    this.dataApi.selectedTimesheetDayActivities = this.dataApi.selectedTimesheet.weekactivities;
+
+    this.dataApi.selectedTimesheetDayActivities.forEach(activity => {
+
+      const date1 = DateTime.fromISO(activity.daystart);
+      const date2 = DateTime.fromISO(activity.dayend).minus({minutes: activity.pause});
+      // nombre d'heures de travail
+      const diff = date2.diff(date1, ['hours']).toObject();
+      const dayminutes = Duration.fromObject(diff).as('minutes');
+      const dayhours = Duration.fromObject(diff).as('hours');
+      let dayratehours = this.dataApi.selectedTimesheet.weekhoursplanned / 5;
+
+      const hsupp = dayhours - dayratehours;
+      activity.dayovertime = {overtime: 0, day: activity.day};
+      if (hsupp > 0) {
+        activity.dayovertime.overtime = hsupp;
+      } else {
+        activity.dayovertime.overtime = 0;
+      }
+      //desynchronisation entre dayoveertimes et dayactivities
+      this.dataApi.selectedTimesheetDayovertimes.push(activity.dayovertime);
+      this.dataApi.selectedTimesheetSumOvertimes += activity.dayovertime.overtime;
+      this.dataApi.selectedTimesheetSumHoursDone += dayhours;
+
+    });
+    //this.templateEventEmitterService.onFirstComponentButtonClick(timesheet);
+    //this.openPDF();
   }
-}
+
+  eventemit(timesheet) {
+    this.templateEventEmitterService.onFirstComponentButtonClick(timesheet);
+  }
+
+    }

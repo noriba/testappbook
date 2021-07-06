@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { DataApiService } from '../../../services/data-api.service';
-import { BookInterface } from '../../../models/book';
-import { AuthService } from '../../../services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {DataApiService} from '../../../services/data-api.service';
+import {BookInterface} from '../../../models/book';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-list-books',
@@ -10,11 +10,12 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class ListBooksComponent implements OnInit {
 
-  constructor(private dataApi: DataApiService, private authService: AuthService) { }
+  constructor(private dataApi: DataApiService, private authService: AuthService) {
+  }
 
   allBooks: BookInterface[];
-   isAdmin: any ;
-  userUid: string ;
+  isAdmin: any;
+  userUid: string;
 
   ngOnInit() {
     this.getCurrentUser();
@@ -27,9 +28,9 @@ export class ListBooksComponent implements OnInit {
         this.userUid = auth.uid;
         this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
           this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
-        })
+        });
       }
-    })
+    });
   }
 
   getListBooks() {

@@ -2,10 +2,12 @@
   border: 1px solid #007bff;
   background: #fff;
 }
+
 .profile-header {
   background: #007bff;
   height: 150px;
 }
+
 .user-detail {
   margin: -50px 0 30px 0;
 }
@@ -14,6 +16,7 @@ img {
   height: 100px;
   width: 100px;
 }
+
 .user-details h5 {
   margin: 15px 0 5px 0;
 }

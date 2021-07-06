@@ -92,7 +92,7 @@
           <th style="width:8rem"></th>
         </tr>
       </ng-template>
-      <ng-template let-dayactivity let-editing="editing" let-ri="rowIndex" pTemplate="body">
+      <ng-template  let-dayactivity let-editing="editing" let-ri="rowIndex" pTemplate="body">
         <tr [pEditableRow]="dayactivity">
           <td>
             <p-cellEditor>
@@ -234,11 +234,11 @@
                     </div>
                     <div class="modal-footer">
                       <button (click)="onRowEditCancel(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)"
-                              class="p-button-danger p-mr-2" data-dismiss="modal"  icon="pi pi-pencil"
+                              class="p-button-danger p-mr-2" data-dismiss="modal" icon="pi pi-pencil"
                               pButton pCancelEditableRow pRipple type="button"> Annuler
                       </button>
                       <button (click)="onRowEditSave(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)"
-                              class="p-button-success p-mr-2"  icon="pi pi-pencil"
+                              class="p-button-success p-mr-2" icon="pi pi-pencil"
                               data-dismiss="modal" pButton pRipple pSaveEditableRow type="button">Valider
                       </button>
 
@@ -256,7 +256,7 @@
 
     <ng-template pTemplate="footer">
       <button (click)="lastStepPlease()" class="ml-2 fixed-bottom" label="Précedent"
-              pButton type="button"  icon="pi pi-angle-double-left" iconPos="left"></button>
+              pButton type="button" icon="pi pi-angle-double-left" iconPos="left"></button>
 
       <button [disabled]="!dataApi.temporaryTimesheet.weekactivities"
               (click)="nextStepPlease()" class="ml-2" label="Suivant"

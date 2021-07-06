@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../../services/auth.service';
 import {UserInterface} from '../../../models/user';
 
 @Component({
@@ -9,7 +9,8 @@ import {UserInterface} from '../../../models/user';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+  }
 
   user: UserInterface = {
     name: '',
@@ -28,7 +29,7 @@ export class ProfileComponent implements OnInit {
         this.user.photoUrl = user.photoURL;
         this.providerId = user.providerData[0].providerId;
       }
-    })
+    });
   }
 
 }

@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyD_K0xyRXmpmfrdH1NVwKt9kaIU3PZjQsw",
-    authDomain: "book-mgr.firebaseapp.com",
-    databaseURL: "https://book-mgr-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "book-mgr",
-    storageBucket: "book-mgr.appspot.com",
-    messagingSenderId: "833107749404",
-    appId: "1:833107749404:web:523117aa78c7357763cdd9",
-    measurementId: "G-Y9DE5SMGD1"
+    apiKey: 'AIzaSyD_K0xyRXmpmfrdH1NVwKt9kaIU3PZjQsw',
+    authDomain: 'book-mgr.firebaseapp.com',
+    databaseURL: 'https://book-mgr-default-rtdb.europe-west1.firebasedatabase.app',
+    projectId: 'book-mgr',
+    storageBucket: 'book-mgr.appspot.com',
+    messagingSenderId: '833107749404',
+    appId: '1:833107749404:web:523117aa78c7357763cdd9',
+    measurementId: 'G-Y9DE5SMGD1'
   }
 };
 
@@ -23,4 +23,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+import 'zone.js/plugins/zone-error'; // Included with Angular CLI.

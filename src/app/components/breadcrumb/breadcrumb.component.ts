@@ -1,10 +1,8 @@
 import {
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
   Injectable,
-  Input,
   OnInit,
   Output,
   Renderer2,
@@ -19,7 +17,8 @@ import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BreadcrumbService} from '../../services/breadcrumb.service';
 import {Steps} from 'primeng/steps';
-
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -50,10 +49,7 @@ export class BreadcrumbComponent implements OnInit {
               private dataApi: DataApiService,
               private breadservice: BreadcrumbService,
               private authService: AuthService,
-              private renderer: Renderer2,
-              private router: Router,
-              private route: ActivatedRoute,
-              private cd: ChangeDetectorRef) {
+              private renderer: Renderer2) {
 
   }
 
@@ -96,15 +92,13 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   stepperChanged(step) {
-/*    this.activeIndexChange.emit(step);
-    this.onChange.emit({originalEvent: event, index: step});
-    let newmenu: MenuItem;
-    this.stepper.model;*/
+    /*    this.activeIndexChange.emit(step);
+        this.onChange.emit({originalEvent: event, index: step});
+        let newmenu: MenuItem;
+        this.stepper.model;*/
     // console.log('stepper change ::: this.stepper.activeIndex = ' + this.stepper.activeIndex);
     // console.log('stepper change ::: this.activeIndex = ' + this.activeIndex);
   }
-
-
 
 
   length: any = 0;
@@ -155,7 +149,21 @@ export class BreadcrumbComponent implements OnInit {
     this.home = {icon: 'pi pi-home'};
   }
 
-  openPDF() {
+  openPDF(): void {
+    let DATA = document.getElementById('htmlData');
+
+    html2canvas(DATA).then(canvas => {
+
+      let fileWidth = 208;
+      let fileHeight = canvas.height * fileWidth / canvas.width;
+
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+
+      PDF.save('angular-demo.pdf');
+    });
   }
 
   setsteps() {

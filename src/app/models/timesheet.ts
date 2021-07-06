@@ -1,6 +1,6 @@
-import { Entity } from '../services/firestore-crud.service';
+import {Entity} from '../services/firestore-crud.service';
 
-export class Timesheet implements Entity  {
+export class Timesheet implements Entity {
   id?: string;
   userUid?: string;
   year?: number;
@@ -44,6 +44,7 @@ export interface Statusmanager {
   signaturedate?: string;
   signature?: string;
 }
+
 export interface Day {
   name: string,
   code: string

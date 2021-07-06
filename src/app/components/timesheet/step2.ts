@@ -8,7 +8,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {Product} from '../../models/products';
 import {ProductService} from '../../services/product.service';
-import {Dayactivity, Dayovertime, Timesheet} from '../../models/timesheet';
+import {Dayactivity, Timesheet} from '../../models/timesheet';
 
 
 @Component({
@@ -51,6 +51,9 @@ export class Step2 implements OnInit {
       'Dimanche'
     ];
   }
+
+
+
 
   ngOnInit() {
     Promise.resolve(null).then(() => this.child.activeIndex = 1);

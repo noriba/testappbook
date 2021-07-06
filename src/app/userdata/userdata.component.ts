@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DataApiService} from '../services/data-api.service';
 import {AuthService} from '../services/auth.service';
 import {UserData} from '../models/userdata';
 import {UserDataService} from '../services/user-data.service';
-import _ from 'lodash';
+import {Roles} from '../models/roles';
 
 @Component({
   selector: 'app-userdata',
@@ -16,10 +15,13 @@ export class UserDataComponent implements OnInit {
   private msgError: any;
   private isError: boolean;
   private btnClose: any;
+   roles: Roles;
+   rolesList: string[];
 
   constructor(
     public userDataService: UserDataService,
     private authService: AuthService) {
+
   }
 
   allUserDatas: UserData[];
@@ -29,6 +31,10 @@ export class UserDataComponent implements OnInit {
   ngOnInit() {
     this.getCurrentUser();
     this.getListUserDatas();
+    this.roles={ admin:true,editor:true}
+    this.rolesList = Object.keys(this.roles);
+    console.log(this.rolesList);
+    console.log(this.roles);
   }
 
   getCurrentUser() {
@@ -71,10 +77,10 @@ export class UserDataComponent implements OnInit {
   }
 
   createNewUserData(userData) {
-      Object
+    Object
       .keys(userData.value)
-      .forEach(key => userData.value[key] === undefined?
-        userData.value[key]='':userData.value[key])
+      .forEach(key => userData.value[key] === undefined ?
+        userData.value[key] = '' : userData.value[key]);
     console.log('UserData', userData.value);
 
     //userData = {...['']};

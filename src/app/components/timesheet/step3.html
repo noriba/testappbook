@@ -16,13 +16,12 @@
           <th style="width:8rem"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" *ngIf="!dayovertimes?.length">
-      <tr class="text-center">
-        Aucune données
-
-      </tr>
+      <ng-template pTemplate="body" *ngIf="!dayovertimes">
+        <tr class="text-center">
+          Aucune données
+        </tr>
       </ng-template>
-      <ng-template *ngIf="dayovertimes" pTemplate="body" let-dayovertime let-editing="editing" let-ri="rowIndex">
+      <ng-template [ngIf]="dayovertimes" pTemplate="body" let-dayovertime let-editing="editing" let-ri="rowIndex">
         <tr [pEditableRow]="dayovertime">
           <td>
             <p-cellEditor>
@@ -83,52 +82,59 @@
 
             <div *ngIf="editing" class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                  aria-labelledby="exampleModalLabel"
-                 aria-hidden="true"><form id="formModal">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Activitée du jour</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <form class="formModal">
+                 aria-hidden="true">
+              <form id="formModal">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Activitée du jour</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form class="formModal">
 
-                      <div class="form-group ">
-                        <label class="col-form-label d-block text-left">Jour :  {{this.dataApi.selectedDayOvertime.day}}</label>
+                        <div class="form-group ">
+                          <label class="col-form-label d-block text-left">Jour
+                            :  {{this.dataApi.selectedDayOvertime.day}}</label>
 
 
-                        <label class="col-form-label d-block text-left ">Heures supplementaires : {{this.dataApi.selectedDayOvertime.overtime}}</label>
+                          <label class="col-form-label d-block text-left ">Heures supplementaires
+                            : {{this.dataApi.selectedDayOvertime.overtime}}</label>
 
-                      </div>
+                        </div>
 
-                      <div class="form-group">
-                        <label class="col-form-label">Raison :</label>
-                        <input class="form-control" name="reason" type="text"
-                               [(ngModel)]="this.dataApi.selectedDayOvertime.reason"
-                               required>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-form-label">Validation:</label>
-                        <input class="form-control" name="overtimestatus" type="text"
-                               [(ngModel)]="this.dataApi.selectedDayOvertime.overtimestatus"
-                               required>
-                      </div>
+                        <div class="form-group">
+                          <label class="col-form-label">Raison :</label>
+                          <input class="form-control" name="reason" type="text"
+                                 [(ngModel)]="this.dataApi.selectedDayOvertime.reason"
+                                 required>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-form-label">Validation:</label>
+                          <input class="form-control" name="overtimestatus" type="text"
+                                 [(ngModel)]="this.dataApi.selectedDayOvertime.overtimestatus"
+                                 required>
+                        </div>
 
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="p-button-danger p-mr-2" pButton pRipple pCancelEditableRow data-dismiss="modal"
-                            (click)="onRowEditCancel(this.dataApi.selectedDayOvertime,this.dataApi.selectedOtRow)">Annuler
-                    </button>
-                    <button type="button" class="p-button-success " pButton pRipple pSaveEditableRow
-                            (click)="onRowEditSave(this.dataApi.selectedDayOvertime, this.dataApi.selectedOtRow)" data-dismiss="modal">Valider
-                    </button>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="p-button-danger p-mr-2" pButton pRipple pCancelEditableRow
+                              data-dismiss="modal"
+                              (click)="onRowEditCancel(this.dataApi.selectedDayOvertime,this.dataApi.selectedOtRow)">
+                        Annuler
+                      </button>
+                      <button type="button" class="p-button-success " pButton pRipple pSaveEditableRow
+                              (click)="onRowEditSave(this.dataApi.selectedDayOvertime, this.dataApi.selectedOtRow)"
+                              data-dismiss="modal">Valider
+                      </button>
 
+                    </div>
                   </div>
                 </div>
-              </div></form>
+              </form>
             </div>
 
 
