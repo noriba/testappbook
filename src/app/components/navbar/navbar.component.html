@@ -1,6 +1,7 @@
 <nav class="navbar sticky-top sticky-top  navbar-expand-md navbar-dark  bg-primary">
   <a class="navbar-brand" routerLink="/">{{app_name}} <span class="" *ngIf="isAdmin">(Administrateur) </span></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar"
+  <button class="navbar-toggler" type="button"
+          data-toggle="collapse" data-target="#mainNavbar"
           aria-controls="mainNavbar"
           aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -8,45 +9,47 @@
 
   <div class="collapse navbar-collapse" id="mainNavbar">
     <ul class="navbar-nav mr-auto">
-            <li class="nav-item" *ngIf="isLogged">
+
+       <!--     <li class="nav-item" *ngIf="isLogged">
               <a class="nav-link" routerLink="/offers">Offers
               </a>
-            </li>
+            </li>-->
 
       <li class="nav-item" *ngIf="isLogged">
-        <a class="nav-link" routerLink="/timesheet">Feuilles de temps
+        <a class="nav-link" routerLink="/timesheet" data-toggle="collapse" data-target="#mainNavbar">Feuilles de temps
         </a>
       </li>
-      <li class="nav-item" *ngIf="isLogged">
+   <!--   <li class="nav-item" *ngIf="isLogged">
         <a class="nav-link" routerLink="/template">Template
         </a>
       </li>
             <li class="nav-item" *ngIf="isLogged">
               <a class="nav-link" routerLink="/stepsdemo">Timesheetdemo
               </a>
-            </li>
+            </li>-->
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" *ngIf="!isLogged">
-        <a class="nav-link" routerLink="/user/register">Créer un compte
+        <a class="nav-link" routerLink="/user/register" data-toggle="collapse" data-target="#mainNavbar">Créer un compte
         </a>
+      </li>
+
+   <!--         <li class="nav-item" *ngIf="isLogged">
+              <a class="nav-link" routerLink="/my-books">My Books</a>
+            </li>-->
+      <li class="nav-item" *ngIf="isLogged">
+        <a class="nav-link" routerLink="/userdata" data-toggle="collapse" data-target="#mainNavbar">Collaborateurs</a>
       </li>
       <li class="nav-item" *ngIf="isLogged">
 
-        <a class="nav-link" routerLink="/user/profile">Profile</a>
-      </li>
-            <li class="nav-item" *ngIf="isLogged">
-              <a class="nav-link" routerLink="/my-books">My Books</a>
-            </li>
-      <li class="nav-item" *ngIf="isLogged">
-        <a class="nav-link" routerLink="/userdata">Collaborateurs</a>
+        <a class="nav-link" routerLink="/user/profile" data-toggle="collapse" data-target="#mainNavbar">Profile</a>
       </li>
       <li class="nav-item" *ngIf="!isLogged">
-        <a class="nav-link" routerLink="/user/login">Connexion
+        <a class="nav-link" routerLink="/user/login" data-toggle="collapse" data-target="#mainNavbar">Connexion
         </a>
       </li>
       <li class="nav-item" *ngIf="isLogged">
-        <a href="#" class="nav-link" (click)="onLogout()">Se déconnecter
+        <a href="#" class="nav-link" (click)="onLogout()" data-toggle="collapse" data-target="#mainNavbar">Se déconnecter
         </a>
       </li>
     </ul>

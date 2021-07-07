@@ -48,9 +48,8 @@ export class Step4 implements OnInit {
     });
     console.log('Vous avez cumulé cette semaine >> ' + this.weekovertime + ' heures supp');
     this.weekhours = (this.weekhoursplanned / 5) * this.dayactivities.length + this.weekovertime;
-
     console.log('Vous avez cumulé cette semaine >> ' + this.weekhours + ' heures travaillées');
-    this.dataApi.temporaryTimesheet.weekhoursdone = this.weekhours;
+    this.dataApi.temporaryTimesheet.weekhoursdone = Number(this.weekhours.toFixed(2));
     this.dataApi.temporaryTimesheet.statusmanager.comment = 'hello';
     this.dataApi.temporaryTimesheet.statusmanager.signature = 'hello';
     this.dataApi.temporaryTimesheet.statusmanager.signaturedate = 'hello';

@@ -169,25 +169,25 @@ export class BreadcrumbComponent implements OnInit {
   setsteps() {
     this.steps$ = [
       {
-        label: 'Identité',
+        label: 'Etape 1',
         command: (event: any) => {
           this.activeIndex = 0;
           this.messageService.add({severity: 'info', summary: 'Etape 1', detail: event.item.label});
         }
       }, {
-        label: 'Pointage',
+        label: 'Etape 2',
         command: (event: any) => {
           this.activeIndex = 1;
           this.messageService.add({severity: 'info', summary: 'Etape 2', detail: event.item.label});
         }
       }, {
-        label: 'Heures supp',
+        label: 'Etape 3',
         command: (event: any) => {
           this.activeIndex = 2;
           this.messageService.add({severity: 'info', summary: 'Etape 3', detail: event.item.label});
         }
       }, {
-        label: 'Signature',
+        label: 'Etape 4',
         command: (event: any) => {
           this.activeIndex = 3;
           this.messageService.add({severity: 'info', summary: 'Etape 4', detail: event.item.label});

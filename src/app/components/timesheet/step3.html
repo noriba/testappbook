@@ -8,9 +8,9 @@
     </ng-template>
     <p-table [value]="dayovertimes" dataKey="day" editMode="row">
       <ng-template pTemplate="header">
-        <tr>
-          <th>Jour</th>
-          <th>Heures supp</th>
+        <tr class="align-text-top">
+          <th >Jour</th>
+          <th class="text-truncate">Heures supp</th>
           <th>Motifs</th>
           <th>Validées</th>
           <th style="width:8rem"></th>
@@ -22,7 +22,7 @@
         </tr>
       </ng-template>
       <ng-template [ngIf]="dayovertimes" pTemplate="body" let-dayovertime let-editing="editing" let-ri="rowIndex">
-        <tr [pEditableRow]="dayovertime">
+        <tr class="text-truncate" [pEditableRow]="dayovertime">
           <td>
             <p-cellEditor>
 
@@ -52,7 +52,7 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input pInputText type="text" [(ngModel)]="dayovertime.overtimestatus" required>
+                <input pInputText type="checkbox" [(ngModel)]="dayovertime.overtimestatus" required>
               </ng-template>
               <ng-template pTemplate="output">
                 {{dayovertime.overtimestatus}}
@@ -113,7 +113,7 @@
                         </div>
                         <div class="form-group">
                           <label class="col-form-label">Validation:</label>
-                          <input class="form-control" name="overtimestatus" type="text"
+                          <input class="form-control" name="overtimestatus" type="checkbox"
                                  [(ngModel)]="this.dataApi.selectedDayOvertime.overtimestatus"
                                  required>
                         </div>
@@ -145,7 +145,7 @@
     </p-table>
 
     <ng-template pTemplate="footer">
-      <button class="ml-2 fixed-bottom" pButton type="button" label="< Précedent" (click)="lastStepPlease()"></button>
+      <button class=" fixed-bottom" pButton type="button" label="< Précedent" (click)="lastStepPlease()"></button>
 
       <button class="ml-2" pButton type="button" label="Suivant >" (click)="nextStepPlease()"></button>
     </ng-template>

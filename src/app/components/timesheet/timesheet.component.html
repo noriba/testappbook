@@ -12,27 +12,27 @@
     <table class="table table-hover ">
       <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Prenom</th>
-        <th scope="col">Nom</th>
-        <th scope="col">Site</th>
-        <th scope="col">Semaine</th>
-        <th scope="col">Heures travaillées</th>
-        <th scope="col">Regime horaire</th>
+        <th class="text-truncate" scope="col">#</th>
+        <th class="text-truncate" scope="col">Prenom</th>
+        <th class="text-truncate" scope="col">Nom</th>
+        <th class="text-truncate" scope="col">Site</th>
+        <th class="text-truncate" scope="col">Semaine</th>
+        <th class="text-truncate" scope="col">Heures travaillées</th>
+        <th class="text-truncate" scope="col">Regime horaire</th>
         <th></th>
 
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let timesheet of allTimesheets; index as i">
-        <th scope="row">{{i + 1}}</th>
-        <td>{{timesheet.firstname}}</td>
-        <td>{{timesheet.lastname}}</td>
-        <td>{{timesheet.site}}</td>
-        <td>{{timesheet.week}}</td>
-        <td>{{timesheet.weekhoursdone}}</td>
-        <td>{{timesheet.weekhoursplanned}}</td>
-        <td>
+      <tr  *ngFor="let timesheet of allTimesheets; index as i">
+        <th  scope="row">{{i + 1}}</th>
+        <td class="text-truncate">{{timesheet.firstname}}</td>
+        <td class="text-truncate">{{timesheet.lastname}}</td>
+        <td class="text-truncate">{{timesheet.site}}</td>
+        <td class="text-truncate">{{timesheet.week}}</td>
+        <td class="text-truncate">{{timesheet.weekhoursdone}}</td>
+        <td class="text-truncate">{{timesheet.weekhoursplanned}}</td>
+        <td class="text-truncate">
           <button
             *ngIf="timesheet.userUid == userUid || isAdmin == true; else noOwner"
             class="btn btn-primary p-mr-2" pButton icon="pi pi-pencil"
@@ -48,7 +48,7 @@
 
           <button
             *ngIf="isAdmin == true; else noAdmin"
-            class="btn btn-danger p-button-danger p-mr-2" pButton
+            class="btn btn-danger p-button-danger p-mr-2 " pButton
             icon="pi pi-times" (click)="onDeleteTimesheet(timesheet.id)">
           </button>
           <ng-template #noAdmin>
