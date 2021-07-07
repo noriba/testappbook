@@ -1,7 +1,7 @@
-<section class="row ">
+<section class="tab-content">
 
   <div class="col-lg-md-4 text-right p-2">
-    <button *ngIf="isAdmin == true; "  class="btn btn-primary my-2 my-xl-2  " pButton
+    <button *ngIf="isAdmin == true; "  class="btn btn-primary my-2 my-xl-2 d-block btn-block-xs-only" pButton
             data-toggle="modal" (click)="resetSelectedUserData()"
             data-target="#modalUserData"
             label="Collaborateur"><i class="pi pi-plus pr-2"> </i>
@@ -135,7 +135,7 @@
         <th scope="col">Site</th>
         <th scope="col">Fonction</th>
         <th scope="col">Agence</th>
-        <th style="width: 8rem"></th>
+        <th style="width:10rem"></th>
 
       </tr>
       </thead>
@@ -157,8 +157,7 @@
         <td>{{UserData.site}}</td>
         <td>{{UserData.function}}</td>
         <td>{{UserData.agency}}</td>
-        <td>
-
+        <td class="custom-control-inline">
           <button *ngIf="UserData.userUid == userUid || isAdmin == true; else noOwner"
                   class="btn btn-primary p-mr-2" icon="pi pi-pencil" pButton
                   data-toggle="modal" data-target="#modalUserData"

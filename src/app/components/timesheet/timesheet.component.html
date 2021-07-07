@@ -1,7 +1,7 @@
-<section class="row ">
+<section class="tab-content">
   <div class="col-lg-md-4 text-right p-2">
 
-    <button class="btn btn-primary my-2 my-xl-2 " pButton type="button"
+    <button class="btn btn-primary my-2 my-xl-2 d-block btn-block-xs-only" pButton type="button"
             label="Feuille de temps"
             (click)="nextStepPlease()"><i class="pi pi-plus pr-2"> </i>
     </button>
@@ -19,7 +19,7 @@
         <th class="text-truncate" scope="col">Semaine</th>
         <th class="text-truncate" scope="col">Heures travaillées</th>
         <th class="text-truncate" scope="col">Regime horaire</th>
-        <th></th>
+        <th style="position: sticky; z-index: 9"></th>
 
       </tr>
       </thead>
@@ -32,7 +32,7 @@
         <td class="text-truncate">{{timesheet.week}}</td>
         <td class="text-truncate">{{timesheet.weekhoursdone}}</td>
         <td class="text-truncate">{{timesheet.weekhoursplanned}}</td>
-        <td class="text-truncate">
+        <td class="text-truncate " style="position: sticky;right:-5px;" >
           <button
             *ngIf="timesheet.userUid == userUid || isAdmin == true; else noOwner"
             class="btn btn-primary p-mr-2" pButton icon="pi pi-pencil"
