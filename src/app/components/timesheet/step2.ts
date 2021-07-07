@@ -26,7 +26,7 @@ export class Step2 implements OnInit {
   items: MenuItem[];
   steps: MenuItem[];
   home: MenuItem;
-  activeIndex: number;
+  activeIndex: number=1;
   jours: string[];
   products: Product[];
   statuses: SelectItem[];
@@ -178,5 +178,14 @@ export class Step2 implements OnInit {
     console.log('new activity to create :' + JSON.stringify(data.value));
 
 
+  }
+
+  onRowDelete(dayactivity: Dayactivity, index: number) {
+
+    this.dayactivities.forEach( (item, index) => {
+      if(item === dayactivity) this.dayactivities.splice(index,1);
+    });
+    //delete this.dayactivities[index] ;
+console.log(JSON.stringify(this.dayactivities))
   }
 }

@@ -46,8 +46,12 @@ export class TimesheetComponent implements OnInit {
   ngOnInit() {
 
     this.authService.currentUser$.subscribe(userid => {
-      console.log(userid.uid);
-      this.userUidSub.next(userid.uid);
+      if (userid) {
+        this.isLogged = true;
+        this.userUidSub.next(userid.uid);
+      }
+      this.isLogged = false;
+
     });
 
     this.getCurrentUser();

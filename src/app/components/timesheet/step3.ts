@@ -63,7 +63,7 @@ export class Step3 implements OnInit {
       const hsupp = dayhours - this.dayratehours;
       activity.dayovertime = {overtime: 0, day: activity.day};
       if (hsupp > 0) {
-        activity.dayovertime.overtime = hsupp;
+        activity.dayovertime.overtime = Number(hsupp.toFixed(2)) ;
       } else {
         activity.dayovertime.overtime = 0;
       }
