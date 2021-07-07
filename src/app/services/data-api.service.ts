@@ -261,7 +261,7 @@ export class DataApiService {
     console.log('Temporary timesheet created :' +
       JSON.stringify(userData));
 
-    let tempTimesheet: Timesheet = {
+    this.temporaryTimesheet = {
       year: new Date().getFullYear(),
       week: this.getNumberOfWeek(),
       matricule: userData?.matricule,
@@ -275,7 +275,6 @@ export class DataApiService {
       id: null,
       userUid: userData?.userUid
     };
-    this.temporaryTimesheet = tempTimesheet;
   }
 
   createNewtemporaryTimesheet(timesheet: Timesheet) {

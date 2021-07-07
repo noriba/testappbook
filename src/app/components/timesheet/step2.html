@@ -1,4 +1,4 @@
-<div class="stepsdemo-content">
+<div class="stepsdemo-content ">
 
   <app-breadcrumb></app-breadcrumb>
 
@@ -82,19 +82,19 @@
     <p-table [value]="dayactivities" dataKey="id" editMode="row">
 
       <ng-template pTemplate="header">
-        <tr>
-          <th>Jour</th>
-          <th>Immatriculation</th>
-          <th>Kilometrage</th>
+        <tr class="align-text-top">
+          <th style="min-width: fit-content">Jour</th>
+          <th class="text-truncate" >Immatriculation</th>
+          <th class="text-truncate" >Kilometrage</th>
           <th>Debut</th>
           <th>Fin</th>
           <th>Pause</th>
-          <th style="width:8rem"></th>
+          <th style=""></th>
         </tr>
       </ng-template>
       <ng-template  let-dayactivity let-editing="editing" let-ri="rowIndex" pTemplate="body">
         <tr [pEditableRow]="dayactivity">
-          <td>
+          <td style="">
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input [(ngModel)]="dayactivity.day" pInputText type="text">
@@ -154,23 +154,20 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td style="text-align:center">
-            <button (click)="onRowEditSave(dayactivity,this.dataApi.selectedActRow)" *ngIf="editing"
-                    class="p-button-rounded p-button-text p-button-success p-mr-2" icon="pi pi-check"
-                    pButton pRipple
-                    pSaveEditableRow
-                    type="button"
-            ></button>
-            <button (click)="onRowEditCancel(dayactivity, ri)" *ngIf="editing"
-                    class="p-button-rounded p-button-text p-button-danger" icon="pi pi-times"
-                    pButton pCancelEditableRow
-                    pRipple
-                    type="button"
-            ></button>
+          <td style="">
+
             <button (click)="onRowEditInit(dayactivity, ri)" *ngIf="!editing" class="p-button-rounded p-button-text"
                     data-target="#exampleModal"
                     data-toggle="modal"
                     icon="pi pi-pencil"
+                    pButton pInitEditableRow
+                    pRipple
+                    type="button"
+            ></button>
+            <button (click)="onRowDelete(dayactivity, ri)" *ngIf="!editing" class="p-button-rounded p-button-text"
+                    data-target="#exampleModal"
+                    data-toggle="modal"
+                    icon="pi pi-times"
                     pButton pInitEditableRow
                     pRipple
                     type="button"
@@ -234,11 +231,11 @@
                     </div>
                     <div class="modal-footer">
                       <button (click)="onRowEditCancel(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)"
-                              class="p-button-danger p-mr-2" data-dismiss="modal" icon="pi pi-pencil"
+                              class="p-button-danger p-mr-2" data-dismiss="modal"
                               pButton pCancelEditableRow pRipple type="button"> Annuler
                       </button>
                       <button (click)="onRowEditSave(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)"
-                              class="p-button-success p-mr-2" icon="pi pi-pencil"
+                              class="p-button-success p-mr-2"
                               data-dismiss="modal" pButton pRipple pSaveEditableRow type="button">Valider
                       </button>
 
@@ -255,12 +252,12 @@
     </p-table>
 
     <ng-template pTemplate="footer">
-      <button (click)="lastStepPlease()" class="ml-2 fixed-bottom" label="Précedent"
-              pButton type="button" icon="pi pi-angle-double-left" iconPos="left"></button>
+      <button (click)="lastStepPlease()" class=" fixed-bottom" label="Précedent"
+              pButton type="button" icon="pi pi-angle-left" iconPos="left"></button>
 
       <button [disabled]="!dataApi.temporaryTimesheet.weekactivities"
               (click)="nextStepPlease()" class="ml-2" label="Suivant"
-              pButton type="button" icon="pi pi-angle-double-right" iconPos="right"></button>
+              pButton type="button" icon="pi pi-angle-right" iconPos="right"></button>
     </ng-template>
 
   </p-card>

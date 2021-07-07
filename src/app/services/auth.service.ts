@@ -6,6 +6,8 @@ import {Injectable} from '@angular/core';
 import {auth} from 'firebase';
 import * as firebase from 'firebase/app';
 import {UserData} from '../models/userdata';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+
 
 
 @Injectable({
@@ -29,6 +31,7 @@ export class AuthService {
   userRef;
 
   constructor(
+    private router: Router,
     private afsAuth: AngularFireAuth,
     private afs: AngularFirestore) {
     this.subscription = this.afsAuth
@@ -183,6 +186,8 @@ export class AuthService {
     return this.afsAuth.auth.signOut()
       .then(res => {
         console.log('Succes onLogout() :: ' + res);
+        this.router.navigate(['/user/login']);
+
       })
       .catch(error => {
         console.log('Error onLogout() :: ' + error);
