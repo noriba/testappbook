@@ -9,30 +9,34 @@
 
   <div class="table-responsive ">
 
-    <table class="table table-hover ">
+    <table class="table table-hover p-p-0 p-m-0">
       <thead>
       <tr>
         <th class="text-truncate" scope="col">#</th>
-        <th class="text-truncate" scope="col">Prenom</th>
-        <th class="text-truncate" scope="col">Nom</th>
+        <th *ngIf="isAdmin" class="text-truncate" scope="col">Prenom</th>
+        <th *ngIf="isAdmin" class="text-truncate" scope="col">Nom</th>
         <th class="text-truncate" scope="col">Site</th>
+        <th class="text-truncate" scope="col">Année</th>
         <th class="text-truncate" scope="col">Semaine</th>
         <th class="text-truncate" scope="col">Heures travaillées</th>
         <th class="text-truncate" scope="col">Regime horaire</th>
-        <th style="position: sticky; z-index: 9"></th>
+        <th class="text-truncate" scope="col">Contrat</th>
+        <th ></th>
 
       </tr>
       </thead>
-      <tbody>
-      <tr  *ngFor="let timesheet of allTimesheets; index as i">
+      <tbody class="" >
+      <tr *ngFor="let timesheet of allTimesheets; index as i">
         <th  scope="row">{{i + 1}}</th>
-        <td class="text-truncate">{{timesheet.firstname}}</td>
-        <td class="text-truncate">{{timesheet.lastname}}</td>
+        <td *ngIf="isAdmin" class="text-truncate">{{timesheet.firstname}}</td>
+        <td *ngIf="isAdmin" class="text-truncate">{{timesheet.lastname}}</td>
         <td class="text-truncate">{{timesheet.site}}</td>
+        <td class="text-truncate">{{timesheet.year}}</td>
         <td class="text-truncate">{{timesheet.week}}</td>
         <td class="text-truncate">{{timesheet.weekhoursdone}}</td>
         <td class="text-truncate">{{timesheet.weekhoursplanned}}</td>
-        <td class="text-truncate " style="position: sticky;right:-5px;" >
+        <td class="text-truncate">{{timesheet.contracttype}}</td>
+        <td class="text-truncate "  >
           <button
             *ngIf="timesheet.userUid == userUid || isAdmin == true; else noOwner"
             class="btn btn-primary p-mr-2" pButton icon="pi pi-pencil"

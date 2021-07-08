@@ -4,7 +4,12 @@ import {Router} from '@angular/router';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
 import {Observable} from 'rxjs/internal/Observable';
-
+import {UserDataService} from '../../../services/user-data.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {NgForm} from '@angular/forms';
++ 6-7
+// import custom validator to validate that password and confirm password fields match
+//import { MustMatch } from './_helpers/must-match.validator';
 
 @Component({
   selector: 'app-register',
@@ -14,10 +19,16 @@ import {Observable} from 'rxjs/internal/Observable';
 export class RegisterComponent implements OnInit {
   fb: string;
 
-  constructor(private router: Router, private authService: AuthService, private storage: AngularFireStorage) {
+  constructor(private router: Router,
+              private authService: AuthService,
+              public userDataService: UserDataService,
+              private formBuilder: FormBuilder,
+              private storage: AngularFireStorage) {
   }
+  @ViewChild('formRegister') ngForm: NgForm;
 
   @ViewChild('imageUser') inputImageUser: ElementRef;
+  submitted = false;
 
   public email: string = '';
   public password: string = '';
@@ -28,6 +39,7 @@ export class RegisterComponent implements OnInit {
   isError: any;
 
   ngOnInit() {
+
   }
 
 
@@ -38,9 +50,13 @@ export class RegisterComponent implements OnInit {
     ref: '',
     task: ''
   };
+  get f() { return this.ngForm.controls; }
 
 
   onUpload(event) {
+
+
+
     this.imageLoad.id = Math.random().toString(36).substring(2);
     this.imageLoad.file = event.target.files[0];
     this.imageLoad.filePath = `uploads/profile_${this.imageLoad.id}`;
@@ -58,11 +74,39 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  onAddUser() {
-    this.authService.registerUser(this.email, this.password)
+  onAddUser(formRegister) {
+
+    this.submitted = true;
+
+    console.log(formRegister.value.email);
+    console.log(formRegister.value.password);
+    this.authService.registerUser(formRegister.value.email, formRegister.value.password)
       .then((res) => {
+        console.log('nouveau firebase User ::: ' + JSON.stringify(res));
+
+
         this.authService.isAuth().subscribe(user => {
           if (user) {
+            console.log('mettre a jour ::: ' + user.uid);
+            console.log('mettre a jour ::: ' + formRegister.value);
+            console.log('mettre a jour ::: ' + JSON.stringify(formRegister.value));
+
+            formRegister.value.userUid = user.uid;
+            //userData.value.portada = this.inputImageUser.nativeElement.value;
+            this.userDataService.updateUserData(formRegister.value)
+              .then((res) => {
+                console.log('addUserData res ::: ' + res);
+
+                formRegister.resetForm();
+              })
+              .catch(err => {
+                console.log('error registration ::: ' + err);
+
+                this.isError = true;
+                this.msgError = err.message;
+              });
+
+
             user.updateProfile({
               displayName: '',
               photoURL: this.inputImageUser.nativeElement.value
