@@ -7,7 +7,8 @@ import {auth} from 'firebase';
 import * as firebase from 'firebase/app';
 import {UserData} from '../models/userdata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-
+import {returnIsFirstChange} from '../components/breadcrumb/wizard.module';
+import { first } from 'rxjs/operators';
 
 
 @Injectable({
@@ -84,15 +85,35 @@ export class AuthService {
   getCurrentUser() {
     this.isAuth().subscribe(auth => {
       if (auth) {
+        console.log("id de firebase "+ auth.uid)
         this.isLogged = true;
         this.userUid = auth.uid;
-        this.isUserAdmin(this.userUid)
-          .subscribe(userRole => {
-            this.isAdmin = Object
-              .assign({}, userRole.roles)
-              .hasOwnProperty('admin');
-            console.log('ADMINISTRATEUR :::' + this.isAdmin);
-          });
+        this.getMyUserData(this.userUid).subscribe(
+          user => {
+            if (user) {
+              console.log('user correctly registred ' + user.id);
+            } else {
+              console.log('user not registred ' + user.id);
+            }
+            this.isUserAdmin(user.id)
+              .subscribe(userRole => {
+                  console.log('is useradmin??? :::' + userRole);
+
+                  this.isAdmin = Object
+                    .assign({}, userRole.roles)
+                    .hasOwnProperty('admin');
+                  console.log('ADMINISTRATEUR :::' + this.isAdmin);
+                },
+                err => console.log(err),
+                () => console.log('request completed.'));
+          },
+          error => { console.log('request error.',error)
+          },
+          () => { console.log('request error completed.')
+          }
+        );
+
+        console.log('request completed.');
       } else {
         this.isLogged = false;
       }
@@ -107,6 +128,7 @@ export class AuthService {
   }
 
   isUserAdmin(userid: string) {
+    console.log('check roles admin ' + userid);
     return this.afs.doc<UserData>(`userdatas/${userid}`)
       .valueChanges();
   }
@@ -152,12 +174,24 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.createUserWithEmailAndPassword(email, pass)
         .then(userData => {
-          console.log('registerUser ::: userData ' + userData.user.photoURL);
+          console.log('registerUser ::: firebase user ' + userData.user.uid);
           this.imageprofile = userData.user.photoURL;
-          return (resolve(userData) , this.updateUserData(userData.user));
+          return (resolve(userData) );
         }).catch(err => console.log(reject(err)));
     });
   }
+
+  /*
+    deleteUser(uid: string) {
+      return new Promise((resolve, reject) => {
+        this.afsAuth.auth.createUserWithEmailAndPassword(email, pass)
+          .then(userData => {
+            console.log('registerUser ::: firebase user ' + userData.user.uid);
+            this.imageprofile = userData.user.photoURL;
+            return (resolve(userData) );
+          }).catch(err => console.log(reject(err)));
+      });
+    }*/
 
   loginEmailUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
@@ -208,6 +242,7 @@ export class AuthService {
     userRef = this.afs.doc(`userdatas/${user.uid}`);
     const data: UserData = {
       id: user.uid,
+      userUid: user.uid,
       email: user.email,
       roles: {
         editor: true
@@ -232,5 +267,23 @@ export class AuthService {
     return userRef.set(data, {merge: true});
   }
 
+  getMyUserData(useruid) {
+    console.log("getting user data of "+ useruid);
+
+    return this.afs.collection<UserData>('userdatas').snapshotChanges().pipe(first())
+      .pipe(map(changes => {
+
+        return changes.map(action => {
+          const data = action.payload.doc.data() as UserData;
+          data.id = action.payload.doc.data().id;
+          return data;
+        }).filter(data => {
+          data.userUid == useruid?console.log("searching success for "+ data.userUid):
+            console.log("searching ... "+ data.userUid);
+
+          return data.userUid == useruid;
+        }).pop();
+      }));
+  }
 
 }

@@ -59,6 +59,7 @@ import {TableModule} from 'primeng/table';
 import {PanelModule} from 'primeng/panel';
 import {UserDataComponent} from './userdata/userdata.component';
 import {TemplateEventEmitterService} from './services/template-event-emitter.service';
+import {PasswordModule} from 'primeng/password';
 
 
 @NgModule({
@@ -92,6 +93,7 @@ import {TemplateEventEmitterService} from './services/template-event-emitter.ser
     UserDataComponent
   ],
   imports: [
+    PasswordModule,
     PanelModule,
     FieldsetModule,
     HttpClientModule,

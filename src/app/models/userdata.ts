@@ -20,8 +20,9 @@ export interface UserData {
   sectorcode?: string;
   weekhoursplanned?: number;
   password?: string;
+  confirmPassword?: string;
   photoUrl?: string;
-  roles?: Roles;
+  roles: Roles;
 }
 
 let USERS;

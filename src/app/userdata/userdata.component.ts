@@ -99,6 +99,8 @@ export class UserDataComponent implements OnInit {
     } else {
       // Update
       //  userData.value.portada = this.inputImageUser.nativeElement.value;
+      userData.value.userUid = this.userUid;
+
       this.userDataService.updateUserData(userData.value)
         .then(() => {
           userData.resetForm();
