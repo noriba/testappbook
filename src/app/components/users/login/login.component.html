@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
         <div class="card_login">
-          <div class="card">
+          <div class="card p-shadow-1">
             <div class="card-body text-center">
               <form #formLogin="ngForm" (submit)="onLogin()">
                 <h1 class="h3 mb-3 font-weight-normal" *ngIf="!isError">Connexion</h1>
@@ -17,6 +17,7 @@
                 <div class="form-group">
                   <input [(ngModel)]="password" type="password" id="password" name="password" class="form-control"
                          placeholder="Password" required>
+
                 </div>
                 <button type="submit" class="btn btn-lg btn-primary btn-block">Connexion</button>
                 <div class="form-group">
@@ -25,11 +26,11 @@
 
               </form>
               <div class="">
-                <button class="btn btn-block btn-social btn-facebook" data-dismiss="modal" (click)="onLoginFacebook()">
+                <button class="btn btn-lg btn-block btn-social btn-facebook" data-dismiss="modal" (click)="onLoginFacebook()">
                   <span class="fa fa-facebook"></span>
                   FACEBOOK
                 </button>
-                <button type="submit" class="btn btn-block btn-social btn-google" (click)="onLoginGoogle()">
+                <button type="submit" class="btn btn-lg btn-block btn-social btn-google" (click)="onLoginGoogle()">
                   <span class="fa fa-google"></span>
                   GOOGLE
                 </button>

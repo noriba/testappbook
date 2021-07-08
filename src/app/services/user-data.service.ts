@@ -50,14 +50,38 @@ export class UserDataService {
   }
 
   updateUserData(user: UserData) {
-    let idUserData = user.id;
+    console.log('Mettre a jour userData.id ::: ' + user.id);
+    console.log('Mettre a jour userData.useruid ::: ' + user.userUid);
+    let idUserData = user.userUid;
     this.userDataDoc = this.afs.doc<UserData>(`userdatas/${idUserData}`);
-    return this.userDataDoc.update(user)
-      .then((res) => {
-      })
-      .catch(err => {
-        console.log('err', err.message);
-      });
+    let data: UserData = {
+      id: user.userUid,
+      userUid: user.userUid,
+      email: user.email,
+      roles: {
+        editor: true
+      },
+      firstname: '',
+      lastname: '',
+      matricule: '',
+      contract: '',
+      site: '',
+      agency: '',
+      phonenumber: '',
+      function: '',
+      numberplate: '',
+      manager: '',
+      vancode: '',
+      depotcode: '',
+      sectorcode: '',
+      weekhoursplanned: 0,
+    };
+
+    data={...data,...user}
+
+    console.log('MERGE ::: data = ' + JSON.stringify(data));
+    console.log('MERGE ::: user = ' + JSON.stringify(user));
+    return this.userDataDoc.set(data, {merge: true});
   }
 
   deleteUserData(idUserData: string) {
@@ -71,11 +95,34 @@ export class UserDataService {
   }
 
   addUserData(user: UserData) {
+    console.log("adduser :::::: "+user.firstname);
+    let data: UserData = {
+      id: '',
+      userUid: '',
+      email: '',
+      roles: {
+        editor: true
+      },
+      firstname: '',
+      lastname: '',
+      matricule: '',
+      contract: '',
+      site: '',
+      agency: '',
+      phonenumber: '',
+      function: '',
+      numberplate: '',
+      manager: '',
+      vancode: '',
+      depotcode: '',
+      sectorcode: '',
+      weekhoursplanned: 0,
+    };
+    user = {...data, ...user};
     return new Promise((resolve, reject) => {
       this.userDataCollection.add(user)
         .then(userData => {
-          console.log('userData.id ::: ' + userData.id);
-          console.log('userData.id ::: ' + typeof userData);
+          console.log('userData.id a bien été créé ::: ' + userData.id);
           user.id = userData.id;
           this.updateUserData(user);
         })
