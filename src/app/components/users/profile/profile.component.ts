@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
 import {UserInterface} from '../../../models/user';
+import {UserData} from '../../../models/userdata';
+import {UserDataService} from '../../../services/user-data.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,11 +11,14 @@ import {UserInterface} from '../../../models/user';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private authService: AuthService) {
-  }
+  constructor(
+    private authService: AuthService,
+    private userDataService: UserDataService,
+              ) {  }
 
-  user: UserInterface = {
-    name: '',
+  user: UserData = {
+    firstname: '',
+    lastname: '',
     email: '',
     photoUrl: '',
     roles: {}
@@ -22,12 +27,14 @@ export class ProfileComponent implements OnInit {
   public providerId: string = 'null';
 
   ngOnInit() {
-    this.authService.isAuth().subscribe(user => {
+    this.userDataService.getMyUserData(this.authService.userUid).subscribe(user => {
+      console.log(user)
+      console.log(user.firstname)
       if (user) {
-        this.user.name = user.displayName;
+        this.user.firstname = user.firstname;
+        this.user.lastname = user.lastname;
         this.user.email = user.email;
-        this.user.photoUrl = user.photoURL;
-        this.providerId = user.providerData[0].providerId;
+        this.user.photoUrl = user.photoUrl;
       }
     });
   }

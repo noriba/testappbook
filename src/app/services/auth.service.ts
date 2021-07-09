@@ -93,7 +93,7 @@ export class AuthService {
             if (user) {
               console.log('user correctly registred ' + user.id);
             } else {
-              console.log('user not registred ' + user.id);
+              console.log('user not registred ');
             }
             this.isUserAdmin(user.id)
               .subscribe(userRole => {
@@ -258,6 +258,7 @@ export class AuthService {
       numberplate: '',
       manager: '',
       vancode: '',
+      photoUrl:'',
       depotcode: '',
       sectorcode: '',
       weekhoursplanned: 0,

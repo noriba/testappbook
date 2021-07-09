@@ -22,7 +22,7 @@ export interface UserData {
   password?: string;
   confirmPassword?: string;
   photoUrl?: string;
-  roles: Roles;
+  roles?: Roles;
 }
 
 let USERS;
