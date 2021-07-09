@@ -9,11 +9,15 @@
       </div>
       <div class="row user-details">
         <div class="col-12">
-          <h5 *ngIf="providerId != 'password'">{{user.name}}</h5>
+          <h5 >{{user.lastname}} {{user.firstname}}</h5>
 
           <p>
             {{user.email}}
           </p>
+          <p>
+            {{user.phonenumber}}
+          </p>
+
 
           <hr>
           <div class="pb-4">

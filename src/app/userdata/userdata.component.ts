@@ -30,7 +30,6 @@ export class UserDataComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentUser();
-    this.getListUserDatas();
     this.roles={ admin:true,editor:true}
     this.rolesList = Object.keys(this.roles);
     console.log(this.rolesList);
@@ -39,14 +38,20 @@ export class UserDataComponent implements OnInit {
 
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
+      console.log("get current auth", auth)
+      console.log("get current uid",auth.uid)
       if (auth) {
+
         this.userUid = auth.uid;
+
         this.authService
           .isUserAdmin(this.userUid)
           .subscribe(userRole => {
             this.isAdmin = Object
               .assign({}, userRole.roles)
               .hasOwnProperty('admin');
+            this.isAdmin?this.getListUserDatas():this.getMyUserData(this.userUid);
+
           });
       }
     });
@@ -122,5 +127,13 @@ export class UserDataComponent implements OnInit {
     console.log('selected reset UserData', this.userDataService.selectedUserData);
 
 
+  }
+
+  getMyUserData(userid) {
+    this.userDataService.getMyUserData(userid).subscribe(userData => {
+      console.log("my user id "+userid);
+      console.log("my user data "+userData);
+      this.userDataService.selectedUserData = userData;
+    });
   }
 }
