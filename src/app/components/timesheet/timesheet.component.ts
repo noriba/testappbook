@@ -1,4 +1,3 @@
-import {Component, OnInit} from '@angular/core';
 import {DataApiService} from '../../services/data-api.service';
 import {AuthService} from '../../services/auth.service';
 import jsPDF from 'jspdf';
@@ -6,12 +5,16 @@ import html2canvas from 'html2canvas';
 import {MenuItem, MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {Timesheet} from '../../models/timesheet';
-import {BehaviorSubject,Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {UserDataService} from '../../services/user-data.service';
 import {UserData} from '../../models/userdata';
 import {TemplateEventEmitterService} from '../../services/template-event-emitter.service';
 import DateTime from 'luxon/src/datetime.js';
 import Duration from 'luxon/src/duration.js';
+import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
+import {SendMailServiceService} from '../../services/send-mail-service.service';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-timesheet',
@@ -19,7 +22,8 @@ import Duration from 'luxon/src/duration.js';
   styleUrls: ['./timesheet.component.css'],
   providers: [MessageService]
 })
-export class TimesheetComponent implements OnInit {
+export class TimesheetComponent implements OnInit, OnDestroy {
+  public subscription: Subscription;
 
   isAdmin: boolean = false;
   userUid: string;
@@ -40,6 +44,8 @@ export class TimesheetComponent implements OnInit {
               private userDataService: UserDataService,
               private router: Router,
               public templateEventEmitterService: TemplateEventEmitterService,
+              private sendmailservice: SendMailServiceService,
+              private fb: FormBuilder,
               private messageService: MessageService) {
   }
 
@@ -202,6 +208,49 @@ export class TimesheetComponent implements OnInit {
 
   eventemit(timesheet) {
     this.templateEventEmitterService.onFirstComponentButtonClick(timesheet);
+    this.sendMail(timesheet);
   }
 
-    }
+
+  infoForm = this.fb.group({
+    name: ['',
+      [
+        Validators.required,
+        Validators.minLength(3)
+      ]
+    ],
+    email: ['',
+      [
+        Validators.required,
+        Validators.email
+      ]
+    ]
+  });
+
+  get name() {
+    return this.infoForm.get('name');
+  }
+
+  get email() {
+    return this.infoForm.get('email');
+  }
+
+
+  sendMail(timesheet : Timesheet) {
+    console.log(this.infoForm.value);
+    this.subscription = this.sendmailservice.sendEmail(this.currentUserDatas,timesheet).subscribe(
+      data => {
+        let msg = data['message'];
+        alert(msg);
+        console.log(data, 'success');
+      }, error => {
+        console.error(error, 'error');
+      });
+  }
+
+
+  ngOnDestroy() {
+  }
+
+
+}

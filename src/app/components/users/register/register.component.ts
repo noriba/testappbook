@@ -92,6 +92,7 @@ export class RegisterComponent implements OnInit {
             console.log('mettre a jour ::: ' + JSON.stringify(formRegister.value));
 
             formRegister.value.userUid = user.uid;
+            formRegister.value.photoUrl = this.inputImageUser.nativeElement.value;
             //userData.value.portada = this.inputImageUser.nativeElement.value;
             this.userDataService.updateUserData(formRegister.value)
               .then((res) => {
@@ -108,7 +109,7 @@ export class RegisterComponent implements OnInit {
 
 
             user.updateProfile({
-              displayName: '',
+              displayName: formRegister.value.firstname + ' '+ formRegister.value.lastname,
               photoURL: this.inputImageUser.nativeElement.value
             }).then(() => {
               console.log('onAddUser ::: userData = ' + user.photoURL);
