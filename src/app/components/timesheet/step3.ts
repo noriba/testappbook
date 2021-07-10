@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {TicketService} from '../../stepsdemo/ticketservice';
+
 import {Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {BreadcrumbComponent} from '../breadcrumb/breadcrumb.component';
@@ -26,7 +26,7 @@ export class Step3 implements OnInit {
 
 
   constructor(
-    public ticketService: TicketService,
+
     public dataApi: DataApiService,
     private router: Router) {
   }

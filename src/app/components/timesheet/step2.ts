@@ -6,8 +6,6 @@ import {DataApiService} from '../../services/data-api.service';
 import {AuthService} from '../../services/auth.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import {Product} from '../../models/products';
-import {ProductService} from '../../services/product.service';
 import {Dayactivity, Timesheet} from '../../models/timesheet';
 
 
@@ -28,7 +26,6 @@ export class Step2 implements OnInit {
   home: MenuItem;
   activeIndex: number=1;
   jours: string[];
-  products: Product[];
   statuses: SelectItem[];
   clonedDayActivities: { [s: string]: Dayactivity; } = {};
   timesheets: Timesheet;
@@ -38,7 +35,6 @@ export class Step2 implements OnInit {
 
   constructor(public dataApi: DataApiService,
               private authService: AuthService,
-              private productService: ProductService,
               private router: Router,
               private messageService: MessageService) {
     this.days = [

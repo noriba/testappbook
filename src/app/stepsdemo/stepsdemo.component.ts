@@ -1,4 +1,4 @@
-import {TicketService} from './ticketservice';
+
 import {Subscription} from 'rxjs';
 import {Component, OnInit} from '@angular/core';
 import {DataApiService} from '../services/data-api.service';
@@ -29,7 +29,7 @@ export class StepsdemoComponent implements OnInit {
   subscription: Subscription;
 
   constructor(public messageService: MessageService,
-              public ticketService: TicketService,
+
               private breadcrumb: BreadcrumbComponent,
               private dataApi: DataApiService,
               private authService: AuthService,
@@ -38,8 +38,8 @@ export class StepsdemoComponent implements OnInit {
 
 
   ngOnInit() {
-    this.profile = this.ticketService.ticketInformation.profile;
-    this.contracts = this.ticketService.ticketInformation.contracts;
+
+
     this.selectedContractType = this.contracts[this.profile.contract];
 
     this.setBreadCrumb();
@@ -53,9 +53,9 @@ export class StepsdemoComponent implements OnInit {
         this.userUid = auth.uid;
         this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
           this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
-        });
+        },err => console.log("error",err));
       }
-    });
+    },err => console.log("error",err));
   }
 
   setBreadCrumb() {
@@ -70,7 +70,7 @@ export class StepsdemoComponent implements OnInit {
   }
 
   nextPage() {
-    this.ticketService.ticketInformation.personalInformation = this.profile;
+
     this.router.navigate(['step2']);
   }
 
