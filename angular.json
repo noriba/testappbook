@@ -18,7 +18,6 @@
               "firebase",
               "lodash/dropRight",
               "@angular/common/locales/fr",
-
               "core-js-pure/features/array/is-array",
               "core-js-pure/features/object/get-prototype-of",
               "core-js-pure/features/object/set-prototype-of",

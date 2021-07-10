@@ -1,5 +1,5 @@
 <nav class="navbar sticky-top sticky-top  navbar-expand-md navbar-dark  bg-primary">
-  <a class="navbar-brand" routerLink="/">{{app_name}} <span class="" *ngIf="isAdmin">(Admin) </span></a>
+  <a class="navbar-brand" routerLink="/">{{app_name}} <span class="" *ngIf="isAdmin | async">(Admin) </span></a>
   <button class="navbar-toggler" type="button"
           data-toggle="collapse" data-target="#mainNavbar"
           aria-controls="mainNavbar"
@@ -15,7 +15,7 @@
               </a>
             </li>-->
 
-      <li class="nav-item" *ngIf="isLogged">
+      <li class="nav-item" *ngIf="isLogged|async">
         <a class="nav-link" routerLink="/timesheet" data-toggle="collapse" data-target="#mainNavbar">Feuilles de temps
         </a>
       </li>
@@ -29,7 +29,7 @@
             </li>-->
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item" *ngIf="!isLogged">
+      <li class="nav-item" *ngIf="!(isLogged|async)">
         <a class="nav-link" routerLink="/user/register" data-toggle="collapse" data-target="#mainNavbar">Créer un compte
         </a>
       </li>
@@ -37,19 +37,20 @@
    <!--         <li class="nav-item" *ngIf="isLogged">
               <a class="nav-link" routerLink="/my-books">My Books</a>
             </li>-->
-      <li class="nav-item" *ngIf="isLogged">
+      <li class="nav-item" *ngIf="isLogged|async">
         <a class="nav-link" routerLink="/userdata" data-toggle="collapse" data-target="#mainNavbar">Collaborateurs</a>
       </li>
-      <li class="nav-item" *ngIf="isLogged">
+      <li class="nav-item" *ngIf="isLogged|async">
 
         <a class="nav-link" routerLink="/user/profile" data-toggle="collapse" data-target="#mainNavbar">Profile</a>
       </li>
-      <li class="nav-item" *ngIf="!isLogged">
+      <li class="nav-item" *ngIf="!(isLogged |async)">
         <a class="nav-link" routerLink="/user/login" data-toggle="collapse" data-target="#mainNavbar">Connexion
         </a>
       </li>
-      <li class="nav-item" *ngIf="isLogged">
-        <a href="#" class="nav-link" (click)="onLogout()" data-toggle="collapse" data-target="#mainNavbar">Se déconnecter
+      <li class="nav-item" *ngIf="isLogged |async">
+        <a href="#" class="nav-link" (click)="onLogout()" routerLink="/user/login" data-toggle="collapse"
+           data-target="#mainNavbar">Se déconnecter
         </a>
       </li>
     </ul>

@@ -7,7 +7,6 @@ import {Observable} from 'rxjs/internal/Observable';
 import {UserDataService} from '../../../services/user-data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {NgForm} from '@angular/forms';
-+ 6-7
 // import custom validator to validate that password and confirm password fields match
 //import { MustMatch } from './_helpers/must-match.validator';
 
@@ -54,9 +53,6 @@ export class RegisterComponent implements OnInit {
 
 
   onUpload(event) {
-
-
-
     this.imageLoad.id = Math.random().toString(36).substring(2);
     this.imageLoad.file = event.target.files[0];
     this.imageLoad.filePath = `uploads/profile_${this.imageLoad.id}`;
@@ -67,7 +63,7 @@ export class RegisterComponent implements OnInit {
       this.imageLoad.task.snapshotChanges()
         .pipe(finalize(() => this.urlImage = this.imageLoad.ref.getDownloadURL()))
         .subscribe();
-      console.log('Subió imagen');
+      console.log('submit image');
     } catch (error) {
       this.msgError = error;
       console.log('Error in load image' + error);
@@ -87,6 +83,7 @@ export class RegisterComponent implements OnInit {
 
         this.authService.isAuth().subscribe(user => {
           if (user) {
+
             console.log('mettre a jour ::: ' + user.uid);
             console.log('mettre a jour ::: ' + formRegister.value);
             console.log('mettre a jour ::: ' + JSON.stringify(formRegister.value));
@@ -102,6 +99,7 @@ export class RegisterComponent implements OnInit {
               })
               .catch(err => {
                 console.log('error registration ::: ' + err);
+                this.imageLoad.task = this.storage.ref(this.imageLoad.filePath).delete();
 
                 this.isError = true;
                 this.msgError = err.message;
