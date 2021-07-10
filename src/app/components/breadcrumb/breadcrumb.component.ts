@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {MenuItem, MessageService} from 'primeng/api';
 import {Subscription} from 'rxjs';
-import {TicketService} from '../../stepsdemo/ticketservice';
+
 import {DataApiService} from '../../services/data-api.service';
 import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -45,7 +45,7 @@ export class BreadcrumbComponent implements OnInit {
   inc = 0;
 
   constructor(public messageService: MessageService,
-              public ticketService: TicketService,
+
               private dataApi: DataApiService,
               private breadservice: BreadcrumbService,
               private authService: AuthService,
@@ -194,13 +194,7 @@ export class BreadcrumbComponent implements OnInit {
         }
       }];
 
-    this.subscription = this.ticketService.paymentComplete$.subscribe((personalInformation) => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Order submitted',
-        detail: 'Dear, ' + personalInformation.firstname + ' ' + personalInformation.lastname + ' your order completed.'
-      });
-    });
+
 
   }
 
@@ -223,14 +217,7 @@ export class BreadcrumbComponent implements OnInit {
       }
     ];
 
-    this.subscription = this.ticketService.paymentComplete$.subscribe((personalInformation) => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Order submitted',
-        detail: 'Dear, ' + personalInformation.firstname + ' ' + personalInformation.lastname + ' your order completed.'
-      });
-    });
-  }
+   }
 
   ngOnDestroy() {
     if (this.subscription) {

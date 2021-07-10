@@ -14,14 +14,8 @@ import {Step1} from './components/timesheet/step1';
 import {Step3} from './components/timesheet/step3';
 import {Step4} from './components/timesheet/step4';
 import {Step2} from './components/timesheet/step2';
-import {DataTableComponent} from './components/data-table.component';
-import {ParentComponent} from './components/parent.component';
-import {FileTreeComponent} from './components/file-tree.component';
-import {MyBreadcrumbedComponent} from './components/my-breadcrumbed.component';
-import {MyBreadcrumbed2Component} from './components/my-breadcrumbed-2.component';
 import {BreadcrumbInitializedGuard} from './guards/breadcrumbInitialized.guard';
 import {BreadcrumbComponent} from './components/breadcrumb/breadcrumb.component';
-import {StepsComponent} from './components/breadcrumb/wizard.module';
 import {UserDataComponent} from './userdata/userdata.component';
 import {HomeComponent} from './components/home/home.component';
 
@@ -42,31 +36,8 @@ const routes: Routes = [
   {path: 'step2', component: Step2, canActivate: [AuthGuard]},
   {path: 'step3', component: Step3, canActivate: [AuthGuard]},
   {path: 'step4', component: Step4, canActivate: [AuthGuard]},
-  {path: 'steps', component: StepsComponent},
   {path: 'user/profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'data-table', component: DataTableComponent},
-  {path: 'step', component: BreadcrumbComponent},
-  {
-    path: 'prime', component: ParentComponent,
-    children: [{
-      path: 'file-tree', component: FileTreeComponent
-    }, {
-      path: 'breadcrumb', component: MyBreadcrumbedComponent
-    }, {
-      path: 'breadcrumb2', component: MyBreadcrumbed2Component, canActivate: [BreadcrumbInitializedGuard], data: {
-        crumbs: [
-          {label: 'Home', routerLink: '/'},
-          {label: 'Tab1', routerLink: '/tab1'},
-          {label: 'Tab2', routerLink: '/tab2'},
-          {label: 'Tab2', routerLink: '/tab2'},
-          {label: 'Tab2', routerLink: '/tab2'},
-          {label: 'Tab2', routerLink: '/tab2'},
-          {label: 'Tab3', routerLink: '/tab3'},
-        ]
-      }
-    }],
-  },
-  {path: '**', component: Page404Component}
+   {path: '**', component: Page404Component}
 ];
 
 @NgModule({

@@ -1,10 +1,9 @@
 import {BookInterface} from '../models/book';
 import {Dayactivity, Dayovertime, Timesheet} from '../models/timesheet';
-import {map} from 'rxjs/internal/operators';
+import {map,take} from 'rxjs/internal/operators';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
-import {Product} from '../models/products';
 import {HttpClient} from '@angular/common/http';
 import {UserData} from '../models/userdata';
 import {FirestoreCrudService} from './firestore-crud.service';
@@ -49,7 +48,6 @@ export class DataApiService {
   selectedRow: number;
   public selectedBook: BookInterface = {id: null};
   public selectedTimesheet: Timesheet = {weekactivities: [], id: null};
-  public selectedProduct: Product = {id: null};
 
   public temporaryTimesheet: Timesheet = {
     weekhoursplanned: 0,
@@ -191,7 +189,7 @@ export class DataApiService {
   getAllTimesheets() {
     this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
     return this.timesheets = this.timesheetsCollection
-      .snapshotChanges()
+      .snapshotChanges().pipe(take(1))
       .pipe(map(changes => {
         return changes.map(action => {
           const data = action.payload.doc.data() as Timesheet;
@@ -307,7 +305,6 @@ export class DataApiService {
   }
 
   createNewUserData(userData: UserData) {
-
     return new Promise((resolve, reject) => {
       this.userDataCollection.add(userData)
         .then(userData => {

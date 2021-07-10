@@ -47,13 +47,7 @@ import {Step1} from './components/timesheet/step1';
 import {Step2} from './components/timesheet/step2';
 import {Step3} from './components/timesheet/step3';
 import {Step4} from './components/timesheet/step4';
-import {ParentComponent} from './components/parent.component';
-import {MyBreadcrumbed2Component} from './components/my-breadcrumbed-2.component';
-import {MyBreadcrumbedComponent} from './components/my-breadcrumbed.component';
-import {FileTreeComponent} from './components/file-tree.component';
-import {DataTableComponent} from './components/data-table.component';
-import {StepComponent, StepsComponent, WizardModule} from './components/breadcrumb/wizard.module';
-import {ProductService} from './services/product.service';
+
 import {HttpClientModule} from '@angular/common/http';
 import {TableModule} from 'primeng/table';
 import {PanelModule} from 'primeng/panel';
@@ -65,11 +59,7 @@ import {PasswordModule} from 'primeng/password';
 @NgModule({
   declarations: [
 
-    DataTableComponent,
-    FileTreeComponent,
-    MyBreadcrumbed2Component,
-    MyBreadcrumbedComponent,
-    ParentComponent,
+
     Step1,
     Step2,
     Step3,
@@ -98,7 +88,6 @@ import {PasswordModule} from 'primeng/password';
     FieldsetModule,
     HttpClientModule,
     TableModule,
-    WizardModule,
     ReactiveComponentModule,
     DataViewModule,
     CommonModule,
@@ -125,9 +114,8 @@ import {PasswordModule} from 'primeng/password';
     TreeTableModule
   ],
   exports: [
-    WizardModule,
-    StepsComponent,
-    StepComponent],
+
+  ],
   providers: [
     AngularFireAuth,
     AngularFirestore,
@@ -135,10 +123,7 @@ import {PasswordModule} from 'primeng/password';
     NgbModal,
     NgbModalConfig,
     BreadcrumbComponent,
-    StepComponent,
-    StepsComponent,
     TemplateEventEmitterService,
-    ProductService
   ],
   bootstrap: [AppComponent]
 })

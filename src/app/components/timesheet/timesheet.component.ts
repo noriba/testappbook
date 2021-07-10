@@ -15,6 +15,7 @@ import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angul
 import {SendMailServiceService} from '../../services/send-mail-service.service';
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
+import {first,take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-timesheet',
@@ -58,30 +59,34 @@ export class TimesheetComponent implements OnInit, OnDestroy {
       }
       this.isLogged = false;
 
-    });
+    }, err => console.log('error', err), () => console.log('completed'));
 
     this.getCurrentUser();
   }
 
 
-  getAllTimesheets() {
+  getAllTimesheets(options?: PushSubscriptionOptionsInit) {
     console.log('Get All Timmesheets ::: ', this.isAdmin);
     this.dataApi
-      .getAllTimesheets()
+      .getAllTimesheets().pipe(take(1))
       .subscribe(timesheets => {
-        this.allTimesheets = timesheets;
-        console.log('Timesheets list :::' + JSON.stringify(this.allTimesheets));
-      });
+          this.allTimesheets = timesheets;
+          console.log('Timesheets list :::' + JSON.stringify(this.allTimesheets));
+        },
+        err => console.log('error', err),
+        () => console.log('completed'));
   }
 
   getMyTimesheets(userid) {
     console.log('Get my Timesheets ::: ', this.isAdmin, '  userid= ', userid);
     return this.dataApi
-      .getMyTimesheets(userid)
+      .getMyTimesheets(userid).pipe(take(1))
       .subscribe(timesheets => {
-        this.allTimesheets = timesheets;
-        console.log('Timeseehts list :::' + JSON.stringify(this.allTimesheets));
-      });
+          this.allTimesheets = timesheets;
+          console.log('Timeseehts list :::' + JSON.stringify(this.allTimesheets));
+        },
+        err => console.log('error', err),
+        () => console.log('completed'));
   }
 
   lastStepPlease() {
@@ -100,7 +105,7 @@ export class TimesheetComponent implements OnInit, OnDestroy {
         this.isLogged = true;
         this.userUid = auth.uid;
         this.userDataService
-          .isUserAdmin(this.userUid)
+          .isUserAdmin(this.userUid).pipe(take(1))
           .subscribe(userRole => {
             this.isAdmin = Object
               .assign({}, userRole.roles)
@@ -116,11 +121,11 @@ export class TimesheetComponent implements OnInit, OnDestroy {
             }
             this.currentUserDatas = {...userRole};
             console.log('ADMINISTRATEUR 1 :::' + this.isAdmin);
-          });
+          }, err => console.log('error', err), () => console.log('completed'));
       } else {
         this.isLogged = false;
       }
-    });
+    }, err => console.log('error', err));
   }
 
 
@@ -236,9 +241,9 @@ export class TimesheetComponent implements OnInit, OnDestroy {
   }
 
 
-  sendMail(timesheet : Timesheet) {
+  sendMail(timesheet: Timesheet) {
     console.log(this.infoForm.value);
-    this.subscription = this.sendmailservice.sendEmail(this.currentUserDatas,timesheet).subscribe(
+    this.subscription = this.sendmailservice.sendEmail(this.currentUserDatas, timesheet).subscribe(
       data => {
         let msg = data['message'];
         alert(msg);
