@@ -21,10 +21,10 @@
 
           <hr>
           <div class="pb-4">
-            <h5 *ngIf="authService.isAdmin">
+            <h5 *ngIf="authService.isAdmin|async">
               Administrateur
             </h5>
-            <h5  *ngIf="!authService.isAdmin">
+            <h5  *ngIf="!authService.isAdmin|async">
               Collaborateur
             </h5>
           </div>

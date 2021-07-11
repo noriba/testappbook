@@ -15,7 +15,9 @@ import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angul
 import {SendMailServiceService} from '../../services/send-mail-service.service';
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {first,take} from 'rxjs/operators';
+import {first,take,map} from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
+import { skipUntil,skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-timesheet',
@@ -23,7 +25,7 @@ import {first,take} from 'rxjs/operators';
   styleUrls: ['./timesheet.component.css'],
   providers: [MessageService]
 })
-export class TimesheetComponent implements OnInit, OnDestroy {
+export class TimesheetComponent implements OnInit {
 
   subscription: Subscription;
   home: MenuItem;
@@ -45,9 +47,13 @@ export class TimesheetComponent implements OnInit, OnDestroy {
               ) {  }
 
   ngOnInit() {
-    this.isAdmin.next( this.authService.isAdmin.getValue());
-    this.isLogged.next(this.authService.isLogged.getValue());
+    this.authService.isAdmin.pipe(skip(1)).subscribe(admin=> {
+      !admin? this.getMyTimesheets(this.userUid.getValue()) : this.getAllTimesheets();
+      return this.isAdmin.next(admin);
+    })
     this.userUid.next(this.authService.userUid.getValue());
+    //this.isAdmin.next(this.authService.isAdmin.getValue()) ;
+    this.isLogged.next(this.authService.isLogged.getValue());
 
 /*    this.authService.currentUser$.subscribe(userid => {
       if (userid) {
@@ -58,31 +64,32 @@ export class TimesheetComponent implements OnInit, OnDestroy {
     }, err => console.log('error', err), () => console.log('completed'));*/
 
     // this.getCurrentUser();
-    this.isAdmin.subscribe(x=>console.log("isadmin=",x));
-    console.log("userid ? ",this.userUid.pipe())
-    !this.isAdmin.value?this.getMyTimesheets(this.userUid):this.getAllTimesheets();
+    //console.log("isadmin=",this.isAdmin.getValue());
+    console.log("userid ? ",this.userUid.getValue())
   }
 
 
   getAllTimesheets() {
-    console.log('Get All Timmesheets ::: ', this.isAdmin);
-    this.dataApi
+    console.log('Get All Timmesheets ::: ', this.isAdmin.value);
+    this.subscription=this.dataApi
       .getAllTimesheets()
+      .pipe(takeUntil(this.authService._loggedOutEmitter))
       .subscribe(timesheets => {
           this.allTimesheets = timesheets;
-          console.log('Timesheets list :::' + JSON.stringify(this.allTimesheets));
+          console.log('All Timesheets list :::' + JSON.stringify(this.allTimesheets));
         },
         err => console.log('error', err),
         () => console.log('completed'));
   }
 
   getMyTimesheets(userid) {
-    console.log('Get my Timesheets ::: ', this.isAdmin, '  userid= ', userid);
-     this.dataApi
+    console.log('Get my Timesheets ::: ', this.isAdmin.value, '  userid= ', userid);
+     this.subscription=this.dataApi
       .getMyTimesheets(userid)
-      .subscribe(timesheets => {
-          this.myTimesheets = timesheets;
-          console.log('Timeseehts list :::' + JSON.stringify(this.allTimesheets));
+       .pipe(takeUntil(this.authService._loggedOutEmitter))
+       .subscribe(timesheets => {
+          this.allTimesheets = timesheets;
+          console.log('My Timeseehts list :::' + JSON.stringify(this.allTimesheets));
         },
         err => console.log('error', err),
         () => console.log('completed'));
@@ -163,7 +170,8 @@ export class TimesheetComponent implements OnInit, OnDestroy {
 
     const confirmation = confirm('Veuillez confirmer');
     if (confirmation) {
-      this.dataApi.deleteTimesheet(idTimesheet).then((res) => {
+      this.dataApi.deleteTimesheet(idTimesheet)
+        .then((res) => {
       }).catch(err => {
         console.log('err', err.message);
       });
@@ -254,8 +262,6 @@ export class TimesheetComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy() {
-  }
 
 
 }
