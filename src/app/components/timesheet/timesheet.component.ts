@@ -24,21 +24,16 @@ import {first,take} from 'rxjs/operators';
   providers: [MessageService]
 })
 export class TimesheetComponent implements OnInit, OnDestroy {
-  public subscription: Subscription;
 
-  isAdmin: boolean = false;
-  userUid: string;
-  userUidSub = new BehaviorSubject<string>('');
-  USERS: any;
-  items: MenuItem[];
-  steps: MenuItem[];
+  subscription: Subscription;
   home: MenuItem;
-  activeIndex: number;
-  isAdminSub = new Subject<boolean>();
-  private isLogged: boolean;
   allTimesheets: Timesheet[];
-  private currentUserDatas: UserData;
+  currentUserDatas: UserData;
   display: boolean = false;
+  isLogged: Observable<boolean> ;
+  isAdmin: Observable<boolean>;
+  userUid: Observable<string>;
+   myTimesheets: Timesheet[];
 
   constructor(private dataApi: DataApiService,
               private authService: AuthService,
@@ -46,29 +41,31 @@ export class TimesheetComponent implements OnInit, OnDestroy {
               private router: Router,
               public templateEventEmitterService: TemplateEventEmitterService,
               private sendmailservice: SendMailServiceService,
-              private fb: FormBuilder,
-              private messageService: MessageService) {
-  }
+              private fb: FormBuilder
+              ) {  }
 
   ngOnInit() {
+    this.isAdmin = this.authService.isAdmin.pipe();
+    this.isLogged = this.authService.isLogged.pipe();
+    this.userUid = this.authService.userUid.pipe();
 
-    this.authService.currentUser$.subscribe(userid => {
+/*    this.authService.currentUser$.subscribe(userid => {
       if (userid) {
         this.isLogged = true;
         this.userUidSub.next(userid.uid);
       }
       this.isLogged = false;
+    }, err => console.log('error', err), () => console.log('completed'));*/
 
-    }, err => console.log('error', err), () => console.log('completed'));
-
-    this.getCurrentUser();
+    // this.getCurrentUser();
+    !this.isAdmin?this.getMyTimesheets(this.userUid):this.getAllTimesheets();
   }
 
 
-  getAllTimesheets(options?: PushSubscriptionOptionsInit) {
+  getAllTimesheets() {
     console.log('Get All Timmesheets ::: ', this.isAdmin);
     this.dataApi
-      .getAllTimesheets().pipe(take(1))
+      .getAllTimesheets()
       .subscribe(timesheets => {
           this.allTimesheets = timesheets;
           console.log('Timesheets list :::' + JSON.stringify(this.allTimesheets));
@@ -79,10 +76,10 @@ export class TimesheetComponent implements OnInit, OnDestroy {
 
   getMyTimesheets(userid) {
     console.log('Get my Timesheets ::: ', this.isAdmin, '  userid= ', userid);
-    return this.dataApi
-      .getMyTimesheets(userid).pipe(take(1))
+     this.dataApi
+      .getMyTimesheets(userid)
       .subscribe(timesheets => {
-          this.allTimesheets = timesheets;
+          this.myTimesheets = timesheets;
           console.log('Timeseehts list :::' + JSON.stringify(this.allTimesheets));
         },
         err => console.log('error', err),
@@ -98,18 +95,19 @@ export class TimesheetComponent implements OnInit, OnDestroy {
     this.router.navigate(['step1']);
   }
 
+/*
 
   getCurrentUser() {
     this.authService.isAuth().subscribe(auth => {
       if (auth) {
-        this.isLogged = true;
+        this.isLogged .true;
         this.userUid = auth.uid;
         this.userDataService
-          .isUserAdmin(this.userUid).pipe(take(1))
+          .isUserAdmin( auth.uid).pipe(take(1))
           .subscribe(userRole => {
-            this.isAdmin = Object
+            this.isAdmin.next(Object
               .assign({}, userRole.roles)
-              .hasOwnProperty('admin');
+              .hasOwnProperty('admin'));
             if (this.isAdmin) {
               console.log('admin =' + this.isAdmin);
 
@@ -117,7 +115,7 @@ export class TimesheetComponent implements OnInit, OnDestroy {
             } else {
               console.log('admin =' + this.isAdmin);
 
-              this.getMyTimesheets(this.userUidSub.value);
+              this.getMyTimesheets(this.userUid);
             }
             this.currentUserDatas = {...userRole};
             console.log('ADMINISTRATEUR 1 :::' + this.isAdmin);
@@ -128,6 +126,7 @@ export class TimesheetComponent implements OnInit, OnDestroy {
     }, err => console.log('error', err));
   }
 
+*/
 
   openPDF(): void {
 
@@ -161,7 +160,6 @@ export class TimesheetComponent implements OnInit, OnDestroy {
     console.log('Timeseehts ID to delete  :::' + idTimesheet);
 
     const confirmation = confirm('Veuillez confirmer');
-    ;
     if (confirmation) {
       this.dataApi.deleteTimesheet(idTimesheet).then((res) => {
       }).catch(err => {

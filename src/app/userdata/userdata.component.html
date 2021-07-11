@@ -1,7 +1,7 @@
 <section class="tab-content">
 
   <div class="col-lg-md-4 text-right p-2">
-    <button *ngIf="isAdmin == true; " class="btn btn-primary my-2 my-xl-2 d-block btn-block-xs-only" pButton
+    <button *ngIf="(isAdmin|async) == true; " class="btn btn-primary my-2 my-xl-2 d-block btn-block-xs-only" pButton
             data-toggle="modal" (click)="resetSelectedUserData()"
             data-target="#modalUserData"
             label="Collaborateur"><i class="pi pi-plus pr-2"> </i>
@@ -127,7 +127,7 @@
       </div>
     </form>
   </div>
-  <div *ngIf="isAdmin" class=" table-responsive">
+  <div *ngIf="(isAdmin|async)" class=" table-responsive">
 
     <table class="table table-hover">
       <thead>
@@ -163,7 +163,7 @@
         <td>{{UserData.function}}</td>
         <td>{{UserData.agency}}</td>
         <td class="custom-control-inline">
-          <button *ngIf="UserData.userUid == userUid || isAdmin == true; else noOwner"
+          <button *ngIf="UserData.userUid == (userUid|async) || (isAdmin|async) == true; else noOwner"
                   class="btn btn-primary p-mr-2" icon="pi pi-pencil" pButton
                   data-toggle="modal" data-target="#modalUserData"
                   (click)="onPreUpdateUserData(UserData)">
@@ -173,7 +173,7 @@
                     disabled="true">
             </button>
           </ng-template>
-          <button *ngIf="isAdmin == true; else noAdmin"
+          <button *ngIf="(isAdmin|async) == true; else noAdmin"
                   class="btn p-button-danger " icon="pi pi-times" pButton
                   (click)="onDeleteUserData(UserData.id)">
           </button>
@@ -189,7 +189,7 @@
   </div>
 
 
-  <div *ngIf="!isAdmin" id="modalUserData2"  >
+  <div *ngIf="!(isAdmin |async)" id="modalUserData2"  >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
 

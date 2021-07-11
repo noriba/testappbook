@@ -172,6 +172,7 @@ export class Step2 implements OnInit {
 
     this.dataApi.createNewActivity(data.value);
     console.log('new activity to create :' + JSON.stringify(data.value));
+    data.resetForm();
 
 
   }
