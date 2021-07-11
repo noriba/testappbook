@@ -105,7 +105,6 @@ export class HomeComponent implements OnInit {
           }, err=>             console.log(err)
     );
     }
-    console.log(this.dataApi.selectedTimesheet.id)
   }
 
   onChanges(): void {
