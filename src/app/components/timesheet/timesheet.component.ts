@@ -30,9 +30,9 @@ export class TimesheetComponent implements OnInit, OnDestroy {
   allTimesheets: Timesheet[];
   currentUserDatas: UserData;
   display: boolean = false;
-  isLogged: Observable<boolean> ;
-  isAdmin: Observable<boolean>;
-  userUid: Observable<string>;
+  isLogged= new BehaviorSubject<boolean>(false) ;
+  isAdmin= new BehaviorSubject<boolean>(false);
+  userUid= new BehaviorSubject<string>(null);
    myTimesheets: Timesheet[];
 
   constructor(private dataApi: DataApiService,
@@ -45,9 +45,9 @@ export class TimesheetComponent implements OnInit, OnDestroy {
               ) {  }
 
   ngOnInit() {
-    this.isAdmin = this.authService.isAdmin.pipe();
-    this.isLogged = this.authService.isLogged.pipe();
-    this.userUid = this.authService.userUid.pipe();
+    this.isAdmin.next( this.authService.isAdmin.getValue());
+    this.isLogged.next(this.authService.isLogged.getValue());
+    this.userUid.next(this.authService.userUid.getValue());
 
 /*    this.authService.currentUser$.subscribe(userid => {
       if (userid) {
@@ -58,7 +58,9 @@ export class TimesheetComponent implements OnInit, OnDestroy {
     }, err => console.log('error', err), () => console.log('completed'));*/
 
     // this.getCurrentUser();
-    !this.isAdmin?this.getMyTimesheets(this.userUid):this.getAllTimesheets();
+    this.isAdmin.subscribe(x=>console.log("isadmin=",x));
+    console.log("userid ? ",this.userUid.pipe())
+    !this.isAdmin.value?this.getMyTimesheets(this.userUid):this.getAllTimesheets();
   }
 
 
