@@ -178,7 +178,8 @@ export class DataApiService {
 
     //const res = await this.afs.doc<Timesheet>(`timesheets/${idTimesheet}`)
     this.timesheetDoc = this.afs.collection<Timesheet>(`timesheets`).doc(idTimesheet);
-    return this.timesheetDoc.delete().then((res) => {
+    return this.timesheetDoc.delete()
+      .then((res) => {
       console.log('Document successfully deleted!');
     }).catch(err => {
       console.log('err', err.message);
@@ -189,7 +190,7 @@ export class DataApiService {
   getAllTimesheets() {
     this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
     return this.timesheets = this.timesheetsCollection
-      .snapshotChanges().pipe(take(1))
+      .snapshotChanges()
       .pipe(map(changes => {
         return changes.map(action => {
           const data = action.payload.doc.data() as Timesheet;

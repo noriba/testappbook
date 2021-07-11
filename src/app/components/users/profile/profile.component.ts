@@ -3,6 +3,7 @@ import {AuthService} from '../../../services/auth.service';
 import {UserInterface} from '../../../models/user';
 import {UserData} from '../../../models/userdata';
 import {UserDataService} from '../../../services/user-data.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +13,7 @@ import {UserDataService} from '../../../services/user-data.service';
 export class ProfileComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private userDataService: UserDataService,
               ) {  }
 
@@ -24,10 +25,11 @@ export class ProfileComponent implements OnInit {
     roles: {}
   };
 
-  public providerId: string = 'null';
 
   ngOnInit() {
-    this.userDataService.getMyUserData(this.authService.userUid).subscribe(user => {
+    this.userDataService.getMyUserData(this.authService.userUid.value)
+      .pipe(takeUntil(this.authService._loggedOutEmitter))
+      .subscribe(user => {
       console.log(user)
       console.log(user.firstname)
       if (user) {
@@ -36,7 +38,7 @@ export class ProfileComponent implements OnInit {
         this.user.email = user.email;
         this.user.photoUrl = user.photoUrl;
       }
-    });
+    },err => console.log(err));
   }
 
 }
