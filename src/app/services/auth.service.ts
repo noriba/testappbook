@@ -1,13 +1,13 @@
 import {AngularFireAuth} from '@angular/fire/auth/auth';
 import {map} from 'rxjs/internal/operators';
-import {BehaviorSubject, Observable, of, Subject, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, Subscription,AsyncSubject} from 'rxjs';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {Injectable} from '@angular/core';
 import {auth} from 'firebase';
 import * as firebase from 'firebase/app';
 import {UserData} from '../models/userdata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {first} from 'rxjs/operators';
+import {first,takeUntil} from 'rxjs/operators';
 
 
 @Injectable({
@@ -16,15 +16,19 @@ import {first} from 'rxjs/operators';
 export class AuthService {
 
   userUid: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  subscription: Subscription | undefined;
+  isAdmin: BehaviorSubject<boolean>= new BehaviorSubject<boolean>(false);
   isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   imageprofile: any;
+  private subscription: Subscription;
+  _loggedOutEmitter = new Subject<boolean>();
+   _adminOutEmitter = new Subject<boolean>();
+
 
   constructor(
     private router: Router,
     private afsAuth: AngularFireAuth,
     private afs: AngularFirestore) {
+
     this.getCurrentUser();
   }
 
@@ -46,13 +50,16 @@ export class AuthService {
 
                console.log('user not registered ');
             }
-             this.isUserAdmin(user.id)
+            this.subscription=this.isUserAdmin(user.id)
+              .pipe( takeUntil(this._loggedOutEmitter)   )
               .subscribe(userRole => {
-                  console.log('is useradmin??? :::' + userRole);
+                  console.log('is useradmin??? :::' + userRole.roles.admin);
 
                   this.isAdmin.next( Object
                     .assign({}, userRole.roles)
                     .hasOwnProperty('admin'));
+                  this._adminOutEmitter.next(true);
+
                   console.log('ADMINISTRATEUR :::' + this.isAdmin.value);
                 },
                 err => console.log('request completed.', err),
@@ -74,6 +81,7 @@ export class AuthService {
 
   isUserAdmin(userid: string) {
     console.log('check roles admin ' + userid);
+
     return  this.afs.doc<UserData>(`userdatas/${userid}`)
       .valueChanges();
   }
@@ -125,9 +133,9 @@ export class AuthService {
   logoutUser() {
     return this.afsAuth.auth.signOut()
       .then(() => {
-/*        this.isAdmin.unsubscribe();
-        this.userUid.unsubscribe();
-        this.isLogged.next(false);*/
+        this._loggedOutEmitter.next(true);
+        this.isAdmin.next(false)
+        this.isLogged.next(false);
         console.log('Succes onLogout() ');
         this.router.navigate(['/user/login']);
       })
@@ -190,5 +198,7 @@ export class AuthService {
         }).shift();
       }));
   }
+
+
 
 }

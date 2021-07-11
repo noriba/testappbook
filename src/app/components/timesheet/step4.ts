@@ -21,9 +21,7 @@ export class Step4 implements OnInit {
   msgError: string;
   isError: any;
   private timesheet: Timesheet;
-  private timesheets: Timesheet[];
-  private alltimesheets: Timesheet[];
-  private currentUserDatas: UserData;
+
 
 
   constructor(
@@ -35,9 +33,7 @@ export class Step4 implements OnInit {
   ngOnInit() {
     Promise.resolve(null).then(() => this.child.activeIndex = 3);
 
-    //this.dataApi.getMyTimesheetsJSON().then(data => this.timesheets = data);
-    //this.timesheets = this.dataApi.getMyTimesheets('test');
-    //this.timesheet = this.timesheets.filter(i => i.id == 1).shift();
+
     this.timesheet = this.dataApi.temporaryTimesheet;
     this.weekhoursplanned = this.timesheet.weekhoursplanned;
     this.dayactivities = this.timesheet.weekactivities;
@@ -69,9 +65,8 @@ export class Step4 implements OnInit {
     if (timesheet.id == null) {
       console.log('id == null ::: calling createNewTimesheet()...');
       this.dataApi.createNewTimesheet(timesheet)
-        .then(() => {
-          res =>
-            console.log('success createNewTimesheet() ::: ' + res.message);
+        .then(res => {
+            console.log('success createNewTimesheet() ::: ' + res);
 
           //this.dataApi.resetTemporaryTimesheet(this.currentUserDatas);
         })

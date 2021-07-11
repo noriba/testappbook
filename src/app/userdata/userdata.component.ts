@@ -4,6 +4,7 @@ import {UserData} from '../models/userdata';
 import {UserDataService} from '../services/user-data.service';
 import {Roles} from '../models/roles';
 import {BehaviorSubject, Observable, of, Subject, Subscription} from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-userdata',
@@ -16,6 +17,7 @@ export class UserDataComponent implements OnInit {
   private btnClose: any;
    roles: Roles;
    rolesList: string[];
+  private subscription: Subscription;
 
   constructor(
     public userDataService: UserDataService,
@@ -25,14 +27,15 @@ export class UserDataComponent implements OnInit {
 
   allUserDatas: UserData[];
 
-  isLogged: Observable<boolean> ;
-  isAdmin: Observable<boolean>;
-  userUid: Observable<string>;
+  isLogged=new BehaviorSubject<boolean>(false) ;
+  isAdmin= new BehaviorSubject<boolean>(false);
+  userUid=new BehaviorSubject<string>(null);
 
   ngOnInit() {
-    this.isAdmin = this.authService.isAdmin.pipe();
-    this.isLogged = this.authService.isLogged.pipe();
-    this.userUid = this.authService.userUid.pipe();
+    this.authService.isAdmin.subscribe(admin=> this.isAdmin.next(admin))
+    this.isLogged.next(this.authService.isLogged.getValue());
+    this.userUid .next( this.authService.userUid.getValue());
+    //this.isAdmin.next(this.authService.isAdmin.getValue());
 
     !this.isAdmin?this.getMyUserData(this.userUid):this.getListUserDatas();
 
@@ -62,9 +65,10 @@ export class UserDataComponent implements OnInit {
   }*/
 
   getListUserDatas() {
-    this.userDataService.getAllUserData()
-      .subscribe(UserDatas => {
-        this.allUserDatas = UserDatas;
+    this.subscription=this.userDataService.getAllUserData()
+      .pipe(takeUntil(this.authService._loggedOutEmitter))
+      .subscribe(User => {
+        this.allUserDatas = User;
         console.log(this.allUserDatas);
       },err => console.log("error",err));
   }
@@ -89,10 +93,11 @@ export class UserDataComponent implements OnInit {
       .forEach(key => userData.value[key] === undefined ?
         userData.value[key] = '': true );
     console.log('UserData with replaced undefined values', userData.value);
+    console.log('Userid ', this.userUid.value);
 
     //userData = {...['']};
     if (userData.value.id == null) {
-      userData.value.userUid = this.userUid;
+      userData.value.userUid = this.userUid.value;
       //userData.value.portada = this.inputImageUser.nativeElement.value;
       this.userDataService.addUserData(userData.value)
         .then(() => {
@@ -129,10 +134,15 @@ export class UserDataComponent implements OnInit {
   }
 
   getMyUserData(userid) {
-    this.userDataService.getMyUserData(userid).subscribe(userData => {
+    this.subscription=this.userDataService.getMyUserData(userid)
+      .pipe(takeUntil(this.authService._loggedOutEmitter))
+      .subscribe(userData => {
       console.log("my user id "+userid);
       console.log("my user data "+userData);
       this.userDataService.selectedUserData = userData;
     },err => console.log("error",err));
   }
+
+
+
 }
