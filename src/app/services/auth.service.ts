@@ -15,7 +15,7 @@ import {first} from 'rxjs/operators';
 })
 export class AuthService {
 
-  userUid:BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  userUid: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   subscription: Subscription | undefined;
   isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -28,9 +28,6 @@ export class AuthService {
     this.getCurrentUser();
   }
 
-  get currentUser$(): Observable<firebase.User | undefined> {
-    return this.afsAuth.authState.pipe(map(user => user));
-  }
 
 
 
@@ -49,14 +46,14 @@ export class AuthService {
 
                console.log('user not registered ');
             }
-            this.subscription = this.isUserAdmin(user.id)
+             this.isUserAdmin(user.id)
               .subscribe(userRole => {
                   console.log('is useradmin??? :::' + userRole);
 
                   this.isAdmin.next( Object
                     .assign({}, userRole.roles)
                     .hasOwnProperty('admin'));
-                  console.log('ADMINISTRATEUR :::' + this.isAdmin);
+                  console.log('ADMINISTRATEUR :::' + this.isAdmin.value);
                 },
                 err => console.log('request completed.', err),
                 () => console.log('request completed.'));
@@ -87,7 +84,6 @@ export class AuthService {
       this.afsAuth.auth.createUserWithEmailAndPassword(email, pass)
         .then(userData => {
           this.isLogged.next(true);
-
           console.log('registerUser ::: firebase user ' + userData.user.uid);
           this.imageprofile = userData.user.photoURL;
           return (resolve(userData));
@@ -103,7 +99,6 @@ export class AuthService {
         .then(
           userData => {
             this.isLogged.next(true)
-
             console.log('loginEmailUser ::: userData' + userData.user.photoURL);
             return resolve(userData);
           },
@@ -115,7 +110,6 @@ export class AuthService {
     return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
       .then(credential => {
         this.isLogged.next(true)
-
         return this.updateUserData(credential.user);
       });
   }
@@ -129,16 +123,13 @@ export class AuthService {
   }
 
   logoutUser() {
-
     return this.afsAuth.auth.signOut()
       .then(() => {
-        this.isAdmin.unsubscribe();
+/*        this.isAdmin.unsubscribe();
         this.userUid.unsubscribe();
-        this.isLogged.next(false);
-        this.subscription.unsubscribe();
+        this.isLogged.next(false);*/
         console.log('Succes onLogout() ');
         this.router.navigate(['/user/login']);
-
       })
       .catch(error => {
         console.log('Error onLogout() :: ' + error);
@@ -152,7 +143,6 @@ export class AuthService {
   }
 
   updateUserData(user) {
-
     let userRef: AngularFirestoreDocument<any>;
     userRef = this.afs.doc(`userdatas/${user.uid}`);
     const data: UserData = {
@@ -194,10 +184,8 @@ export class AuthService {
           data.id = action.payload.doc.data().id;
           return data;
         }).filter(data => {
-
           data.userUid == useruid ? console.log('searching success for ' + data.userUid) :
             console.log('searching ... ' + data.userUid);
-
           return data.userUid == useruid;
         }).shift();
       }));

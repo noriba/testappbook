@@ -2,8 +2,7 @@
   <div class="col-lg-md-4 text-right p-2">
 
     <button class="btn btn-primary my-2 my-xl-2 d-block btn-block-xs-only" pButton type="button"
-            label="Feuille de temps"
-            (click)="nextStepPlease()"><i class="pi pi-plus pr-2"> </i>
+            label="Feuille de temps"  (click)="nextStepPlease()"><i class="pi pi-plus pr-2"> </i>
     </button>
   </div>
 
@@ -13,8 +12,8 @@
       <thead>
       <tr>
         <th class="text-truncate" scope="col">#</th>
-        <th *ngIf="isAdmin" class="text-truncate" scope="col">Prenom</th>
-        <th *ngIf="isAdmin" class="text-truncate" scope="col">Nom</th>
+        <th *ngIf="isAdmin|async" class="text-truncate" scope="col">Prenom</th>
+        <th *ngIf="isAdmin|async" class="text-truncate" scope="col">Nom</th>
         <th class="text-truncate" scope="col">Site</th>
         <th class="text-truncate" scope="col">Année</th>
         <th class="text-truncate" scope="col">Semaine</th>
@@ -28,8 +27,8 @@
       <tbody class="" >
       <tr *ngFor="let timesheet of allTimesheets; index as i">
         <th  scope="row">{{i + 1}}</th>
-        <td *ngIf="isAdmin" class="text-truncate">{{timesheet.firstname}}</td>
-        <td *ngIf="isAdmin" class="text-truncate">{{timesheet.lastname}}</td>
+        <td *ngIf="isAdmin|async" class="text-truncate">{{timesheet.firstname}}</td>
+        <td *ngIf="isAdmin|async" class="text-truncate">{{timesheet.lastname}}</td>
         <td class="text-truncate">{{timesheet.site}}</td>
         <td class="text-truncate">{{timesheet.year}}</td>
         <td class="text-truncate">{{timesheet.week}}</td>
@@ -38,7 +37,7 @@
         <td class="text-truncate">{{timesheet.contracttype}}</td>
         <td class="text-truncate "  >
           <button
-            *ngIf="timesheet.userUid == userUid || isAdmin == true; else noOwner"
+            *ngIf="timesheet.userUid == (userUid|async) || (isAdmin|async) == true; else noOwner"
             class="btn btn-primary p-mr-2" pButton icon="pi pi-pencil"
             data-toggle="modal"
             data-target="#modalBook"
@@ -51,7 +50,7 @@
           </ng-template>
 
           <button
-            *ngIf="isAdmin == true; else noAdmin"
+            *ngIf="(isAdmin|async) == true; else noAdmin"
             class="btn btn-danger p-button-danger p-mr-2 " pButton
             icon="pi pi-times" (click)="onDeleteTimesheet(timesheet.id)">
           </button>
@@ -62,7 +61,6 @@
           </ng-template>
 
           <button
-
             class="btn  p-button-success p-mr-2" pButton
             icon="pi pi-envelope" (click)="eventemit(timesheet)">
           </button>

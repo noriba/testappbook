@@ -57,6 +57,7 @@ export class Step1 implements OnInit {
   }
 
   nextStepPlease(data: NgForm): void {
+    data.value.userUid=this.authService.userUid;
     console.log('Selected timesheet ::: ' +
       JSON.stringify(this.dataApi.selectedTimesheet));
     !this.dataApi.selectedTimesheet.lastname ?
