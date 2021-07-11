@@ -34,6 +34,9 @@ export class UserDataComponent implements OnInit {
     this.isLogged = this.authService.isLogged.pipe();
     this.userUid = this.authService.userUid.pipe();
 
+    !this.isAdmin?this.getMyUserData(this.userUid):this.getListUserDatas();
+
+
     this.roles={ admin:true,editor:true}
     this.rolesList = Object.keys(this.roles);
     console.log(this.rolesList);

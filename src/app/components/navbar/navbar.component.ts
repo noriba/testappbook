@@ -15,11 +15,9 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService,
               private afsAuth: AngularFireAuth,
               private router: Router,
-  ) {
-  }
+  ) {  }
 
   app_name: string = 'VRP Manager';
-  //isLogged: boolean = false;
   isLogged: Observable<boolean> ;
   isAdmin: Observable<boolean>;
   userUid: Observable<string>;
