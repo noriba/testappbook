@@ -18,23 +18,31 @@
       <div class="">
         <div class="row   my-2 ">
           <div class="p-inputgroup ">
-            <input type="hidden" name="userUid"
-                   [(ngModel)]="userUid" required>
+            <input type="hidden"
+                   name="userUid"
+                   [(ngModel)]="userUid"
+                   required>
           </div>
           <div class="col col-lg-8 mb-2 ">
             <div class="p-inputgroup ">
               <span class="col-4 col-lg-4 p-inputgroup-addon ">Année</span>
-              <input class="col-8 col-lg-8 table-bordered" name="year"
+              <input class="col-8 col-lg-8 table-bordered"
+                     name="year"
                      [(ngModel)]="this.timesheet.year"
-                     placeholder="" type="number" required>
+                     placeholder=""
+                     type="number"
+                     required>
             </div>
           </div>
           <div class=" col-lg-4 ">
             <div class="p-inputgroup">
               <span class="col-4 col-lg-6 p-inputgroup-addon">Semaine</span>
-              <input class="col-8 col-lg-6 table-bordered" name="week"
+              <input class="col-8 col-lg-6 table-bordered"
+                     name="week"
                      [(ngModel)]="this.timesheet.week"
-                     placeholder="" type="number" required>
+                     placeholder=""
+                     type="number"
+                     required>
             </div>
           </div>
         </div>
@@ -44,7 +52,9 @@
               <span class="col-4 col-lg-4 p-inputgroup-addon">Matricule</span>
               <input class="col-5 col-lg-5 mr-1 table-bordered" name="matricule"
                      [(ngModel)]="this.timesheet.matricule"
-                     placeholder="" type="text" required>
+                     placeholder=""
+                     type="text"
+                     required>
               <input class="col-3 col-lg-3 table-bordered" placeholder="" type="text">
             </div>
           </div>
@@ -53,7 +63,9 @@
               <span class="col-4 col-lg-6 p-inputgroup-addon">Début</span>
               <input class="col-8 col-lg-6 table-bordered" name="weekstart" value="06:00"
                      [(ngModel)]="this.timesheet.weekstart"
-                     placeholder="" type="text" required>
+                     placeholder=""
+                     type="text"
+                     required>
             </div>
           </div>
         </div>
@@ -63,10 +75,14 @@
               <span class="col-4 col-lg-4 p-inputgroup-addon">Nom Prénom</span>
               <input class="col-5 col-lg-5 mr-1 table-bordered" name="firstname"
                      [(ngModel)]="this.timesheet.firstname"
-                     placeholder="" type="text" required>
+                     placeholder=""
+                     type="text"
+                     required>
               <input class="col-3 col-lg-3  table-bordered" name="lastname"
                      [(ngModel)]="this.timesheet.lastname"
-                     placeholder="" type="text" required>
+                     placeholder=""
+                     type="text"
+                     required>
             </div>
           </div>
           <div class="col-lg-4 ">
@@ -74,7 +90,9 @@
               <span class="col-4 col-lg-6 p-inputgroup-addon">Fin</span>
               <input class="col-8 col-lg-6 table-bordered" name="weekend" value="17:00"
                      [(ngModel)]="this.timesheet.weekend"
-                     placeholder="" type="text" required>
+                     placeholder=""
+                     type="text"
+                     required>
             </div>
           </div>
         </div>
@@ -86,7 +104,9 @@
                 <span class="col-4 col-lg-4 p-inputgroup-addon">Site</span>
                 <input class="col-8 col-lg-8 table-bordered" name="site"
                        [(ngModel)]="this.timesheet.site"
-                       placeholder="" type="text" required>
+                       placeholder=""
+                       type="text"
+                       required>
               </div>
             </div>
             <div class="mb-2">

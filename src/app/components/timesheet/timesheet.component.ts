@@ -47,11 +47,13 @@ export class TimesheetComponent implements OnInit {
               ) {  }
 
   ngOnInit() {
-    this.authService.isAdmin.pipe(skip(1)).subscribe(admin=> {
+
+    this.userUid.next(this.authService.userUid.getValue());
+
+    this.authService.isAdmin.subscribe(admin=> {
       !admin? this.getMyTimesheets(this.userUid.getValue()) : this.getAllTimesheets();
       return this.isAdmin.next(admin);
-    })
-    this.userUid.next(this.authService.userUid.getValue());
+    }, err=>console.log(err))
     //this.isAdmin.next(this.authService.isAdmin.getValue()) ;
     this.isLogged.next(this.authService.isLogged.getValue());
 

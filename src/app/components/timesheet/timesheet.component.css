@@ -1,0 +1,25 @@
+.view {
+  margin: auto;
+}
+
+.wrapper {
+  position: relative;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.sticky-col {
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: white;
+}
+
+.first-col {
+
+  left: 0px;
+}
+
+.second-col {
+
+  left: 32px;
+}

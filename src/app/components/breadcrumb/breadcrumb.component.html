@@ -37,10 +37,8 @@
 
 <div class="py-2 p-0" style="font-size: 16px;">
   <p-steps #stepper
-
            [model]="steps$"
            (activeIndexChange)="stepperChanged($event)"
-
            [(activeIndex)]="activeIndex"
            [readonly]="false"
   ></p-steps>
