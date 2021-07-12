@@ -14,6 +14,10 @@
   background-color: white;
 }
 
+.first-btn {
+
+  top: 45px;
+}
 .first-col {
 
   left: 0px;
@@ -23,3 +27,4 @@
 
   left: 32px;
 }
+

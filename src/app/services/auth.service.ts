@@ -1,13 +1,13 @@
 import {AngularFireAuth} from '@angular/fire/auth/auth';
 import {map} from 'rxjs/internal/operators';
-import {BehaviorSubject, Observable, of, Subject, Subscription,AsyncSubject} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, Subscription, AsyncSubject} from 'rxjs';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {Injectable} from '@angular/core';
 import {auth} from 'firebase';
 import * as firebase from 'firebase/app';
 import {UserData} from '../models/userdata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {first,takeUntil} from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 
 
 @Injectable({
@@ -16,23 +16,20 @@ import {first,takeUntil} from 'rxjs/operators';
 export class AuthService {
 
   userUid: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  isAdmin: BehaviorSubject<boolean>= new BehaviorSubject<boolean>(false);
+  isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   imageprofile: any;
   private subscription: Subscription;
   _loggedOutEmitter = new Subject<boolean>();
-   _adminOutEmitter = new Subject<boolean>();
+  _adminOutEmitter = new Subject<boolean>();
 
 
   constructor(
     private router: Router,
     private afsAuth: AngularFireAuth,
     private afs: AngularFirestore) {
-
     this.getCurrentUser();
   }
-
-
 
 
   getCurrentUser() {
@@ -43,27 +40,32 @@ export class AuthService {
         this.userUid.next(auth.uid);
         this.getMyUserData(auth.uid).subscribe(
           user => {
-            if (user) {
-              console.log('user correctly registered ' + user.id);
-            } else {
+            if (!user) {
               this.isLogged.next(false);
+              this.logoutUser();
+              console.log('user not registered ');
+            } else {
+              console.log('user correctly registered ' + JSON.stringify(user));
+              user.roles.admin ?
+                this.isAdmin.next(true) : this.isAdmin.next(false);
+              console.log('ADMINISTRATEUR :::' + this.isAdmin.value);
 
-               console.log('user not registered ');
+              this._adminOutEmitter.next(true);
+              /* this.subscription = this.isUserAdmin(user.id)
+               .pipe(takeUntil(this._loggedOutEmitter))
+               .subscribe(userRole => {
+                   console.log('is useradmin??? :::' + JSON.stringify(userRole));
+
+                   userRole.roles.admin?
+                   this.isAdmin.next(true):this.isAdmin.next(false);
+
+                   this._adminOutEmitter.next(true);
+
+                   console.log('ADMINISTRATEUR :::' + this.isAdmin.value);
+                 },
+                 err => console.log('request completed.', err),
+                 () => console.log('request completed.'));*/
             }
-            this.subscription=this.isUserAdmin(user.id)
-              .pipe( takeUntil(this._loggedOutEmitter)   )
-              .subscribe(userRole => {
-                  console.log('is useradmin??? :::' + userRole.roles.admin);
-
-                  this.isAdmin.next( Object
-                    .assign({}, userRole.roles)
-                    .hasOwnProperty('admin'));
-                  this._adminOutEmitter.next(true);
-
-                  console.log('ADMINISTRATEUR :::' + this.isAdmin.value);
-                },
-                err => console.log('request completed.', err),
-                () => console.log('request completed.'));
           },
           error => {
             console.log('request error.', error);
@@ -79,10 +81,10 @@ export class AuthService {
   }
 
 
-  isUserAdmin(userid: string) : Observable<UserData> {
+  isUserAdmin(userid) {
     console.log('check roles admin ' + userid);
-
-    return  this.afs.doc<UserData>(`userdatas/${userid}`)
+    this.afs.doc<UserData>(`userdatas/${userid}`);
+    return this.afs.doc<UserData>(`userdatas/${userid}`)
       .valueChanges();
   }
 
@@ -100,15 +102,20 @@ export class AuthService {
   }
 
 
-
   loginEmailUser(email: string, pass: string) {
     return new Promise((resolve, reject) => {
       this.afsAuth.auth.signInWithEmailAndPassword(email, pass)
         .then(
-          userData => {
-            this.isLogged.next(true)
-            console.log('loginEmailUser ::: userData' + userData.user.photoURL);
-            return resolve(userData);
+          user => {
+            this.getMyUserData(user.user.uid).subscribe(user => {
+              if (!user) {
+                console.log('Aucune données utilisateur trouvées');
+                this.logoutUser();
+              }
+            }, err => console.log(err));
+            this.isLogged.next(true);
+            console.log('loginEmailUser ::: userData' + user.user.photoURL);
+            return resolve(user);
           },
           err => reject(err));
     });
@@ -117,16 +124,16 @@ export class AuthService {
   loginFacebookUser() {
     return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
       .then(credential => {
-        this.isLogged.next(true)
-        return this.updateUserData(credential.user);
+        this.isLogged.next(true);
+        return this.updateUserDataWithCredentials(credential.user);
       });
   }
 
   loginGoogleUser() {
     return this.afsAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
       .then(credential => {
-        this.isLogged.next(true)
-        return this.updateUserData(credential.user);
+        this.isLogged.next(true);
+        return this.updateUserDataWithCredentials(credential.user);
       });
   }
 
@@ -134,7 +141,7 @@ export class AuthService {
     return this.afsAuth.auth.signOut()
       .then(() => {
         this._loggedOutEmitter.next(true);
-        this.isAdmin.next(false)
+        this.isAdmin.next(false);
         this.isLogged.next(false);
         console.log('Succes onLogout() ');
         this.router.navigate(['/user/login']);
@@ -150,55 +157,70 @@ export class AuthService {
     }));
   }
 
-  updateUserData(user) {
+  updateUserDataWithCredentials(user) {
+    console.log('updateUserData ::: ', JSON.stringify(user));
     let userRef: AngularFirestoreDocument<any>;
+    let usertomerge;
     userRef = this.afs.doc(`userdatas/${user.uid}`);
-    const data: UserData = {
-      id: user.uid,
-      userUid: user.uid,
-      email: user.email,
-      roles: {
-        editor: true,
-        admin: false
-      },
-      firstname: '',
-      lastname: '',
-      matricule: '',
-      contract: '',
-      site: '',
-      agency: '',
-      phonenumber: '',
-      function: '',
-      numberplate: '',
-      manager: '',
-      vancode: '',
-      photoUrl: '',
-      depotcode: '',
-      sectorcode: '',
-      weekhoursplanned: 0,
-    };
+    userRef.valueChanges().subscribe(
+      user => {
+        console.log('data to merge ::: ', user);
+        let data: UserData;
+        if (!user) {
+          data = {
+            id: user.uid,
+            userUid: user.uid,
+            email: user.email,
+            roles: {
+              editor: true,
+              admin: false,
+              owner: true
+            },
+            firstname: '',
+            lastname: '',
+            matricule: '',
+            contract: '',
+            site: '',
+            agency: '',
+            phonenumber: '',
+            function: '',
+            numberplate: '',
+            manager: '',
+            vancode: '',
+            depotcode: '',
+            sectorcode: '',
+            weekhoursplanned: 35,
+          };
+        } else {
+          data = user;
+        }
 
-    return userRef.set(data, {merge: true});
+        return userRef.set(data, {merge: true});
+
+      }, err => console.log(err));
+
   }
 
   getMyUserData(useruid) {
     console.log('getting user data of ' + useruid);
-    console.log('search of' + useruid);
+    console.log('search of ' + useruid);
 
-    return this.afs.collection<UserData>('userdatas').snapshotChanges().pipe(first())
+    return this.afs.collection<UserData>('userdatas')
+      .snapshotChanges()
+      .pipe(first())
       .pipe(map(changes => {
         return changes.map(action => {
           const data = action.payload.doc.data() as UserData;
           data.id = action.payload.doc.data().id;
           return data;
         }).filter(data => {
-          data.userUid == useruid ? console.log('searching success for ' + data.userUid) :
+          data.userUid == useruid ?
+            console.log('searching success for ' + data.userUid) :
             console.log('searching ... ' + data.userUid);
           return data.userUid == useruid;
         }).shift();
       }));
   }
-
 
 
 }

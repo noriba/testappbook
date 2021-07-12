@@ -34,9 +34,9 @@ export class MyBooksComponent implements OnInit {
             this.isAdmin = Object
               .assign({}, userRole.roles)
               .hasOwnProperty('admin');
-          });
+          },err=>err);
       }
-    });
+    },err=>err);
   }
 
   getMyBooks(userId) {
