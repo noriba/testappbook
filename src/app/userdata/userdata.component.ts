@@ -76,6 +76,7 @@ export class UserDataComponent implements OnInit {
   onDeleteUserData(idUserData: string): void {
     const confirmation = confirm('Are you sure?');
     if (confirmation) {
+      console.log("deleting...",idUserData)
       this.userDataService.deleteUserData(idUserData);
     }
   }
@@ -116,7 +117,6 @@ export class UserDataComponent implements OnInit {
       this.userDataService.updateUserData(userData.value)
         .then(() => {
           userData.resetForm();
-          this.btnClose.nativeElement.click();
         })
         .catch(err => {
           this.isError = true;

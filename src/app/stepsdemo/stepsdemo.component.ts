@@ -48,11 +48,17 @@ export class StepsdemoComponent implements OnInit {
   }
 
   getCurrentUser() {
-    this.authService.isAuth().subscribe(auth => {
+    this.authService
+      .isAuth()
+      .subscribe(auth => {
       if (auth) {
         this.userUid = auth.uid;
-        this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
-          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
+        this.authService
+          .isUserAdmin(this.userUid)
+          .subscribe(userRole => {
+          this.isAdmin = Object
+            .assign({}, userRole.roles)
+            .hasOwnProperty('admin');
         },err => console.log("error",err));
       }
     },err => console.log("error",err));

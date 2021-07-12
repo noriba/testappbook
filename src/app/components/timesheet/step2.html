@@ -1,14 +1,14 @@
-<div class="stepsdemo-content ">
+<div class="m-2 col-lg-md-8" id="htmlData">
 
   <app-breadcrumb></app-breadcrumb>
 
 
-  <p-card header="Pointage de la semaine">
+  <p-card [style]="{'margin': '0em','padding':'0em'}"  header="Pointage de la semaine">
     <ng-template pTemplate="header">
     </ng-template>
 
     <button pButton type="button" class="btn btn-primary mb-4" data-toggle="modal"
-            data-target="#exampleModal1" data-whatever="">      Nouvelle Journée +
+            data-target="#exampleModal1" data-whatever=""> Nouvelle Journée +
     </button>
 
     <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
@@ -65,34 +65,38 @@
                        type="number">
               </div>
             </div>
-            <div class="modal-footer">
-              <button pButton type="button" class="btn p-button-danger p-mr-2"
+            <div class="modal-footer " >
+              <div class="p-fluid  p-grid mt-4">
+              <button pButton type="button" class="p-field p-col  btn p-button-danger p-mr-2"
                       data-dismiss="modal">Annuler
               </button>
-              <button pButton type="button" class="btn p-button-success"
+              <button pButton type="button" class="p-field p-col  btn p-button-success"
                       data-dismiss="modal" (click)="createNewActivity(myForm)">Valider
               </button>
-            </div>
+            </div></div>
           </div>
         </div>
       </form>
     </div>
 
-    <p-table [value]="dayactivities" dataKey="id" editMode="row">
+    <p-table styleClass="p-datatable-sm" [value]="dayactivities" dataKey="id" editMode="row">
 
       <ng-template pTemplate="header">
-        <tr class="align-text-top">
+        <tr class=" align-text-top ">
           <th style="min-width: fit-content">Jour</th>
-          <th class="text-truncate" >Immatriculation</th>
-          <th class="text-truncate" >Kilometrage</th>
-          <th>Debut</th>
-          <th>Fin</th>
-          <th>Pause</th>
+          <th class="text-truncate">Immatriculation</th>
+          <th class="text-truncate">Kilometrage</th>
+          <th class="text-truncate">Debut</th>
+          <th class="text-truncate">Fin</th>
+          <th class="text-truncate">Pause</th>
           <th style=""></th>
         </tr>
       </ng-template>
-      <ng-template  let-dayactivity let-editing="editing" let-ri="rowIndex" pTemplate="body">
+
+      <ng-template [ngIf]="dayactivities" let-dayactivity let-editing="editing" let-ri="rowIndex" pTemplate="body">
+
         <tr [pEditableRow]="dayactivity">
+
           <td style="">
             <p-cellEditor>
               <ng-template pTemplate="input">
@@ -103,7 +107,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td>
+          <td class="text-truncate">
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input [(ngModel)]="dayactivity.numberplate" pInputText required type="text">
@@ -113,7 +117,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td>
+          <td class="text-truncate">
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input [(ngModel)]="dayactivity.mileage" pInputText required type="number">
@@ -123,7 +127,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td>
+          <td class="text-truncate">
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input [(ngModel)]="dayactivity.daystart" pInputText required type="time">
@@ -133,7 +137,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td>
+          <td class="text-truncate">
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input [(ngModel)]="dayactivity.dayend" pInputText required type="time">
@@ -143,7 +147,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td>
+          <td class="text-truncate">
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input [(ngModel)]="dayactivity.pause" pInputText required type="time">
@@ -153,7 +157,7 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td class="custom-control-inline">
+          <td class="p-0">
 
             <button (click)="onRowEditInit(dayactivity, ri)" *ngIf="!editing" class="p-button-rounded p-button-text"
                     data-target="#exampleModal"
@@ -250,14 +254,18 @@
 
     </p-table>
 
-    <ng-template pTemplate="footer">
-      <button (click)="lastStepPlease()" class=" fixed-bottom" label="Précedent"
-              pButton type="button" icon="pi pi-angle-left" iconPos="left"></button>
+      <div class="p-fluid  p-grid pt-5">
+        <button class="p-field p-col fixed-bottom" (click)="lastStepPlease()" label="Précedent"
+                pButton type="button" icon="pi pi-angle-left" iconPos="left">
+        </button>
 
-      <button [disabled]="!dataApi.temporaryTimesheet.weekactivities"
-              (click)="nextStepPlease()" class="ml-2" label="Suivant"
-              pButton type="button" icon="pi pi-angle-right" iconPos="right"></button>
-    </ng-template>
+        <button class="p-field p-col ml-2"
+                [disabled]="!dataApi.temporaryTimesheet.weekactivities"
+                (click)="nextStepPlease()"  label="Suivant"
+                pButton type="button" icon="pi pi-angle-right" iconPos="right"
+                [disabled]="!dayactivities.length">
+        </button>
+      </div>
 
   </p-card>
 

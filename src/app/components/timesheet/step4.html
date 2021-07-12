@@ -1,4 +1,4 @@
-<div class="stepsdemo-content">
+<div class="m-2 col-lg-md-8" id="htmlData">
   <app-breadcrumb></app-breadcrumb>
 
   <p-card header=" Activité de la semaine">
@@ -9,16 +9,15 @@
     <p> Vous etes au regime {{weekhoursplanned}} heures par semaines</p>
     <p>Vous avez travaillé {{weekhours}} heures</p>
     <p>dont {{weekovertime}} d'heures supplementaires</p>
-    <ng-template pTemplate="footer">
-      <button class="ml-2 fixed-bottom"
+    <div class="p-fluid  p-grid mt-4">
+  <button class="p-field p-col ml-2 fixed-bottom"
               pButton type="button"
               label="< Précedent" (click)="lastStepPlease()">
       </button>
-      <button class="ml-2 bg-success"
+      <button class="p-field p-col ml-2 bg-success"
               pButton type="button"
               label="Terminée >" (click)="nextStepPlease()">
       </button>
-
-    </ng-template>
+</div>
   </p-card>
 </div>

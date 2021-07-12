@@ -23,7 +23,7 @@ export class DetailsBookComponent implements OnInit {
   getDetails(idBook: string): void {
     this.dataApi.getOneBook(idBook).subscribe(book => {
       this.book = book;
-    });
+    },err=>err);
   }
 
 }
