@@ -127,42 +127,44 @@
       </div>
     </form>
   </div>
+
   <div *ngIf="(isAdmin|async)" class=" table-responsive">
 
     <table class="table table-hover">
       <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Prénom</th>
-        <th scope="col">Nom</th>
-        <th scope="col">Matricule</th>
-        <th scope="col">Email</th>
-        <th scope="col">Télephone</th>
-        <th scope="col">Site</th>
-        <th scope="col">Fonction</th>
-        <th scope="col">Agence</th>
-        <th style="width:10rem"></th>
+        <th class="text-truncate sticky-col first-col" scope="col">#</th>
+        <th class="text-truncate sticky-col second-col" scope="col">Prénom</th>
+        <th class="text-truncate" scope="col">Nom</th>
+        <th class="text-truncate" scope="col">Matricule</th>
+        <th class="text-truncate" scope="col">Email</th>
+        <th class="text-truncate" scope="col">Télephone</th>
+        <th class="text-truncate" scope="col">Site</th>
+        <th class="text-truncate" scope="col">Fonction</th>
+        <th class="text-truncate" scope="col">Agence</th>
+        <th></th>
       </tr>
       </thead>
+
       <tbody *ngIf="!allUserDatas?.length">
       <tr class="text-center">
         Aucune données
-
       </tr>
       </tbody>
+
       <tbody *ngIf="allUserDatas">
       <tr *ngFor="let UserData of allUserDatas; index as i">
-        <th scope="row">{{i + 1}}</th>
+        <th class="sticky-col first-col" scope="row">{{i + 1}}</th>
         <!--          <td class=""><img class=" img-fluid " src="{{UserData.portada}}"></td>-->
-        <td>{{UserData.firstname}}</td>
-        <td>{{UserData.lastname}}</td>
-        <td>{{UserData.matricule}}</td>
-        <td>{{UserData.email}}</td>
-        <td>{{UserData.phonenumber}}</td>
-        <td>{{UserData.site}}</td>
-        <td>{{UserData.function}}</td>
-        <td>{{UserData.agency}}</td>
-        <td class="custom-control-inline">
+        <td class="text-truncate sticky-col second-col">{{UserData.firstname}}</td>
+        <td class="text-truncate">{{UserData.lastname}}</td>
+        <td class="text-truncate">{{UserData.matricule}}</td>
+        <td class="text-truncate">{{UserData.email}}</td>
+        <td class="text-truncate">{{UserData.phonenumber}}</td>
+        <td class="text-truncate">{{UserData.site}}</td>
+        <td class="text-truncate">{{UserData.function}}</td>
+        <td class="text-truncate">{{UserData.agency}}</td>
+        <td class="text-truncate p-1">
           <button *ngIf="UserData.userUid == (userUid|async) || (isAdmin|async) == true; else noOwner"
                   class="btn btn-primary p-mr-2" icon="pi pi-pencil" pButton
                   data-toggle="modal" data-target="#modalUserData"
@@ -189,101 +191,102 @@
   </div>
 
 
-  <div *ngIf="!(isAdmin |async)" id="modalUserData2"  >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
+  <div *ngIf="!(isAdmin |async)" id="modalUserData2">
+    <div class="" role="document">
+      <div class="card ">
 
-          <div class="modal-body">
-            <div class="form-group">
-              <input type="hidden" [(ngModel)]="this.userDataService.selectedUserData.id "
-                     class="form-control"
-                     name="id"
-                     required>
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Prénom:</label>
-              <input [(ngModel)]="this.userDataService.selectedUserData.firstname "
-                     class="form-control"
-                     name="firstname"
-                     required
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Nom:</label>
-              <input [(ngModel)]="this.userDataService.selectedUserData.lastname "
-                     class="form-control"
-                     name="lastname"
-                     required
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Matricule:</label>
-              <input [(ngModel)]="this.userDataService.selectedUserData.matricule "
-                     class="form-control"
-                     name="matricule"
-                     required
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Email:</label>
-              <input [(ngModel)]="this.userDataService.selectedUserData.email "
-                     class="form-control"
-                     name="email"
-                     required
-                     type="email">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Télephone:</label>
-              <input [(ngModel)]="this.userDataService.selectedUserData.phonenumber "
-                     class="form-control" name="phonenumber"
-                     required
-                     type="number">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Site:</label>
-              <input [(ngModel)]="this.userDataService.selectedUserData.site "
-                     class="form-control"
-                     name="site"
-                     required
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Fonction:</label>
-              <input [(ngModel)]="this.userDataService.selectedUserData.function "
-                     class="form-control"
-                     name="function"
-                     required
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Agence:</label>
-              <input [(ngModel)]="this.userDataService.selectedUserData.agency "
-                     class="form-control"
-                     name="agency"
-                     required
-                     type="text">
-            </div>
-            <div class="form-group">
-              <label class="col-form-label">Régime horaire:</label>
-              <input [(ngModel)]="this.userDataService.selectedUserData.weekhoursplanned "
-                     class="form-control"
-                     name="weekhoursplanned"
-                     required
-                     type="number">
-            </div>
-
-
+        <div class="p-fluid p-formgrid p-grid  p-4  ">
+          <div class="form-group  p-field">
+            <input type="hidden" [(ngModel)]="this.userDataService.selectedUserData.id "
+                   class="form-control "
+                   name="id"
+                   required>
           </div>
-          <div class="modal-footer">
-            <button pButton type="button" class="btn p-button-danger p-mr-2"
-                    data-dismiss="modal">Annuler
-            </button>
-            <button pButton type="button" class="btn p-button-success"
-                    data-dismiss="modal" (click)="createNewUserData(myForm)">Valider
-            </button>
+          <div class="form-group p-field col-lg-4 ">
+            <label class="col-form-label  ">Prénom:</label>
+            <input [(ngModel)]="this.userDataService.selectedUserData.firstname "
+                   class="form-control "
+                   name="firstname"
+                   type="text"
+                   required>
           </div>
+          <div class="form-group p-field col-lg-4">
+            <label class="col-form-label ">Nom:</label>
+            <input [(ngModel)]="this.userDataService.selectedUserData.lastname "
+                   class="form-control  "
+                   name="lastname"
+                   type="text"
+                   required>
+          </div>
+          <div class="form-group p-field col-lg-4">
+            <label class="col-form-label ">Matricule:</label>
+            <input [(ngModel)]="this.userDataService.selectedUserData.matricule "
+                   class="form-control"
+                   name="matricule"
+                   type="text"
+                   required>
+          </div>
+          <div class="form-group p-field col-lg-4">
+            <label class="col-form-label">Email:</label>
+            <input [(ngModel)]="this.userDataService.selectedUserData.email "
+                   class="form-control"
+                   name="email"
+                   type="email"
+                   required>
+          </div>
+          <div class="form-group p-field col-lg-4">
+            <label class="col-form-label">Télephone:</label>
+            <input [(ngModel)]="this.userDataService.selectedUserData.phonenumber "
+                   class="form-control"
+                   name="phonenumber"
+                   type="number"
+                   required>
+          </div>
+          <div class="form-group p-field col-lg-4">
+            <label class="col-form-label">Site:</label>
+            <input [(ngModel)]="this.userDataService.selectedUserData.site "
+                   class="form-control"
+                   name="site"
+                   type="text"
+                   required>
+          </div>
+          <div class="form-group p-field col-lg-4">
+            <label class="col-form-label">Fonction:</label>
+            <input [(ngModel)]="this.userDataService.selectedUserData.function "
+                   class="form-control"
+                   name="function"
+                   type="text"
+                   required>
+          </div>
+          <div class="form-group p-field col-lg-4">
+            <label class="col-form-label">Agence:</label>
+            <input [(ngModel)]="this.userDataService.selectedUserData.agency "
+                   class="form-control"
+                   name="agency"
+                   type="text"
+                   required>
+          </div>
+          <div class="form-group p-field col-lg-4">
+            <label class="col-form-label">Régime horaire:</label>
+            <input [(ngModel)]="this.userDataService.selectedUserData.weekhoursplanned "
+                   class="form-control"
+                   name="weekhoursplanned"
+                   type="number"
+                   required>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button pButton type="button" class="btn p-button-danger p-mr-2"
+                  data-dismiss="modal">Annuler
+          </button>
+          <button pButton type="button" class="btn p-button-success"
+                  data-dismiss="modal" (click)="createNewUserData(myForm)">Valider
+          </button>
         </div>
       </div>
+    </div>
   </div>
 
 </section>

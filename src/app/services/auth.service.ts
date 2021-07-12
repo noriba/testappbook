@@ -79,7 +79,7 @@ export class AuthService {
   }
 
 
-  isUserAdmin(userid: string) {
+  isUserAdmin(userid: string) : Observable<UserData> {
     console.log('check roles admin ' + userid);
 
     return  this.afs.doc<UserData>(`userdatas/${userid}`)
