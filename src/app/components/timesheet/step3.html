@@ -1,4 +1,4 @@
-<div class="stepsdemo-content">
+<div class="m-2 col-lg-md-8" id="htmlData">
 
   <app-breadcrumb></app-breadcrumb>
 
@@ -16,12 +16,9 @@
           <th style="width:8rem"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" *ngIf="!dayovertimes">
-        <tr class="text-center">
-          Aucune données
-        </tr>
-      </ng-template>
-      <ng-template [ngIf]="dayovertimes" pTemplate="body" let-dayovertime let-editing="editing" let-ri="rowIndex">
+
+      <ng-template [ngIf]="dayovertimes" pTemplate="body"
+                   let-dayovertime let-editing="editing" let-ri="rowIndex">
         <tr class="text-truncate" [pEditableRow]="dayovertime">
           <td>
             <p-cellEditor>
@@ -121,35 +118,38 @@
                       </form>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="p-button-danger p-mr-2" pButton pRipple pCancelEditableRow
+                    <div class="p-fluid  p-grid mt-4">
+                      <button type="button" class="p-field p-col p-button-danger p-mr-2"
+                              pButton pRipple pCancelEditableRow
                               data-dismiss="modal"
                               (click)="onRowEditCancel(this.dataApi.selectedDayOvertime,this.dataApi.selectedOtRow)">
                         Annuler
                       </button>
-                      <button type="button" class="p-button-success " pButton pRipple pSaveEditableRow
+                      <button type="button" class="p-field p-col p-button-success "
+                              pButton pRipple pSaveEditableRow
                               (click)="onRowEditSave(this.dataApi.selectedDayOvertime, this.dataApi.selectedOtRow)"
                               data-dismiss="modal">Valider
                       </button>
-
-                    </div>
+                    </div></div>
                   </div>
                 </div>
               </form>
             </div>
-
-
           </td>
         </tr>
       </ng-template>
 
     </p-table>
-
-    <ng-template pTemplate="footer">
-      <button class=" fixed-bottom" pButton type="button" label="< Précedent" (click)="lastStepPlease()"></button>
-
-      <button class="ml-2" pButton type="button" label="Suivant >" (click)="nextStepPlease()"></button>
-    </ng-template>
-
+    <div class="p-fluid  p-grid mt-4">
+      <button class="p-field p-col  fixed-bottom"
+              pButton type="button" label="< Précedent"
+              (click)="lastStepPlease()">
+      </button>
+      <button class="p-field p-col ml-2"
+              pButton type="button" label="Suivant >"
+              (click)="nextStepPlease()">
+      </button>
+</div>
   </p-card>
 
 

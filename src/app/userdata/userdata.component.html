@@ -4,7 +4,7 @@
     <button *ngIf="(isAdmin|async) == true; " class="btn btn-primary my-2 my-xl-2 d-block btn-block-xs-only" pButton
             data-toggle="modal" (click)="resetSelectedUserData()"
             data-target="#modalUserData"
-            label="Collaborateur"><i class="pi pi-plus pr-2"> </i>
+            label="Collaborateur" disabled="true"><i class="pi pi-plus pr-2"> </i>
     </button>
   </div>
   <div class="modal fade" id="modalUserData" tabindex="-1" role="dialog"

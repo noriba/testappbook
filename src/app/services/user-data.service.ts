@@ -29,13 +29,15 @@ export class UserDataService {
 
   getMyUserData(userid) {
     this.userDataCollection = this.afs.collection<UserData>('userdatas');
-    return this.myUserData = this.userDataCollection.snapshotChanges()
+    return this.myUserData = this.userDataCollection
+      .snapshotChanges()
       .pipe(map(changes => {
         return changes.map(action => {
           const data = action.payload.doc.data() as UserData;
           data.id = action.payload.doc.data().id;
           return data;
-        }).filter(data => data.userUid == userid).shift();
+        }).filter(data => data.userUid == userid)
+          .shift();
       }));
   }
 
@@ -108,7 +110,8 @@ export class UserDataService {
 
   deleteUserData(idUserData: string) {
     this.userDataDoc = this.afs.doc<UserData>(`userdatas/${idUserData}`);
-    return this.userDataDoc.delete().then((res) => {
+    return this.userDataDoc.delete()
+      .then((res) => {
       console.log('Document successfully deleted!');
 
     }).catch(err => {
@@ -123,7 +126,9 @@ export class UserDataService {
       userUid: '',
       email: '',
       roles: {
-        editor: true
+        editor: true,
+        admin: false,
+        owner: true
       },
       firstname: '',
       lastname: '',
@@ -138,7 +143,7 @@ export class UserDataService {
       vancode: '',
       depotcode: '',
       sectorcode: '',
-      weekhoursplanned: 0,
+      weekhoursplanned: 35,
     };
     user = {...data, ...user};
     return new Promise((resolve, reject) => {

@@ -8,9 +8,11 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {Timesheet} from '../../models/timesheet';
 import {NgForm} from '@angular/forms';
+import {UserData} from '../../models/userdata';
 
 
 @Component({
+  selector: 'app-step1',
   templateUrl: './step1.html',
   providers: [MessageService]
 })
@@ -125,9 +127,9 @@ export class Step1 implements OnInit {
             this.isAdmin = Object
               .assign({}, userRole.roles)
               .hasOwnProperty('admin');
-          });
+          },err=>err);
       }
-    });
+    },err=>err);
   }
 
   openPDF(): void {
