@@ -1,6 +1,4 @@
 .p-steps span {
-  color: white;
-
   margin-top: 4px;
 }
 
@@ -17,8 +15,14 @@
   /* color: white ;*/
 }
 
+/*
 
 
-
-.p-steps-number{
+.p-steps .p-steps-item .p-menuitem-link .p-steps-number {
+background: white;
 }
+
+.p-steps .p-steps-item .p-menuitem-link .p-steps-number:active {
+background: blue;
+}
+*/
