@@ -7,7 +7,9 @@ import {auth} from 'firebase';
 import * as firebase from 'firebase/app';
 import {UserData} from '../models/userdata';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {first, takeUntil} from 'rxjs/operators';
+import {first, takeUntil, catchError} from 'rxjs/operators';
+import {throwError} from 'rxjs';
+import {concat} from 'rxjs';
 
 
 @Injectable({
@@ -36,20 +38,20 @@ export class AuthService {
     this.isAuth().subscribe(auth => {
       if (auth) {
         console.log('id de firebase ' + auth.uid);
-        this.isLogged.next(true);
         this.userUid.next(auth.uid);
         this.getMyUserData(auth.uid).subscribe(
           user => {
             if (!user) {
-              this.isLogged.next(false);
               this.logoutUser();
+              this.isLogged.next(false);
               console.log('user not registered ');
+              return;
             } else {
+              this.isLogged.next(true);
               console.log('user correctly registered ' + JSON.stringify(user));
+              console.log('ADMINISTRATEUR ? :::' + this.isAdmin.value);
               user.roles.admin ?
                 this.isAdmin.next(true) : this.isAdmin.next(false);
-              console.log('ADMINISTRATEUR :::' + this.isAdmin.value);
-
               this._adminOutEmitter.next(true);
               /* this.subscription = this.isUserAdmin(user.id)
                .pipe(takeUntil(this._loggedOutEmitter))
@@ -71,9 +73,8 @@ export class AuthService {
             console.log('request error.', error);
           },
           () => {
-            console.log('request error completed.');
+            console.log('request getmyuserdata completed.');
           });
-        console.log('request completed.');
       } else {
         this.isLogged.next(false);
       }
@@ -107,17 +108,26 @@ export class AuthService {
       this.afsAuth.auth.signInWithEmailAndPassword(email, pass)
         .then(
           user => {
-            this.getMyUserData(user.user.uid).subscribe(user => {
-              if (!user) {
-                console.log('Aucune données utilisateur trouvées');
-                this.logoutUser();
-              }
-            }, err => console.log(err));
-            this.isLogged.next(true);
+            this.getMyUserData(user.user.uid).subscribe(
+              userdata => {
+                if (!userdata) {
+                  console.log('Aucune données utilisateur trouvées');
+                  this.logoutUser();
+                  this.isLogged.next(false);
+                  this.router.navigate(['/user/login']);
+
+                } else {
+                  this.isLogged.next(true);
+                  this.router.navigate(['timesheet']);
+                }
+              }, err => console.log(err));
             console.log('loginEmailUser ::: userData' + user.user.photoURL);
             return resolve(user);
           },
-          err => reject(err));
+          err => reject(err))
+        .catch(err => {
+          console.log('ERRRRRRRRRRRRRRRRRRRRORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR', err.message);
+        });
     });
   }
 
@@ -125,6 +135,8 @@ export class AuthService {
     return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
       .then(credential => {
         this.isLogged.next(true);
+        this.router.navigate(['timesheet']);
+
         return this.updateUserDataWithCredentials(credential.user);
       });
   }
@@ -133,6 +145,8 @@ export class AuthService {
     return this.afsAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
       .then(credential => {
         this.isLogged.next(true);
+        this.router.navigate(['timesheet']);
+
         return this.updateUserDataWithCredentials(credential.user);
       });
   }
@@ -140,9 +154,10 @@ export class AuthService {
   logoutUser() {
     return this.afsAuth.auth.signOut()
       .then(() => {
-        this._loggedOutEmitter.next(true);
         this.isAdmin.next(false);
         this.isLogged.next(false);
+        this._loggedOutEmitter.next(true);
+
         console.log('Succes onLogout() ');
         this.router.navigate(['/user/login']);
       })
@@ -162,7 +177,9 @@ export class AuthService {
     let userRef: AngularFirestoreDocument<any>;
     let usertomerge;
     userRef = this.afs.doc(`userdatas/${user.uid}`);
-    userRef.valueChanges().subscribe(
+    userRef.valueChanges()
+      .pipe(takeUntil(this._loggedOutEmitter))
+      .subscribe(
       user => {
         console.log('data to merge ::: ', user);
         let data: UserData;
@@ -197,7 +214,7 @@ export class AuthService {
 
         return userRef.set(data, {merge: true});
 
-      }, err => console.log(err));
+      }, err => console.error(err));
 
   }
 

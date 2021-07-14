@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
     roles: {}
   };
 
+  defaultPhotoUrl="https://firebasestorage.googleapis.com/v0/b/book-mgr.appspot.com/o/uploads%2Fprofile_default?alt=media&token=94ed6cc5-fb21-47dd-bb15-6827d1225463";
 
   ngOnInit() {
     this.userDataService.getMyUserData(this.authService.userUid.value)

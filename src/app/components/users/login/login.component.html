@@ -11,28 +11,32 @@
                   Une erreur est survenue!
                 </div>
                 <div class="form-group">
-                  <input [(ngModel)]="email" type="email" id="email" name="email" class="form-control"
+                  <input [(ngModel)]="email" type="email" id="email"
+                         name="email" class="form-control"
                          placeholder="Email" required>
                 </div>
                 <div class="form-group">
-                  <input [(ngModel)]="password" type="password" id="password" name="password" class="form-control"
+                  <input [(ngModel)]="password" type="password" id="password"
+                         name="password" class="form-control"
                          placeholder="Password" required>
 
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary btn-block">Connexion</button>
+                <button type="submit"
+                        class="btn btn-lg btn-primary btn-block">Connexion</button>
                 <div class="form-group">
-                  <a routerLink="/user/register" class="form-control login-user">Vous n'avez pas de compte ?</a>
+                  <a routerLink="/user/register"
+                     class="form-control login-user">Vous n'avez pas de compte ?</a>
                 </div>
 
               </form>
               <div class="">
-                <button class="btn btn-lg btn-block btn-social btn-facebook" data-dismiss="modal" (click)="onLoginFacebook()">
-                  <span class="fa fa-facebook"></span>
-                  FACEBOOK
+                <button class="btn btn-lg btn-block btn-social btn-facebook"
+                        data-dismiss="modal" (click)="onLoginFacebook()">
+                  <span class="fa fa-facebook"></span>       FACEBOOK
                 </button>
-                <button type="submit" class="btn btn-lg btn-block btn-social btn-google" (click)="onLoginGoogle()">
-                  <span class="fa fa-google"></span>
-                  GOOGLE
+                <button type="submit" class="btn btn-lg btn-block btn-social btn-google"
+                        (click)="onLoginGoogle()">
+                  <span class="fa fa-google"></span>         GOOGLE
                 </button>
               </div>
             </div>

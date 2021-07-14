@@ -4,7 +4,8 @@
       <div class="row">
         <div
           class="col-lg-12 col-sm-12 col-12 profile-header justify-content-center d-flex flex-wrap align-items-center">
-          <img class="" src="{{user.photoUrl}}" class="rounded-circle img-thumbnail" alt="profile">
+          <img *ngIf="user.photoUrl" src="{{user.photoUrl}}" class="rounded-circle img-thumbnail" alt="profile">
+          <img *ngIf="!user.photoUrl" src="{{defaultPhotoUrl}}" class="rounded-circle img-thumbnail" alt="profile">
         </div>
       </div>
       <div class="row user-details">
