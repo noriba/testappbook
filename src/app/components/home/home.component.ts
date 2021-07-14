@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
           .templateEventEmitterService
           .invokeFirstComponentFunction
           .subscribe((name: Timesheet) => {
-            console.log('constructeur de home comp :: ' + name);
+            console.log('constructeur de home comp :: ' + JSON.stringify(name));
             this.timesheet=name ;
             this.setTemplate(this.timesheet);
             this.onChanges();
