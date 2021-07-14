@@ -12,8 +12,8 @@
       <thead>
       <tr>
         <th class="text-truncate sticky-col first-col" scope="col">#</th>
-        <th *ngIf="isAdmin|async" class="text-truncate sticky-col second-col" scope="col">Prenom</th>
-        <th *ngIf="isAdmin|async" class="text-truncate" scope="col">Nom</th>
+        <th *ngIf="!(isAdmin|async)" class="text-truncate sticky-col second-col" scope="col">Prenom</th>
+        <th *ngIf="!(isAdmin|async)" class="text-truncate" scope="col">Nom</th>
         <th class="text-truncate" scope="col">Site</th>
         <th class="text-truncate" scope="col">Année</th>
         <th class="text-truncate" scope="col">Semaine</th>
@@ -36,8 +36,8 @@
       <tbody *ngIf="allTimesheets">
       <tr *ngFor="let timesheet of allTimesheets; index as i">
         <th class="sticky-col first-col" scope="row">{{i + 1}}</th>
-        <td *ngIf="isAdmin|async" class="text-truncate sticky-col second-col">{{timesheet.firstname}}</td>
-        <td *ngIf="isAdmin|async" class="text-truncate">{{timesheet.lastname}}</td>
+        <td *ngIf="!(isAdmin|async)" class="text-truncate sticky-col second-col">{{timesheet.firstname}}</td>
+        <td *ngIf="!(isAdmin|async)" class="text-truncate">{{timesheet.lastname}}</td>
         <td class="text-truncate">{{timesheet.site}}</td>
         <td class="text-truncate">{{timesheet.year}}</td>
         <td class="text-truncate">{{timesheet.week}}</td>

@@ -6,6 +6,9 @@ var nodemailer = require('nodemailer');//importing node mailer
 var handlebars = require('handlebars');//importing node mailer
 var fs = require('fs');//importing node mailer
 var path = require('path');//importing node mailer
+var Handlebars = require("handlebars");
+var MomentHandler = require("handlebars.moment");
+MomentHandler.registerHelpers(Handlebars);
 
 emailRouter.route('/')
 .options(cors.cors,(req,res)=>{
@@ -51,9 +54,9 @@ emailRouter.route('/')
   */
   var mailOptions = {
     from: 'vrpmanager75@gmail.com',//replace with your email
-    to: 'vrpmanager75@gmail.com',//replace with your email
+    to: req.body.userdata.email,//replace with your email
     cc:`${req.body.userdata['firstname']}<${req.body.userdata['email']}>`,
-    subject: `NodeMail Testing`,
+    subject: `Rapport d'activité :`,
     html: htmlToSend
 /*
      `
@@ -89,6 +92,12 @@ emailRouter.route('/')
       res.send('Envoyé avec succés!')//if mail is sent successfully send Sent successfully as response
     }
   });
+
+
+
+
+
+
 })
 
 

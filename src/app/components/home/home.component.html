@@ -4,288 +4,277 @@
 <div class="stepsdemo-content " id="htmlData">
 
 
-    <h2 class="text-center mt-4">Feuille de présence</h2>
+  <h2 class="text-center mt-4">Feuille de présence</h2>
 
 
+  <p-fieldset class="m-4" legend="Identité">
+    <form #myForm="ngForm">
 
-    <p-fieldset class="m-4" legend="Identité" >
-      <form #myForm="ngForm">
-
-        <div class="">
-          <div class="row col-lg-12 my-2 ">
+      <div class="">
+        <div class="row col-lg-12 my-2 ">
+          <div class="p-inputgroup ">
+            <input type="hidden" name="userUid"
+                   [(ngModel)]="userUid" required></div>
+          <div class=" col-lg-8 mb-2 ">
             <div class="p-inputgroup ">
-              <input type="hidden" name="userUid"
-                     [(ngModel)]="userUid" required></div>
-            <div class=" col-lg-8 mb-2 ">
-              <div class="p-inputgroup ">
-                <span class="col-4 col-lg-4 p-inputgroup-addon ">Année</span>
-                <input class="col-8 col-lg-8 " name="year"
-                       [(ngModel)]="dataApi.selectedTimesheet.year"
-                       placeholder="" type="number" required>
-              </div>
-            </div>
-            <div class=" col-lg-4 ">
-              <div class="p-inputgroup">
-                <span class="col-4 col-lg-6 p-inputgroup-addon">Semaine</span>
-                <input class="col-8 col-lg-6" name="week"
-                       [(ngModel)]="dataApi.selectedTimesheet.week"
-                       placeholder="" type="number" required>
-              </div>
+              <span class="col-4 col-lg-4 p-inputgroup-addon ">Année</span>
+              <input class="col-8 col-lg-8 " name="year"
+                     [(ngModel)]="dataApi.selectedTimesheet.year"
+                     placeholder="" type="number" required>
             </div>
           </div>
-          <div class="row col-lg-12 my-2">
-            <div class="col-lg-8 mb-2">
-              <div class="p-inputgroup">
-                <span class="col-4 col-lg-4 p-inputgroup-addon">Matricule</span>
-                <input class="col-5 col-lg-5 mr-1" name="matricule"
-                       [(ngModel)]="dataApi.selectedTimesheet.matricule"
-                       placeholder="" type="text" required>
-                <input class="col-3 col-lg-3" placeholder="" type="text">
-              </div>
-            </div>
-            <div class="col-lg-4 ">
-              <div class="p-inputgroup">
-                <span class="col-4 col-lg-6 p-inputgroup-addon">Début</span>
-                <input class="col-8 col-lg-6" name="weekstart" value="06:00"
-                       [(ngModel)]="dataApi.selectedTimesheet.weekstart"
-                       placeholder="" type="time" required>
-              </div>
+          <div class=" col-lg-4 ">
+            <div class="p-inputgroup">
+              <span class="col-4 col-lg-6 p-inputgroup-addon">Semaine</span>
+              <input class="col-8 col-lg-6" name="week"
+                     [(ngModel)]="dataApi.selectedTimesheet.week"
+                     placeholder="" type="number" required>
             </div>
           </div>
-          <div class="row  col-lg-12 my-2">
-            <div class="col-lg-8 mb-2">
-              <div class="p-inputgroup">
-                <span class="col-4 col-lg-4 p-inputgroup-addon">Nom Prénom</span>
-                <input class="col-5 col-lg-5 mr-1" name="firstname"
-                       [(ngModel)]="dataApi.selectedTimesheet.firstname"
-                       placeholder="" type="text" required>
-                <input class="col-3 col-lg-3" name="lastname"
-                       [(ngModel)]="dataApi.selectedTimesheet.lastname"
-                       placeholder="" type="text" required>
-              </div>
-            </div>
-            <div class="col-lg-4 ">
-              <div class="p-inputgroup">
-                <span class="col-4 col-lg-6 p-inputgroup-addon">Fin</span>
-                <input class="col-8 col-lg-6" name="weekend" value="17:00"
-                       [(ngModel)]="dataApi.selectedTimesheet.weekend"
-                       placeholder="" type="time" required>
-              </div>
+        </div>
+        <div class="row col-lg-12 my-2">
+          <div class="col-lg-8 mb-2">
+            <div class="p-inputgroup">
+              <span class="col-4 col-lg-4 p-inputgroup-addon">Matricule</span>
+              <input class="col-5 col-lg-5 mr-1" name="matricule"
+                     [(ngModel)]="dataApi.selectedTimesheet.matricule"
+                     placeholder="" type="text" required>
+              <input class="col-3 col-lg-3" placeholder="" type="text">
             </div>
           </div>
-
-          <div class="row col-lg-12 my-2  ">
-            <div class="col-lg-8 ">
-              <div class=" mb-2 mb-lg-3 ">
-                <div class="p-inputgroup">
-                  <span class="col-4 col-lg-4 p-inputgroup-addon">Site</span>
-                  <input class="col-8 col-lg-8" name="site"
-                         [(ngModel)]="dataApi.selectedTimesheet.site"
-                         placeholder="" type="text" required>
-                </div>
-              </div>
-              <div class="mb-2">
-                <div class="p-inputgroup">
-                  <span class="col-4 col-lg-4 p-inputgroup-addon">Contrat</span>
-                  <div class="col-8 col-lg-8 py-2 px-4 form-check-inline">
-                    <div class="my-auto  p-field-radiobutton" *ngFor='let contract of contracts'>
-                      <input class="p-ml-4" id="contracttype" type="radio" name="contracttype"
-                             [value]=contract [(ngModel)]="dataApi.selectedTimesheet.contracttype">
-                      <label for="contracttype">{{contract}}</label>
-
-                    </div>
-
-                  </div>
-                </div>
-              </div>
+          <div class="col-lg-4 ">
+            <div class="p-inputgroup">
+              <span class="col-4 col-lg-6 p-inputgroup-addon">Début</span>
+              <input class="col-8 col-lg-6" name="weekstart" value="06:00"
+                     [(ngModel)]="dataApi.selectedTimesheet.weekstart"
+                     placeholder="" type="time" required>
             </div>
-            <div class="col-lg-4 p-inputgroup">
-              <span class="col-4 col-lg-6 p-inputgroup-addon">Régime horaire</span>
-              <input class="col-8 col-lg-6" name="weekhoursplanned"
-                     [(ngModel)]="dataApi.selectedTimesheet.weekhoursplanned" placeholder="" type="number" required>
+          </div>
+        </div>
+        <div class="row  col-lg-12 my-2">
+          <div class="col-lg-8 mb-2">
+            <div class="p-inputgroup">
+              <span class="col-4 col-lg-4 p-inputgroup-addon">Nom Prénom</span>
+              <input class="col-5 col-lg-5 mr-1" name="firstname"
+                     [(ngModel)]="dataApi.selectedTimesheet.firstname"
+                     placeholder="" type="text" required>
+              <input class="col-3 col-lg-3" name="lastname"
+                     [(ngModel)]="dataApi.selectedTimesheet.lastname"
+                     placeholder="" type="text" required>
+            </div>
+          </div>
+          <div class="col-lg-4 ">
+            <div class="p-inputgroup">
+              <span class="col-4 col-lg-6 p-inputgroup-addon">Fin</span>
+              <input class="col-8 col-lg-6" name="weekend" value="17:00"
+                     [(ngModel)]="dataApi.selectedTimesheet.weekend"
+                     placeholder="" type="time" required>
             </div>
           </div>
         </div>
 
-      </form>
-    </p-fieldset>
+        <div class="row col-lg-12 my-2  ">
+          <div class="col-lg-8 ">
+            <div class=" mb-2 mb-lg-3 ">
+              <div class="p-inputgroup">
+                <span class="col-4 col-lg-4 p-inputgroup-addon">Site</span>
+                <input class="col-8 col-lg-8" name="site"
+                       [(ngModel)]="dataApi.selectedTimesheet.site"
+                       placeholder="" type="text" required>
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="p-inputgroup">
+                <span class="col-4 col-lg-4 p-inputgroup-addon">Contrat</span>
+                <div class="col-8 col-lg-8 py-2 px-4 form-check-inline">
+                  <div class="my-auto  p-field-radiobutton" *ngFor='let contract of contracts'>
+                    <input class="p-ml-4" id="contracttype" type="radio" name="contracttype"
+                           [value]=contract [(ngModel)]="dataApi.selectedTimesheet.contracttype">
+                    <label for="contracttype">{{contract}}</label>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 p-inputgroup">
+            <span class="col-4 col-lg-6 p-inputgroup-addon">Régime horaire</span>
+            <input class="col-8 col-lg-6" name="weekhoursplanned"
+                   [(ngModel)]="dataApi.selectedTimesheet.weekhoursplanned" placeholder="" type="number" required>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </p-fieldset>
 
 
-    <p-fieldset class="m-4" legend="Pointage de la semaine">
+  <p-fieldset class="m-4" legend="Pointage de la semaine">
 
 
-      <p-table [value]="dataApi.selectedTimesheetDayActivities" dataKey="id" editMode="row">
+    <p-table [value]="dataApi.selectedTimesheetDayActivities" dataKey="id" editMode="row">
 
-        <ng-template pTemplate="header">
-          <tr>
-            <th>Jour</th>
-            <th>Immatriculation</th>
-            <th>Kilometrage</th>
-            <th>Debut</th>
-            <th>Fin</th>
-            <th>Pause</th>
-            <th style="width:8rem">Total</th>
-          </tr>
-        </ng-template>
-        <ng-template let-dayactivity let-editing="editing" let-ri="rowIndex" pTemplate="body">
-          <tr [pEditableRow]="dayactivity">
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input [(ngModel)]="dayactivity.day" pInputText type="text">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{dayactivity.day}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input [(ngModel)]="dayactivity.numberplate" pInputText required type="text">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{dayactivity.numberplate}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input [(ngModel)]="dayactivity.mileage" pInputText required type="number">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{dayactivity.mileage}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input [(ngModel)]="dayactivity.daystart" pInputText required type="time">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{dayactivity.daystart}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input [(ngModel)]="dayactivity.dayend" pInputText required type="time">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{dayactivity.dayend}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input [(ngModel)]="dayactivity.pause" pInputText required type="time">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{dayactivity.pause}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input [(ngModel)]="dayactivity.dayovertime.overtime" pInputText required type="time">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{dayactivity.dayovertime.overtime}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Jour</th>
+          <th>Immatriculation</th>
+          <th>Kilometrage</th>
+          <th>Debut</th>
+          <th>Fin</th>
+          <th>Pause</th>
+          <th style="width:8rem">Total</th>
+        </tr>
+      </ng-template>
+      <ng-template let-dayactivity let-editing="editing" let-ri="rowIndex" pTemplate="body">
+        <tr [pEditableRow]="dayactivity">
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input [(ngModel)]="dayactivity.day" pInputText type="text">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{dayactivity.day}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input [(ngModel)]="dayactivity.numberplate" pInputText required type="text">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{dayactivity.numberplate}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input [(ngModel)]="dayactivity.mileage" pInputText required type="number">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{dayactivity.mileage}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input [(ngModel)]="dayactivity.daystart" pInputText required type="time">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{dayactivity.daystart}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input [(ngModel)]="dayactivity.dayend" pInputText required type="time">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{dayactivity.dayend}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input [(ngModel)]="dayactivity.pause" pInputText required type="time">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{dayactivity.pause}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input [(ngModel)]="dayactivity.dayovertime.overtime" pInputText required type="time">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{dayactivity.dayovertime.overtime}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
 
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="footer">
-          <tr>
-            <td colspan="6" class="p-text-right">Total</td>
-            <td>{{dataApi.selectedTimesheetSumHoursDone }} heures</td>
-          </tr>
-        </ng-template>
-      </p-table>
-
-
-    </p-fieldset>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td colspan="6" class="p-text-right">Total</td>
+          <td>{{dataApi.selectedTimesheetSumHoursDone }} heures</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-fieldset>
 
 
-    <p-fieldset class="m-4" legend="Validation Heures Supplémentaires">
+  <p-fieldset class="m-4" legend="Validation Heures Supplémentaires">
 
-      <p-table [value]="dataApi.selectedTimesheetDayovertimes" dataKey="day" editMode="row">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>Jour</th>
-            <th>Heures supp</th>
-            <th>Motifs</th>
-            <th>Validées</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" *ngIf="!dataApi.selectedTimesheetDayovertimes?.length">
-          <tr class="text-center">
-            Aucune données
-
-          </tr>
-        </ng-template>
-        <ng-template *ngIf="dataApi.selectedTimesheetDayovertimes" pTemplate="body" let-dayovertime let-editing="editing" let-ri="rowIndex">
-          <tr [pEditableRow]="dayovertime">
-            <td>
-              <p-cellEditor>
-
-                <ng-template pTemplate="output">
-                  {{dayovertime.day}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-
-                <ng-template pTemplate="output">
-                  {{dayovertime.overtime}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="dayovertime.reason" required>
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{dayovertime.reason }}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input pInputText type="text"
-                          name="overtimestatus"
-                         [(ngModel)]="dayovertime.overtimestatus" required>
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{dayovertime.overtimestatus}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="footer">
-          <tr>
-            <td colspan="1" class="p-text-left">Total</td>
-            <td>{{dataApi.selectedTimesheetSumOvertimes }} heures</td>
-            <td></td>
-            <td></td>
-          </tr>
-        </ng-template>
-      </p-table>
+    <p-table [value]="dataApi.selectedTimesheetDayovertimes" dataKey="day" editMode="row">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Jour</th>
+          <th>Heures supp</th>
+          <th>Motifs</th>
+          <th>Validées</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" *ngIf="!dataApi.selectedTimesheetDayovertimes?.length">
+        <tr class="text-center">
+          Aucune données
+        </tr>
+      </ng-template>
+      <ng-template *ngIf="dataApi.selectedTimesheetDayovertimes" pTemplate="body"
+                   let-dayovertime
+                   let-editing="editing"
+                   let-ri="rowIndex">
+        <tr [pEditableRow]="dayovertime">
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="output">
+                {{dayovertime.day}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="output">
+                {{dayovertime.overtime}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="output">
+                {{dayovertime.reason }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="output">
+                {{dayovertime.overtimestatus}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td colspan="1" class="p-text-left">Total</td>
+          <td>{{dataApi.selectedTimesheetSumOvertimes }} heures</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
 
 
-    </p-fieldset>
+  </p-fieldset>
 
 
-  </div>
+</div>
 
