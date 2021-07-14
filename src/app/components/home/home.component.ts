@@ -128,9 +128,11 @@ export class HomeComponent implements OnInit {
       let dayratehours = this.dataApi.selectedTimesheet.weekhoursplanned / 5;
 
       const hsupp = dayhours - dayratehours;
-      activity.dayovertime = {overtime: 0, day: activity.day};
+      activity.dayovertime.overtime=0 ;
+      activity.dayovertime.day=activity.day ;
+        //= {overtime: 0, day: activity.day, reason: };
       if (hsupp > 0) {
-        activity.dayovertime.overtime = hsupp;
+        activity.dayovertime.overtime = Number(hsupp.toFixed(2));
       } else {
         activity.dayovertime.overtime = 0;
       }

@@ -89,7 +89,9 @@ export class Step3 implements OnInit {
   }
 
   onRowEditSave(dayovertime: Dayovertime, index: number) {
-    this.dataApi.temporaryTimesheet.weekactivities.filter(d => d.day == dayovertime.day).map(d => d.dayovertime = {...dayovertime});
+    this.dataApi.temporaryTimesheet.weekactivities
+      .filter(d => d.day == dayovertime.day)
+      .map(d => d.dayovertime = {...dayovertime});
 
     this.dayovertimes[index] = {...dayovertime};
     delete this.clonedDayOvertimes[dayovertime.day];
