@@ -208,7 +208,6 @@ export class DataApiService {
         return changes.map(action => {
           const data = action.payload.doc.data() as Timesheet;
           data.id = action.payload.doc.data().id;
-          console.log(action);
           console.log(data);
           return data;
         }).filter(data => data.userUid == user);

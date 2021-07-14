@@ -253,7 +253,7 @@ export class TimesheetComponent implements OnInit {
 
 
   sendMail(timesheet: Timesheet) {
-    // console.log(this.infoForm.value);
+     console.log("timesheet to send ...",JSON.stringify(timesheet));
     this.userDataService.getMyUserData(timesheet.userUid).subscribe(
       user => {
        // console.log(JSON.stringify(user));
