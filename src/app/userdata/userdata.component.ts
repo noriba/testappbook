@@ -32,18 +32,19 @@ export class UserDataComponent implements OnInit {
   userUid=new BehaviorSubject<string>(null);
 
   ngOnInit() {
-    this.authService.isAdmin.subscribe(admin=> this.isAdmin.next(admin))
     this.isLogged.next(this.authService.isLogged.getValue());
     this.userUid .next( this.authService.userUid.getValue());
+    this.authService.isAdmin.subscribe(admin=> {
+      !admin?this.getMyUserData(this.userUid.getValue()):this.getListUserDatas();
+
+      return this.isAdmin.next(admin);
+    })
+
     //this.isAdmin.next(this.authService.isAdmin.getValue());
 
-    !this.isAdmin?this.getMyUserData(this.userUid):this.getListUserDatas();
 
 
-    this.roles={ admin:true,editor:true}
-    this.rolesList = Object.keys(this.roles);
-    console.log(this.rolesList);
-    console.log(this.roles);
+
   }
 
 /*  getCurrentUser() {
@@ -116,12 +117,12 @@ export class UserDataComponent implements OnInit {
 
       this.userDataService.updateUserData(userData.value)
         .then(() => {
-          userData.resetForm();
+          //userData.resetForm();
         })
         .catch(err => {
           this.isError = true;
           this.msgError = err.message;
-          console.log('error onSaveUserData() ::: ' + err.message);
+          console.error('error onSaveUserData() ::: ' + err.message);
         });
     }
 
@@ -138,9 +139,9 @@ export class UserDataComponent implements OnInit {
       .pipe(takeUntil(this.authService._loggedOutEmitter))
       .subscribe(userData => {
       console.log("my user id "+userid);
-      console.log("my user data "+userData);
+      console.log("my user data "+JSON.stringify(userData));
       this.userDataService.selectedUserData = userData;
-    },err => console.log("error",err));
+    },err => console.error("error",err));
   }
 
 

@@ -15,9 +15,9 @@ import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angul
 import {SendMailServiceService} from '../../services/send-mail-service.service';
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {first,take,map} from 'rxjs/operators';
-import { takeUntil } from 'rxjs/operators';
-import { skipUntil,skip } from 'rxjs/operators';
+import {first, take, map} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
+import {skipUntil, skip} from 'rxjs/operators';
 
 @Component({
   selector: 'app-timesheet',
@@ -32,10 +32,10 @@ export class TimesheetComponent implements OnInit {
   allTimesheets: Timesheet[];
   currentUserDatas: UserData;
   display: boolean = false;
-  isLogged= new BehaviorSubject<boolean>(false) ;
-  isAdmin= new BehaviorSubject<boolean>(false);
-  userUid= new BehaviorSubject<string>(null);
-   myTimesheets: Timesheet[];
+  isLogged = new BehaviorSubject<boolean>(false);
+  isAdmin = new BehaviorSubject<boolean>(false);
+  userUid = new BehaviorSubject<string>(null);
+  myTimesheets: Timesheet[];
 
   constructor(private dataApi: DataApiService,
               private authService: AuthService,
@@ -44,56 +44,57 @@ export class TimesheetComponent implements OnInit {
               public templateEventEmitterService: TemplateEventEmitterService,
               private sendmailservice: SendMailServiceService,
               private fb: FormBuilder
-              ) {  }
+  ) {
+  }
 
   ngOnInit() {
 
     this.userUid.next(this.authService.userUid.getValue());
 
-    this.authService.isAdmin.subscribe(admin=> {
-      !admin? this.getMyTimesheets(this.userUid.getValue()) : this.getAllTimesheets();
+    this.authService.isAdmin.subscribe(admin => {
+      !admin ? this.getMyTimesheets(this.userUid.getValue()) : this.getAllTimesheets();
       return this.isAdmin.next(admin);
-    }, err=>console.log(err))
+    }, err => console.error(err));
     //this.isAdmin.next(this.authService.isAdmin.getValue()) ;
     this.isLogged.next(this.authService.isLogged.getValue());
 
-/*    this.authService.currentUser$.subscribe(userid => {
-      if (userid) {
-        this.isLogged = true;
-        this.userUidSub.next(userid.uid);
-      }
-      this.isLogged = false;
-    }, err => console.log('error', err), () => console.log('completed'));*/
+    /*    this.authService.currentUser$.subscribe(userid => {
+          if (userid) {
+            this.isLogged = true;
+            this.userUidSub.next(userid.uid);
+          }
+          this.isLogged = false;
+        }, err => console.log('error', err), () => console.log('completed'));*/
 
     // this.getCurrentUser();
     //console.log("isadmin=",this.isAdmin.getValue());
-    console.log("userid ? ",this.userUid.getValue())
+    console.log('userid ? ', this.userUid.getValue());
   }
 
 
   getAllTimesheets() {
     console.log('Get All Timmesheets ::: ', this.isAdmin.value);
-    this.subscription=this.dataApi
+    this.subscription = this.dataApi
       .getAllTimesheets()
       .pipe(takeUntil(this.authService._loggedOutEmitter))
       .subscribe(timesheets => {
           this.allTimesheets = timesheets;
           console.log('All Timesheets list :::' + JSON.stringify(this.allTimesheets));
         },
-        err => console.log('error', err),
+        err => console.error('error', err),
         () => console.log('completed'));
   }
 
   getMyTimesheets(userid) {
     console.log('Get my Timesheets ::: ', this.isAdmin.value, '  userid= ', userid);
-     this.subscription=this.dataApi
+    this.subscription = this.dataApi
       .getMyTimesheets(userid)
-       .pipe(takeUntil(this.authService._loggedOutEmitter))
-       .subscribe(timesheets => {
+      .pipe(takeUntil(this.authService._loggedOutEmitter))
+      .subscribe(timesheets => {
           this.allTimesheets = timesheets;
           console.log('My Timeseehts list :::' + JSON.stringify(this.allTimesheets));
         },
-        err => console.log('error', err),
+        err => console.error('error', err),
         () => console.log('completed'));
   }
 
@@ -106,38 +107,38 @@ export class TimesheetComponent implements OnInit {
     this.router.navigate(['step1']);
   }
 
-/*
+  /*
 
-  getCurrentUser() {
-    this.authService.isAuth().subscribe(auth => {
-      if (auth) {
-        this.isLogged .true;
-        this.userUid = auth.uid;
-        this.userDataService
-          .isUserAdmin( auth.uid).pipe(take(1))
-          .subscribe(userRole => {
-            this.isAdmin.next(Object
-              .assign({}, userRole.roles)
-              .hasOwnProperty('admin'));
-            if (this.isAdmin) {
-              console.log('admin =' + this.isAdmin);
+    getCurrentUser() {
+      this.authService.isAuth().subscribe(auth => {
+        if (auth) {
+          this.isLogged .true;
+          this.userUid = auth.uid;
+          this.userDataService
+            .isUserAdmin( auth.uid).pipe(take(1))
+            .subscribe(userRole => {
+              this.isAdmin.next(Object
+                .assign({}, userRole.roles)
+                .hasOwnProperty('admin'));
+              if (this.isAdmin) {
+                console.log('admin =' + this.isAdmin);
 
-              this.getAllTimesheets();
-            } else {
-              console.log('admin =' + this.isAdmin);
+                this.getAllTimesheets();
+              } else {
+                console.log('admin =' + this.isAdmin);
 
-              this.getMyTimesheets(this.userUid);
-            }
-            this.currentUserDatas = {...userRole};
-            console.log('ADMINISTRATEUR 1 :::' + this.isAdmin);
-          }, err => console.log('error', err), () => console.log('completed'));
-      } else {
-        this.isLogged = false;
-      }
-    }, err => console.log('error', err));
-  }
+                this.getMyTimesheets(this.userUid);
+              }
+              this.currentUserDatas = {...userRole};
+              console.log('ADMINISTRATEUR 1 :::' + this.isAdmin);
+            }, err => console.log('error', err), () => console.log('completed'));
+        } else {
+          this.isLogged = false;
+        }
+      }, err => console.log('error', err));
+    }
 
-*/
+  */
 
   openPDF(): void {
 
@@ -174,7 +175,7 @@ export class TimesheetComponent implements OnInit {
     if (confirmation) {
       this.dataApi.deleteTimesheet(idTimesheet)
         .then((res) => {
-      }).catch(err => {
+        }).catch(err => {
         console.log('err', err.message);
       });
     }
@@ -252,18 +253,24 @@ export class TimesheetComponent implements OnInit {
 
 
   sendMail(timesheet: Timesheet) {
-    console.log(this.infoForm.value);
-    this.subscription = this.sendmailservice.sendEmail(this.currentUserDatas, timesheet).subscribe(
-      data => {
-        let msg = data['message'];
-        alert(msg);
-        console.log(data, 'success');
-      }, error => {
-        console.error(error, 'error');
-      });
+    // console.log(this.infoForm.value);
+    this.userDataService.getMyUserData(timesheet.userUid).subscribe(
+      user => {
+       // console.log(JSON.stringify(user));
+        console.log(user.email);
+        this.currentUserDatas = user;
+        this.subscription = this.sendmailservice.sendEmail(user, timesheet).subscribe(
+          data => {
+            console.log(data, 'success');
+          }, error => {
+            console.error(error, 'error');
+          });
+
+      }, err => console.log(err)
+    );
+
+
   }
-
-
 
 
 }

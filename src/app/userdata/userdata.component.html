@@ -15,7 +15,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel1">
-              {{ !this.userDataService.selectedUserData.id ?
+              {{ !this.userDataService.selectedUserData?.id ?
               'Nouveau Collaborateur' : 'Mise à jour Collaborateur'}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -147,8 +147,10 @@
       </thead>
 
       <tbody *ngIf="!allUserDatas?.length">
-      <tr class="text-center">
-        Aucune données
+      <tr class=" ">
+        <td></td>
+        <td colspan="6">
+          Aucune données trouvées        </td>
       </tr>
       </tbody>
 
@@ -166,17 +168,17 @@
         <td class="text-truncate">{{UserData.agency}}</td>
         <td class="text-truncate p-1">
           <button *ngIf="UserData.userUid == (userUid|async) || (isAdmin|async) == true; else noOwner"
-                  class="btn btn-primary p-mr-2" icon="pi pi-pencil" pButton
+                  class="btn btn-primary p-mr-2 p-button-text" icon="pi pi-pencil" pButton
                   data-toggle="modal" data-target="#modalUserData"
                   (click)="onPreUpdateUserData(UserData)">
           </button>
           <ng-template #noOwner>
-            <button class="btn btn-secondary p-mr-2" icon="pi pi-pencil" pButton
+            <button class="btn btn-secondary p-mr-2 p-button-text" icon="pi pi-pencil" pButton
                     disabled="true">
             </button>
           </ng-template>
           <button *ngIf="(isAdmin|async) == true; else noAdmin"
-                  class="btn p-button-danger " icon="pi pi-times" pButton
+                  class="btn p-button-danger p-button-text " icon="pi pi-times" pButton
                   (click)="onDeleteUserData(UserData.id)">
           </button>
           <ng-template #noAdmin>
@@ -196,22 +198,22 @@
       <div class="card ">
 
         <div class="p-fluid p-formgrid p-grid  p-4  ">
-          <div class="form-group  p-field">
-            <input type="hidden" [(ngModel)]="this.userDataService.selectedUserData.id "
-                   class="form-control "
+          <div class="form-group  p-field  ">
+            <input type="hidden" [(ngModel)]="userDataService.selectedUserData.id "
+                   class="form-control  "
                    name="id"
                    required>
           </div>
-          <div class="form-group p-field col-lg-4 ">
-            <label class="col-form-label  ">Prénom:</label>
-            <input [(ngModel)]="this.userDataService.selectedUserData.firstname "
+          <div class="form-group p-field col-lg-4  ">
+            <label class="col-form-label  m-0 ">Prénom:</label>
+            <input [(ngModel)]="userDataService.selectedUserData.firstname "
                    class="form-control "
                    name="firstname"
                    type="text"
                    required>
           </div>
           <div class="form-group p-field col-lg-4">
-            <label class="col-form-label ">Nom:</label>
+            <label class="col-form-label m-0 ">Nom:</label>
             <input [(ngModel)]="this.userDataService.selectedUserData.lastname "
                    class="form-control  "
                    name="lastname"
@@ -219,7 +221,7 @@
                    required>
           </div>
           <div class="form-group p-field col-lg-4">
-            <label class="col-form-label ">Matricule:</label>
+            <label class="col-form-label m-0 ">Matricule:</label>
             <input [(ngModel)]="this.userDataService.selectedUserData.matricule "
                    class="form-control"
                    name="matricule"
@@ -227,7 +229,7 @@
                    required>
           </div>
           <div class="form-group p-field col-lg-4">
-            <label class="col-form-label">Email:</label>
+            <label class="col-form-label m-0 ">Email:</label>
             <input [(ngModel)]="this.userDataService.selectedUserData.email "
                    class="form-control"
                    name="email"
@@ -235,7 +237,7 @@
                    required>
           </div>
           <div class="form-group p-field col-lg-4">
-            <label class="col-form-label">Télephone:</label>
+            <label class="col-form-label m-0 ">Télephone:</label>
             <input [(ngModel)]="this.userDataService.selectedUserData.phonenumber "
                    class="form-control"
                    name="phonenumber"
@@ -243,7 +245,7 @@
                    required>
           </div>
           <div class="form-group p-field col-lg-4">
-            <label class="col-form-label">Site:</label>
+            <label class="col-form-label m-0 ">Site:</label>
             <input [(ngModel)]="this.userDataService.selectedUserData.site "
                    class="form-control"
                    name="site"
@@ -251,7 +253,7 @@
                    required>
           </div>
           <div class="form-group p-field col-lg-4">
-            <label class="col-form-label">Fonction:</label>
+            <label class="col-form-label m-0 ">Fonction:</label>
             <input [(ngModel)]="this.userDataService.selectedUserData.function "
                    class="form-control"
                    name="function"
@@ -259,7 +261,7 @@
                    required>
           </div>
           <div class="form-group p-field col-lg-4">
-            <label class="col-form-label">Agence:</label>
+            <label class="col-form-label m-0 ">Agence:</label>
             <input [(ngModel)]="this.userDataService.selectedUserData.agency "
                    class="form-control"
                    name="agency"
@@ -267,7 +269,7 @@
                    required>
           </div>
           <div class="form-group p-field col-lg-4">
-            <label class="col-form-label">Régime horaire:</label>
+            <label class="col-form-label m-0 ">Régime horaire:</label>
             <input [(ngModel)]="this.userDataService.selectedUserData.weekhoursplanned "
                    class="form-control"
                    name="weekhoursplanned"
@@ -278,11 +280,11 @@
 
         </div>
         <div class="modal-footer">
-          <button pButton type="button" class="btn p-button-danger p-mr-2"
+<!--          <button pButton type="button" class="btn p-button-danger p-mr-2"
                   data-dismiss="modal">Annuler
-          </button>
+          </button>-->
           <button pButton type="button" class="btn p-button-success"
-                  data-dismiss="modal" (click)="createNewUserData(myForm)">Valider
+                  data-dismiss="modal" (click)="createNewUserData(myForm)">Mettre à jour
           </button>
         </div>
       </div>

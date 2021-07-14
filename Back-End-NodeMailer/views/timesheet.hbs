@@ -1,0 +1,93 @@
+<table style="width: 50%; border: 1px">
+  <thead>
+  <tr style="background-color: #000; color: #fff;">
+    <th style="" colspan="4">Identité</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#with timesheet}}
+    <tr>
+      <th>Année</th>
+      <td>{{year}}</td>
+      <th>Semaine</th>
+      <td>{{week}} </td>
+    </tr>
+    <tr>
+      <th>Matricule</th>
+      <td>{{matricule}}</td>
+      <th>Début de semaine</th>
+      <td>{{weekstart}}  </td>
+    </tr>
+    <tr>
+      <th>Nom et Prénom</th>
+      <td>{{firstname}}{{lastname}}</td>
+      <th>Fin de semaine</th>
+      <td> {{weekend}}  </td>
+    </tr>
+    <tr>
+      <th>Site</th>
+      <td>{{site}}</td>
+      <th>Régime horaire</th>
+      <td> {{weekhoursplanned}}  </td>
+    </tr>
+    <tr>
+      <th>Contrat</th>
+      <td>{{contracttype}}</td>
+      <th>Régime horaire</th>
+      <td> {{weekhoursdone}}  </td>
+    </tr>
+
+    </tbody>
+    </table>
+
+<br>
+<br>
+    <table style="width: 50%; border: 1px">
+      <thead>
+      <tr style="background-color: #000; color: #fff;">
+        <th style="" colspan="6">Pointage de la semaine</th>
+      </tr>
+      </thead>
+    <tbody>
+    <tr >
+      <th>Jour</th><th>Immatriculation</th><th>Kilometrage</th><th>Début</th><th>Fin</th><th>Pause</th>
+    </tr>
+    {{#each weekactivities}}
+      <tr>
+        <td>{{day}}</td><td>{{numberplate}}</td><td>{{mileage}}</td><td>{{daystart}}</td><td>{{dayend}}</td><td>{{pause}}</td>
+      </tr>
+
+
+      </tbody>
+      </table>
+      <br>
+      <br>
+
+      {{createdate}}
+      {{#with dayovertime}}
+        {{day}}
+        {{reason}}
+        {{overtime}}
+        {{overtimestatus}}
+      {{/with}}
+    {{/each}}
+
+    <br>
+    <br>
+    <table style="width: 50%; border: 1px">
+      <thead>
+      <tr style="background-color: #000; color: #fff;">
+        <th style="" colspan="4">Validation Heures Supplémentaires</th>
+      </tr>
+      </thead>
+    <tbody>
+    {{#with statusmanager}}
+      {{status}}
+      {{signature}}
+      {{signaturedate}}
+      {{comment}}
+    {{/with}}
+  {{/with}}
+
+</tbody>
+</table>

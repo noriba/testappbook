@@ -13,7 +13,9 @@ export class SendMailServiceService {
   constructor(private http: HttpClient) { }
 
   sendEmail(userdata,timesheet): Observable<{UserData,Timesheet}> {
-    return this.http.post<{UserData,Timesheet} >('http://localhost:3000/email', {userdata,timesheet})
+    console.log(userdata)
+    console.log(timesheet)
+    return this.http.post<{UserData,Timesheet} >('http://localhost:3000/email/', {userdata,timesheet})
   }
 
 

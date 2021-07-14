@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
   onLogin(): void {
     this.authService.loginEmailUser(this.email, this.password)
       .then((res) => {
-        this.onLoginRedirect();
       }).catch(err => {
       this.isError = true;
       console.log('err', err.message);
@@ -34,7 +33,6 @@ export class LoginComponent implements OnInit {
   onLoginGoogle(): void {
     this.authService.loginGoogleUser()
       .then((res) => {
-        this.onLoginRedirect();
       }).catch(err => {
       this.isError = true;
       console.log('err', err.message);
@@ -44,14 +42,10 @@ export class LoginComponent implements OnInit {
   onLoginFacebook(): void {
     this.authService.loginFacebookUser()
       .then((res) => {
-        this.onLoginRedirect();
       }).catch(err => {
       this.isError = true;
       console.log('err', err.message);
     });
   }
 
-  onLoginRedirect(): void {
-    this.router.navigate(['timesheet']);
-  }
 }

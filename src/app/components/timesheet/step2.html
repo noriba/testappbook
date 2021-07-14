@@ -3,11 +3,11 @@
   <app-breadcrumb></app-breadcrumb>
 
 
-  <p-card [style]="{'margin': '0em','padding':'0em'}"  header="Pointage de la semaine">
+  <p-card [style]="{'margin': '0em','padding':'0em'}" header="Pointage de la semaine">
     <ng-template pTemplate="header">
     </ng-template>
 
-    <button pButton type="button" class="btn btn-primary mb-4" data-toggle="modal"
+    <button pButton type="button" class="p-fluid  p-grid btn btn-primary mb-4" data-toggle="modal"
             data-target="#exampleModal1" data-whatever=""> Nouvelle Journée +
     </button>
 
@@ -65,15 +65,16 @@
                        type="number">
               </div>
             </div>
-            <div class="modal-footer " >
+            <div class="modal-footer ">
               <div class="p-fluid  p-grid mt-4">
-              <button pButton type="button" class="p-field p-col  btn p-button-danger p-mr-2"
-                      data-dismiss="modal">Annuler
-              </button>
-              <button pButton type="button" class="p-field p-col  btn p-button-success"
-                      data-dismiss="modal" (click)="createNewActivity(myForm)">Valider
-              </button>
-            </div></div>
+                <button pButton type="button" class="p-field p-col  btn p-button-danger p-mr-2"
+                        data-dismiss="modal">Annuler
+                </button>
+                <button pButton type="button" class="p-field p-col  btn p-button-success"
+                        data-dismiss="modal" (click)="createNewActivity(myForm)">Valider
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -82,17 +83,23 @@
     <p-table styleClass="p-datatable-sm" [value]="dayactivities" dataKey="id" editMode="row">
 
       <ng-template pTemplate="header">
-        <tr class=" align-text-top ">
+        <tr class="align-text-top ">
           <th style="min-width: fit-content">Jour</th>
           <th class="text-truncate">Immatriculation</th>
           <th class="text-truncate">Kilometrage</th>
           <th class="text-truncate">Debut</th>
           <th class="text-truncate">Fin</th>
           <th class="text-truncate">Pause</th>
-          <th style=""></th>
+          <th style="width: 6em"></th>
         </tr>
       </ng-template>
-
+      <ng-template [ngIf]="!dayactivities.length" pTemplate="emptymessage" let-columns>
+        <tr>
+          <td colspan="6">
+            Aucune données trouvées
+          </td>
+        </tr>
+      </ng-template>
       <ng-template [ngIf]="dayactivities" let-dayactivity let-editing="editing" let-ri="rowIndex" pTemplate="body">
 
         <tr [pEditableRow]="dayactivity">
@@ -123,7 +130,7 @@
                 <input [(ngModel)]="dayactivity.mileage" pInputText required type="number">
               </ng-template>
               <ng-template pTemplate="output">
-                {{dayactivity.mileage}}
+                {{dayactivity.mileage}} km
               </ng-template>
             </p-cellEditor>
           </td>
@@ -153,21 +160,24 @@
                 <input [(ngModel)]="dayactivity.pause" pInputText required type="time">
               </ng-template>
               <ng-template pTemplate="output">
-                {{dayactivity.pause}}
+                {{dayactivity.pause}} min
               </ng-template>
             </p-cellEditor>
           </td>
-          <td class="p-0">
+          <td class="">
 
-            <button (click)="onRowEditInit(dayactivity, ri)" *ngIf="!editing" class="p-button-rounded p-button-text"
+            <button (click)="onRowEditInit(dayactivity, ri)" *ngIf="!editing"
+                    class="p-button-rounded p-button-text"
                     data-target="#exampleModal"
                     data-toggle="modal"
                     icon="pi pi-pencil"
                     pButton pInitEditableRow
                     pRipple
                     type="button"
+
             ></button>
-            <button (click)="onRowDelete(dayactivity, ri)" *ngIf="!editing" class="p-button-rounded p-button-text"
+            <button (click)="onRowDelete(dayactivity, ri)" *ngIf="!editing"
+                    class="p-button-rounded p-button-text"
                     data-target="#exampleModal"
                     data-toggle="modal"
                     icon="pi pi-times"
@@ -176,7 +186,8 @@
                     type="button"
             ></button>
 
-            <div *ngIf="editing" aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade"
+            <div *ngIf="editing" aria-hidden="true" aria-labelledby="exampleModalLabel"
+                 class="modal fade"
                  id="exampleModal"
                  role="dialog"
                  tabindex="-1">
@@ -254,18 +265,17 @@
 
     </p-table>
 
-      <div class="p-fluid  p-grid pt-5">
-        <button class="p-field p-col fixed-bottom" (click)="lastStepPlease()" label="Précedent"
-                pButton type="button" icon="pi pi-angle-left" iconPos="left">
-        </button>
-
-        <button class="p-field p-col ml-2"
-                [disabled]="!dataApi.temporaryTimesheet.weekactivities"
-                (click)="nextStepPlease()"  label="Suivant"
-                pButton type="button" icon="pi pi-angle-right" iconPos="right"
-                [disabled]="!dayactivities.length">
-        </button>
-      </div>
+    <div class="p-fluid  p-grid pt-5">
+      <button class="p-field p-col " (click)="lastStepPlease()" label="Précedent"
+              pButton type="button" icon="pi pi-angle-left" iconPos="left">
+      </button>
+      <button class="p-field p-col ml-2"
+              [disabled]="!dataApi.temporaryTimesheet.weekactivities"
+              (click)="nextStepPlease()" label="Suivant"
+              pButton type="button" icon="pi pi-angle-right" iconPos="right"
+              [disabled]="!dayactivities.length">
+      </button>
+    </div>
 
   </p-card>
 

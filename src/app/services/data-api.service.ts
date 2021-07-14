@@ -227,23 +227,23 @@ export class DataApiService {
       });
   }
 
-  createNewTimesheet(timesheet: Timesheet) {
+  createNewTimesheet(newtimesheet: Timesheet) {
     // return    this.afs.collection('timesheets').add(timesheet).then(function(docRef) {
     //   return docRef.id;
     // });
     //let uuid = uuidv4();
     //timesheet.id = uuid;
-    console.log('timesheet ::: ' + JSON.stringify(timesheet));
+    console.log('timesheet ::: ' + JSON.stringify(newtimesheet));
     this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
 
     return new Promise((resolve, reject) => {
-      this.timesheetsCollection.add(timesheet)
-        .then(userData => {
+      this.timesheetsCollection.add(newtimesheet)
+        .then(timesh => {
           console.log('success');
-          console.log('userData.id ::: ' + userData.id);
-          timesheet.id = userData.id;
+          console.log('userData.id ::: ' + timesh.id);
+          newtimesheet.id = timesh.id;
           console.log(this.temporaryTimesheet);
-          this.updateTimesheet(timesheet);
+          this.updateTimesheet(newtimesheet);
         })
         .catch(err => console.log(reject(err)));
     });

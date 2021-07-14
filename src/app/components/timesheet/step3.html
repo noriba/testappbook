@@ -3,20 +3,26 @@
   <app-breadcrumb></app-breadcrumb>
 
 
-  <p-card header="Validation Heures Supplémentaires">
+  <p-card styleClass="p-card-sm" header="Validation Heures Supplémentaires">
     <ng-template pTemplate="header">
     </ng-template>
-    <p-table [value]="dayovertimes" dataKey="day" editMode="row">
+    <p-table styleClass="p-datatable-sm" [value]="dayovertimes" dataKey="day" editMode="row">
       <ng-template pTemplate="header">
         <tr class="align-text-top">
           <th >Jour</th>
           <th class="text-truncate">Heures supp</th>
-          <th>Motifs</th>
-          <th>Validées</th>
-          <th style="width:8rem"></th>
+          <th>Motif</th>
+          <th>Validé</th>
+          <th ></th>
         </tr>
       </ng-template>
-
+      <ng-template [ngIf]="!dayovertimes.length" pTemplate="emptymessage" >
+        <tr>
+          <td colspan="3">
+            Aucune données trouvées
+          </td>
+        </tr>
+      </ng-template>
       <ng-template [ngIf]="dayovertimes" pTemplate="body"
                    let-dayovertime let-editing="editing" let-ri="rowIndex">
         <tr class="text-truncate" [pEditableRow]="dayovertime">
@@ -32,7 +38,7 @@
             <p-cellEditor>
 
               <ng-template pTemplate="output">
-                {{dayovertime.overtime}}
+                {{dayovertime.overtime}} heures
               </ng-template>
             </p-cellEditor>
           </td>
