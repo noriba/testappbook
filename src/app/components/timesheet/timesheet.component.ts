@@ -68,6 +68,14 @@ export class TimesheetComponent implements OnInit {
 
     // this.getCurrentUser();
     //console.log("isadmin=",this.isAdmin.getValue());
+    this.userDataService
+      .getMyUserData(this.userUid.getValue())
+      .subscribe(
+        userData=> {
+          console.log("my userdata :::",userData)
+          return this.currentUserDatas = userData;
+        },
+          err=> console.log(err));
     console.log('userid ? ', this.userUid.getValue());
   }
 
@@ -104,6 +112,7 @@ export class TimesheetComponent implements OnInit {
 
   nextStepPlease() {
     this.dataApi.resetTemporaryTimesheet(this.currentUserDatas);
+    console.log('My userdata  :::' + JSON.stringify(this.currentUserDatas));
     this.router.navigate(['step1']);
   }
 

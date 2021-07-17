@@ -110,7 +110,8 @@ export class HomeComponent implements OnInit {
   onChanges(): void {
     console.log(this.dataApi.selectedTimesheet.id)
     this.ngForm.valueChanges.pipe(sampleTime(100)).subscribe(
-      val =>  this.openPDF(),
+      val =>
+        this.openPDF(),
       err => console.log('error:', err),
       () => console.log('the end'),);
   }
