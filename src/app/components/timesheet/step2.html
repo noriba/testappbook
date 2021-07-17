@@ -6,11 +6,20 @@
   <p-card [style]="{'margin': '0em','padding':'0em'}" header="Pointage de la semaine">
     <ng-template pTemplate="header">
     </ng-template>
-
-    <button pButton type="button" class="p-fluid  p-grid btn btn-primary mb-4" data-toggle="modal"
-            data-target="#exampleModal1" data-whatever=""> Nouvelle Journée +
-    </button>
-
+    <div class="p-fluid  p-grid p-md-3 pt-5">
+      <button class="p-field col-7"
+              label="Nouvelle Journée"
+              pButton type="button" icon="pi pi-plus" iconPos="right"
+              data-toggle="modal"
+              data-target="#exampleModal1"      >
+      </button>
+<!--    <button pButton type="button"
+            class=" btn btn-primary mb-4"
+            data-toggle="modal"
+            data-target="#exampleModal1"
+            data-whatever=""> Nouvelle Journée +
+    </button>-->
+    </div>
     <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -116,9 +125,7 @@
           </td>
           <td class="text-truncate">
             <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input [(ngModel)]="dayactivity.numberplate" pInputText required type="text">
-              </ng-template>
+
               <ng-template pTemplate="output">
                 {{dayactivity.numberplate}}
               </ng-template>
@@ -126,9 +133,7 @@
           </td>
           <td class="text-truncate">
             <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input [(ngModel)]="dayactivity.mileage" pInputText required type="number">
-              </ng-template>
+
               <ng-template pTemplate="output">
                 {{dayactivity.mileage}} km
               </ng-template>
@@ -136,9 +141,7 @@
           </td>
           <td class="text-truncate">
             <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input [(ngModel)]="dayactivity.daystart" pInputText required type="time">
-              </ng-template>
+
               <ng-template pTemplate="output">
                 {{dayactivity.daystart}}
               </ng-template>
@@ -146,9 +149,7 @@
           </td>
           <td class="text-truncate">
             <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input [(ngModel)]="dayactivity.dayend" pInputText required type="time">
-              </ng-template>
+
               <ng-template pTemplate="output">
                 {{dayactivity.dayend}}
               </ng-template>
@@ -156,9 +157,7 @@
           </td>
           <td class="text-truncate">
             <p-cellEditor>
-              <ng-template pTemplate="input">
-                <input [(ngModel)]="dayactivity.pause" pInputText required type="time">
-              </ng-template>
+
               <ng-template pTemplate="output">
                 {{dayactivity.pause}} min
               </ng-template>
@@ -171,8 +170,7 @@
                     data-target="#exampleModal"
                     data-toggle="modal"
                     icon="pi pi-pencil"
-                    pButton pInitEditableRow
-                    pRipple
+                    pButton pInitEditableRow pRipple
                     type="button"
 
             ></button>
@@ -181,8 +179,7 @@
                     data-target="#exampleModal"
                     data-toggle="modal"
                     icon="pi pi-times"
-                    pButton pInitEditableRow
-                    pRipple
+                    pButton pInitEditableRow pRipple
                     type="button"
             ></button>
 
@@ -195,7 +192,7 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Activitée du jour</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Mettre à jour l'activité</h5>
                       <button aria-label="Close" class="close" data-dismiss="modal" type="button">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -265,14 +262,21 @@
 
     </p-table>
 
-    <div class="p-fluid  p-grid pt-5">
-      <button class="p-field p-col " (click)="lastStepPlease()" label="Précedent"
-              pButton type="button" icon="pi pi-angle-left" iconPos="left">
+    <div class="p-fluid  p-grid p-md-3 pt-5">
+      <button class="p-field p-col "
+              (click)="lastStepPlease()"
+              label="Précedent"
+              pButton type="button"
+              icon="pi pi-angle-left"
+              iconPos="left">
       </button>
       <button class="p-field p-col ml-2"
               [disabled]="!dataApi.temporaryTimesheet.weekactivities"
-              (click)="nextStepPlease()" label="Suivant"
-              pButton type="button" icon="pi pi-angle-right" iconPos="right"
+              (click)="nextStepPlease()"
+              label="Suivant"
+              pButton type="button"
+              icon="pi pi-angle-right"
+              iconPos="right"
               [disabled]="!dayactivities.length">
       </button>
     </div>

@@ -6,14 +6,16 @@
   <p-card styleClass="p-card-sm" header="Validation Heures Supplémentaires">
     <ng-template pTemplate="header">
     </ng-template>
-    <p-table styleClass="p-datatable-sm" [value]="dayovertimes" dataKey="day" editMode="row">
+    <p-table styleClass="p-datatable-sm"
+             [value]="dayovertimes"
+             dataKey="day" editMode="row">
       <ng-template pTemplate="header">
         <tr class="align-text-top">
           <th >Jour</th>
           <th class="text-truncate">Heures supp</th>
-          <th>Motif</th>
-          <th>Validé</th>
-          <th ></th>
+          <th >Motif</th>
+          <th >Validé</th>
+          <th style="width: 6em"></th>
         </tr>
       </ng-template>
       <ng-template [ngIf]="!dayovertimes.length" pTemplate="emptymessage" >
@@ -45,7 +47,8 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input pInputText type="text" [(ngModel)]="dayovertime.reason" required>
+                <input pInputText type="text"
+                       [(ngModel)]="dayovertime.reason" required>
               </ng-template>
               <ng-template pTemplate="output">
                 {{dayovertime.reason }}
@@ -55,7 +58,8 @@
           <td>
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input pInputText type="checkbox" [(ngModel)]="dayovertime.overtimestatus" required>
+                <input pInputText type="checkbox"
+                       [(ngModel)]="dayovertime.overtimestatus" >
               </ng-template>
               <ng-template pTemplate="output">
                 {{dayovertime.overtimestatus}}
@@ -65,7 +69,7 @@
 
 
           <td style="text-align:center">
-            <button *ngIf="editing" pButton pRipple type="button"
+<!--            <button *ngIf="editing" pButton pRipple type="button"
                     pSaveEditableRow icon="pi pi-check"
                     (click)="onRowEditSave(dayovertime,ri)"
                     class="p-button-rounded p-button-text p-button-success p-mr-2"
@@ -74,11 +78,11 @@
                     pCancelEditableRow icon="pi pi-times"
                     (click)="onRowEditCancel(dayovertime, ri)"
                     class="p-button-rounded p-button-text p-button-danger"
-            ></button>
-            <button *ngIf="!editing" pButton pRipple type="button"
+            ></button>-->
+            <button *ngIf="!editing"  type="button"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                    pInitEditableRow icon="pi pi-pencil"
+                    pButton pRipple pInitEditableRow icon="pi pi-pencil"
                     (click)="onRowEditInit(dayovertime, ri)"
                     class="p-button-rounded p-button-text"
             ></button>
@@ -125,13 +129,15 @@
                     </div>
                     <div class="modal-footer">
                     <div class="p-fluid  p-grid mt-4">
-                      <button type="button" class="p-field p-col p-button-danger p-mr-2"
+                      <button type="button"
+                              class="p-field p-col p-button-danger p-mr-2"
                               pButton pRipple pCancelEditableRow
                               data-dismiss="modal"
                               (click)="onRowEditCancel(this.dataApi.selectedDayOvertime,this.dataApi.selectedOtRow)">
                         Annuler
                       </button>
-                      <button type="button" class="p-field p-col p-button-success "
+                      <button type="button"
+                              class="p-field p-col p-button-success "
                               pButton pRipple pSaveEditableRow
                               (click)="onRowEditSave(this.dataApi.selectedDayOvertime, this.dataApi.selectedOtRow)"
                               data-dismiss="modal">Valider
@@ -146,7 +152,8 @@
       </ng-template>
 
     </p-table>
-    <div class="p-fluid  p-grid mt-4">
+
+    <div class="p-fluid  p-grid p-md-3 mt-4">
       <button class="p-field p-col  fixed-bottom"
               pButton type="button" label="< Précedent"
               (click)="lastStepPlease()">

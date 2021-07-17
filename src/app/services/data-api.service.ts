@@ -7,6 +7,7 @@ import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} 
 import {HttpClient} from '@angular/common/http';
 import {UserData} from '../models/userdata';
 import {FirestoreCrudService} from './firestore-crud.service';
+import * as QueryString from 'querystring';
 
 
 @Injectable({
@@ -259,6 +260,11 @@ export class DataApiService {
     console.log('Temporary timesheet created :' +
       JSON.stringify(userData));
 
+    var dt = new Date(); // current date of week
+    var currentWeekDay = dt.getDay();
+    var lessDays = currentWeekDay == 0 ? 6 : currentWeekDay - 1;
+    var wkStart = new Date(new Date(dt).setDate(dt.getDate() - lessDays));
+    var wkEnd = new Date(new Date(wkStart).setDate(wkStart.getDate() + 6));
     this.temporaryTimesheet = {
       year: new Date().getFullYear(),
       week: this.getNumberOfWeek(),
@@ -266,6 +272,8 @@ export class DataApiService {
       firstname: userData?.firstname,
       lastname: userData?.lastname,
       site: userData?.site,
+      weekend: wkEnd.toLocaleDateString() ,
+      weekstart: wkStart.toLocaleDateString(),
       contracttype: userData?.contract,
       weekhoursplanned: userData?.weekhoursplanned,
       statusmanager: {},
