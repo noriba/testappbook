@@ -10,8 +10,8 @@ export class Timesheet implements Entity {
   site?: string;
   contracttype?: string;
   week?: number;
-  weekstart?: number;
-  weekend?: number;
+  weekstart?: string;
+  weekend?: string;
   weekactivities?: Dayactivity[];
   weekhoursdone?: number;
   weekhoursplanned?: number;

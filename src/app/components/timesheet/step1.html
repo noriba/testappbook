@@ -22,8 +22,8 @@
         </div>
         <div class="col col-lg-8 mb-2 ">
           <div class="p-inputgroup ">
-            <span class="col-5 col-lg-4 p-inputgroup-addon ">Année</span>
-            <input class="col-7 col-lg-8 table-bordered"
+            <span class="col-4 col-lg-4 p-inputgroup-addon ">Année</span>
+            <input class="col-8 col-lg-8 table-bordered"
                    name="year"
                    [(ngModel)]="this.timesheet.year"
                    placeholder=""
@@ -33,8 +33,8 @@
         </div>
         <div class=" col-lg-4 ">
           <div class="p-inputgroup">
-            <span class="col-5 col-lg-6 p-inputgroup-addon">Semaine</span>
-            <input class="col-7 col-lg-6 table-bordered"
+            <span class="col-4 col-lg-6 p-inputgroup-addon">Semaine</span>
+            <input class="col-8 col-lg-6 table-bordered"
                    name="week"
                    [(ngModel)]="this.timesheet.week"
                    placeholder=""
@@ -46,8 +46,8 @@
       <div class="row my-2">
         <div class="col-lg-8 mb-2">
           <div class="p-inputgroup">
-            <span class="col-5 col-lg-4 p-inputgroup-addon">Matricule</span>
-            <input class="col-5 col-lg-5 mr-1 table-bordered" name="matricule"
+            <span class="col-4 col-lg-4 p-inputgroup-addon">Matricule</span>
+            <input class="col-6 col-lg-5 mr-1 table-bordered" name="matricule"
                    [(ngModel)]="this.timesheet.matricule"
                    placeholder=""
                    type="text"
@@ -57,8 +57,8 @@
         </div>
         <div class="col-lg-4 ">
           <div class="p-inputgroup">
-            <span class="col-5 col-lg-6 p-inputgroup-addon">Début</span>
-            <input class="col-7 col-lg-6 table-bordered" name="weekstart" value="06:00"
+            <span class="col-4 col-lg-6 p-inputgroup-addon">Début</span>
+            <input class="col-8 col-lg-6 table-bordered" name="weekstart" value="06:00"
                    [(ngModel)]="this.timesheet.weekstart"
                    placeholder=""
                    type="text"
@@ -69,13 +69,13 @@
       <div class="row my-2">
         <div class="col-lg-8 mb-2">
           <div class="p-inputgroup">
-            <span class="col-5 col-lg-4 p-inputgroup-addon">Nom Prénom</span>
-            <input class="col-5 col-lg-5 mr-1 table-bordered" name="firstname"
+            <span class="col-4 col-lg-4 p-inputgroup-addon">Nom Prénom</span>
+            <input class="col-4 col-lg-5 mr-1 table-bordered" name="firstname"
                    [(ngModel)]="this.timesheet.firstname"
                    placeholder=""
                    type="text"
                    required>
-            <input class="col-2 col-lg-3  table-bordered" name="lastname"
+            <input class="col-4 col-lg-3  table-bordered" name="lastname"
                    [(ngModel)]="this.timesheet.lastname"
                    placeholder=""
                    type="text"
@@ -84,8 +84,8 @@
         </div>
         <div class="col-lg-4 ">
           <div class="p-inputgroup">
-            <span class="col-5 col-lg-6 p-inputgroup-addon">Fin</span>
-            <input class="col-7 col-lg-6 table-bordered" name="weekend" value="17:00"
+            <span class="col-4 col-lg-6 p-inputgroup-addon">Fin</span>
+            <input class="col-8 col-lg-6 table-bordered" name="weekend" value="17:00"
                    [(ngModel)]="this.timesheet.weekend"
                    placeholder=""
                    type="text"
@@ -98,8 +98,8 @@
         <div class="col-lg-8 ">
           <div class=" mb-2 mb-lg-3 ">
             <div class="p-inputgroup">
-              <span class="col-5 col-lg-4 p-inputgroup-addon">Site</span>
-              <input class="col-7 col-lg-8 table-bordered" name="site"
+              <span class="col-4 col-lg-4 p-inputgroup-addon">Site</span>
+              <input class="col-8 col-lg-8 table-bordered" name="site"
                      [(ngModel)]="this.timesheet.site"
                      placeholder=""
                      type="text"
@@ -108,8 +108,8 @@
           </div>
           <div class="mb-2">
             <div class="p-inputgroup">
-              <span class="col-5 col-lg-4 p-inputgroup-addon">Contrat</span>
-              <div class="col-7 col-lg-8 py-2 px-4 form-check-inline table-bordered  ">
+              <span class="col-4 col-lg-4 p-inputgroup-addon">Contrat</span>
+              <div class="col-8 col-lg-8 py-2 px-4 form-check-inline table-bordered  ">
                 <div class="p-field my-auto pt-2 mx-auto" *ngFor='let contract of contracts'>
                   <input class="p-field-radiobutton " id="contracttype" type="radio" name="contracttype" value="CDI"
                          [value]=contract [(ngModel)]="this.timesheet.contracttype">
@@ -121,12 +121,16 @@
           </div>
         </div>
         <div class="col-lg-4 p-inputgroup">
-          <span class="col-5 col-lg-6 p-inputgroup-addon">Régime horaire</span>
-          <input class="col-7 col-lg-6 table-bordered" name="weekhoursplanned"
+          <span class="col-4 col-lg-6 p-inputgroup-addon">Régime horaire</span>
+          <input class="col-8 col-lg-6 table-bordered" name="weekhoursplanned"
                  [(ngModel)]="this.timesheet.weekhoursplanned" placeholder="" type="number" required>
         </div>
       </div>
+<!--
       <div class="p-fluid  p-grid pt-2 mt-4 sticky-top bottom-btn" style="bottom: 10px">
+-->
+      <div class="p-fluid  p-grid p-md-3  pt-2 mt-4" >
+
         <button class="p-field p-col fixed-bottom" pButton type="button" label="< Précedent"
                 (click)="lastStepPlease()">
         </button>
