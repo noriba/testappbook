@@ -1,0 +1,99 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "year": 2021,
+      "matricule": "azerty",
+      "firstname": "rachid",
+      "lastname": "boulawane",
+      "site": "paris la defense",
+      "contracttype": "CDI",
+      "week": 25,
+      "weekstart": 1,
+      "weekend": 7,
+      "weekactivities": [
+        {
+          "id": 1,
+          "day": "lundi",
+          "numberplate": "46ANWWW59",
+          "mileage": 14,
+          "daystart": "2014-01-01T23:28:56.782Z",
+          "dayend": "2014-01-01T23:28:56.782Z",
+          "pause": 20,
+          "createdate": "2014-01-01T23:28:56.782Z"
+        },
+        {
+          "id": 2,
+          "day": "Mardi",
+          "numberplate": "46ANWWW59",
+          "mileage": 14,
+          "daystart": "2014-01-01T23:28:56.782Z",
+          "dayend": "2014-01-01T23:28:56.782Z",
+          "pause": 20,
+          "createdate": "2014-01-01T23:28:56.782Z"
+        },
+        {
+          "id": 3,
+          "day": "Mercredi",
+          "numberplate": "46ANWWW59",
+          "mileage": 14,
+          "daystart": "2014-01-01T23:28:56.782Z",
+          "dayend": "2014-01-01T23:28:56.782Z",
+          "pause": 20,
+          "createdate": "2014-01-01T23:28:56.782Z"
+        },
+        {
+          "id": 4,
+          "day": "Jeudi",
+          "numberplate": "46ANWWW59",
+          "mileage": 14,
+          "daystart": "2014-01-01T23:28:56.782Z",
+          "dayend": "2014-01-01T23:28:56.782Z",
+          "pause": 20,
+          "createdate": "2014-01-01T23:28:56.782Z"
+        },
+        {
+          "id": 5,
+          "day": "Vendredi",
+          "numberplate": "46ANWWW59",
+          "mileage": 14,
+          "daystart": "2014-01-01T23:28:56.782Z",
+          "dayend": "2014-01-01T23:28:56.782Z",
+          "pause": 20,
+          "createdate": "2014-01-01T23:28:56.782Z"
+        },
+        {
+          "id": 6,
+          "day": "Samedi",
+          "numberplate": "46ANWWW59",
+          "mileage": 14,
+          "daystart": "2014-01-01T23:28:56.782Z",
+          "dayend": "2014-01-01T23:28:56.782Z",
+          "pause": 20,
+          "createdate": "2014-01-01T23:28:56.782Z"
+        },
+        {
+          "id": 7,
+          "day": "Dimanche",
+          "numberplate": "46ANWWW59",
+          "mileage": 14,
+          "daystart": "2014-01-01T23:28:56.782Z",
+          "dayend": "2014-01-01T23:28:56.782Z",
+          "pause": 20,
+          "createdate": "2014-01-01T23:28:56.782Z"
+        }
+      ],
+      "weekhoursdone": 45,
+      "weekhoursplanned": 35,
+      "statusmanager": [
+        {
+          "status": true,
+          "comment": "{single: 21}",
+          "signaturedate": "2014-01-01T23:28:56.782Z",
+          "signature": "0123456789"
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DataApiService} from '../../services/data-api.service';
 import {AuthService} from '../../services/auth.service';
 import {BookInterface} from '../../models/book';
@@ -11,10 +11,11 @@ import {BookInterface} from '../../models/book';
 })
 export class MyBooksComponent implements OnInit {
 
-  constructor(private dataApi: DataApiService, private authService: AuthService) { }
+  constructor(private dataApi: DataApiService, private authService: AuthService) {
+  }
 
-    myBooks: BookInterface[];
-  private isAdmin: any ;
+  myBooks: BookInterface[];
+  private isAdmin: any;
   private userUid: string;
 
   ngOnInit() {
@@ -23,30 +24,31 @@ export class MyBooksComponent implements OnInit {
   }
 
   getCurrentUser() {
-    debugger;
     this.authService.isAuth().subscribe(auth => {
-      debugger;
       if (auth) {
-        this.userUid= auth.uid;
+        this.userUid = auth.uid;
         this.getMyBooks(this.userUid);
-        this.authService.isUserAdmin(this.userUid).subscribe(userRole => {
-          this.isAdmin = Object.assign({}, userRole.roles).hasOwnProperty('admin');
-        })
+        this.authService
+          .isUserAdmin(this.userUid)
+          .subscribe(userRole => {
+            this.isAdmin = Object
+              .assign({}, userRole.roles)
+              .hasOwnProperty('admin');
+          },err=>err);
       }
-    })
+    },err=>err);
   }
+
   getMyBooks(userId) {
-    debugger;
     this.dataApi.getMyBooks(userId)
       .subscribe(books => {
-        debugger;
         this.myBooks = books;
       });
   }
 
   onDeleteBook(idBook: string): void {
-    const confirmacion = confirm('Are you sure?');
-    if (confirmacion) {
+    const confirmation = confirm('Are you sure?');
+    if (confirmation) {
       this.dataApi.deleteBook(idBook);
     }
   }

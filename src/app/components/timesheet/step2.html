@@ -1,0 +1,287 @@
+<div class="m-2 col-lg-md-8" id="htmlData">
+
+  <app-breadcrumb></app-breadcrumb>
+
+
+  <p-card [style]="{'margin': '0em','padding':'0em'}" header="Pointage de la semaine">
+    <ng-template pTemplate="header">
+    </ng-template>
+    <div class="p-fluid  p-grid p-md-3 pt-5">
+      <button class="p-field col-7"
+              label="Nouvelle Journée"
+              pButton type="button" icon="pi pi-plus" iconPos="right"
+              data-toggle="modal"
+              data-target="#exampleModal1"      >
+      </button>
+<!--    <button pButton type="button"
+            class=" btn btn-primary mb-4"
+            data-toggle="modal"
+            data-target="#exampleModal1"
+            data-whatever=""> Nouvelle Journée +
+    </button>-->
+    </div>
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+      <form #myForm="ngForm" (ngSubmit)="createNewActivity(myForm)">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel1">Nouvelle activité</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label class="col-form-label">Jour:</label>
+                <select class="custom-select" name="day" ngModel>
+                  <option *ngFor="let day of days" [ngValue]="day">{{day}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">Immatriculation:</label>
+                <input ngModel class="form-control"
+                       name="numberplate"
+                       required
+                       type="text">
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">Kilometrage:</label>
+                <input ngModel class="form-control"
+                       name="mileage"
+                       required
+                       type="number">
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">Début:</label>
+                <input ngModel class="form-control"
+                       name="daystart"
+                       required
+                       type="time">
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">Fin:</label>
+                <input ngModel class="form-control"
+                       name="dayend"
+                       required
+                       type="time">
+              </div>
+              <div class="form-group">
+                <label class="col-form-label">Pause:</label>
+                <input ngModel class="form-control" name="pause"
+                       required
+                       type="number">
+              </div>
+            </div>
+            <div class="modal-footer ">
+              <div class="p-fluid  p-grid mt-4">
+                <button pButton type="button" class="p-field p-col  btn p-button-danger p-mr-2"
+                        data-dismiss="modal">Annuler
+                </button>
+                <button pButton type="button" class="p-field p-col  btn p-button-success"
+                        data-dismiss="modal" (click)="createNewActivity(myForm)">Valider
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <p-table styleClass="p-datatable-sm" [value]="dayactivities" dataKey="id" editMode="row">
+
+      <ng-template pTemplate="header">
+        <tr class="align-text-top ">
+          <th style="min-width: fit-content">Jour</th>
+          <th class="text-truncate">Immatriculation</th>
+          <th class="text-truncate">Kilometrage</th>
+          <th class="text-truncate">Debut</th>
+          <th class="text-truncate">Fin</th>
+          <th class="text-truncate">Pause</th>
+          <th style="width: 6em"></th>
+        </tr>
+      </ng-template>
+      <ng-template [ngIf]="!dayactivities.length" pTemplate="emptymessage" let-columns>
+        <tr>
+          <td colspan="6">
+            Aucune données trouvées
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template [ngIf]="dayactivities" let-dayactivity let-editing="editing" let-ri="rowIndex" pTemplate="body">
+
+        <tr [pEditableRow]="dayactivity">
+
+          <td style="">
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input [(ngModel)]="dayactivity.day" pInputText type="text">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{dayactivity.day}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td class="text-truncate">
+            <p-cellEditor>
+
+              <ng-template pTemplate="output">
+                {{dayactivity.numberplate}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td class="text-truncate">
+            <p-cellEditor>
+
+              <ng-template pTemplate="output">
+                {{dayactivity.mileage}} km
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td class="text-truncate">
+            <p-cellEditor>
+
+              <ng-template pTemplate="output">
+                {{dayactivity.daystart}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td class="text-truncate">
+            <p-cellEditor>
+
+              <ng-template pTemplate="output">
+                {{dayactivity.dayend}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td class="text-truncate">
+            <p-cellEditor>
+
+              <ng-template pTemplate="output">
+                {{dayactivity.pause}} min
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td class="">
+
+            <button (click)="onRowEditInit(dayactivity, ri)" *ngIf="!editing"
+                    class="p-button-rounded p-button-text"
+                    data-target="#exampleModal"
+                    data-toggle="modal"
+                    icon="pi pi-pencil"
+                    pButton pInitEditableRow pRipple
+                    type="button"
+
+            ></button>
+            <button (click)="onRowDelete(dayactivity, ri)" *ngIf="!editing"
+                    class="p-button-rounded p-button-text"
+                    data-target="#exampleModal"
+                    data-toggle="modal"
+                    icon="pi pi-times"
+                    pButton pInitEditableRow pRipple
+                    type="button"
+            ></button>
+
+            <div *ngIf="editing" aria-hidden="true" aria-labelledby="exampleModalLabel"
+                 class="modal fade"
+                 id="exampleModal"
+                 role="dialog"
+                 tabindex="-1">
+              <form id="formModal">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Mettre à jour l'activité</h5>
+                      <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form class="formModal">
+                        <div class="form-group">
+                          <label class="col-form-label">Jour:</label>
+                          <input [(ngModel)]="this.dataApi.selectedDayActivity.day " class="form-control" name="day"
+                                 type="text">
+                        </div>
+                        <div class="form-group">
+                          <label class="col-form-label">Immatriculation:</label>
+                          <input [(ngModel)]="this.dataApi.selectedDayActivity.numberplate" class="form-control"
+                                 name="numberplate"
+                                 required
+                                 type="text">
+                        </div>
+                        <div class="form-group">
+                          <label class="col-form-label">Kilometrage:</label>
+                          <input [(ngModel)]="this.dataApi.selectedDayActivity.mileage" class="form-control"
+                                 name="mileage"
+                                 required
+                                 type="text">
+                        </div>
+                        <div class="form-group">
+                          <label class="col-form-label">Début:</label>
+                          <input [(ngModel)]="this.dataApi.selectedDayActivity.daystart" class="form-control"
+                                 name="daystart"
+                                 required
+                                 type="text">
+                        </div>
+                        <div class="form-group">
+                          <label class="col-form-label">Fin:</label>
+                          <input [(ngModel)]="this.dataApi.selectedDayActivity.dayend" class="form-control"
+                                 name="dayend"
+                                 required
+                                 type="text">
+                        </div>
+                        <div class="form-group">
+                          <label class="col-form-label">Pause:</label>
+                          <input [(ngModel)]="this.dataApi.selectedDayActivity.pause" class="form-control" name="pause"
+                                 required
+                                 type="text">
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button (click)="onRowEditCancel(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)"
+                              class="p-button-danger p-mr-2" data-dismiss="modal"
+                              pButton pCancelEditableRow pRipple type="button"> Annuler
+                      </button>
+                      <button (click)="onRowEditSave(this.dataApi.selectedDayActivity,this.dataApi.selectedActRow)"
+                              class="p-button-success p-mr-2"
+                              data-dismiss="modal" pButton pRipple pSaveEditableRow type="button">Valider
+                      </button>
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+    <div class="p-fluid  p-grid p-md-3 pt-5">
+      <button class="p-field p-col "
+              (click)="lastStepPlease()"
+              label="Précedent"
+              pButton type="button"
+              icon="pi pi-angle-left"
+              iconPos="left">
+      </button>
+      <button class="p-field p-col ml-2"
+              [disabled]="!dataApi.temporaryTimesheet.weekactivities"
+              (click)="nextStepPlease()"
+              label="Suivant"
+              pButton type="button"
+              icon="pi pi-angle-right"
+              iconPos="right"
+              [disabled]="!dayactivities.length">
+      </button>
+    </div>
+
+  </p-card>
+
+
+</div>

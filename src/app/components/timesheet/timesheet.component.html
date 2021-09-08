@@ -1,0 +1,92 @@
+<section class="tab-content" >
+  <div class=" col-lg-md-4 text-right p-2">
+<!--
+  <div class="sticky-top first-btn col-lg-md-4 text-right p-2">
+-->
+
+    <button class=" btn  btn-primary my-2 my-xl-2 d-block btn-block-xs-only " pButton type="button"
+            label="Feuille de temps" (click)="nextStepPlease()"><i class="pi pi-plus pr-2"> </i>
+    </button>
+  </div>
+
+  <div class="table-responsive ">
+
+    <table class="table table-hover ">
+      <thead>
+      <tr>
+        <th class="text-truncate sticky-col first-col" scope="col">#</th>
+        <th *ngIf="!(isAdmin|async)" class="text-truncate sticky-col second-col" scope="col">Prenom</th>
+        <th *ngIf="!(isAdmin|async)" class="text-truncate" scope="col">Nom</th>
+        <th class="text-truncate" scope="col">Site</th>
+        <th class="text-truncate" scope="col">Année</th>
+        <th class="text-truncate" scope="col">Semaine</th>
+        <th class="text-truncate" scope="col">Heures travaillées</th>
+        <th class="text-truncate" scope="col">Regime horaire</th>
+        <th class="text-truncate" scope="col">Contrat</th>
+        <th></th>
+
+      </tr>
+      </thead>
+
+      <tbody *ngIf="!allTimesheets?.length">
+      <tr class=" ">
+        <td></td>
+        <td colspan="6">
+          Aucune données trouvées        </td>
+      </tr>
+      </tbody>
+
+      <tbody *ngIf="allTimesheets">
+      <tr *ngFor="let timesheet of allTimesheets; index as i">
+        <th class="sticky-col first-col" scope="row">{{i + 1}}</th>
+        <td *ngIf="!(isAdmin|async)" class="text-truncate sticky-col second-col">{{timesheet.firstname}}</td>
+        <td *ngIf="!(isAdmin|async)" class="text-truncate">{{timesheet.lastname}}</td>
+        <td class="text-truncate">{{timesheet.site}}</td>
+        <td class="text-truncate">{{timesheet.year}}</td>
+        <td class="text-truncate">{{timesheet.week}}</td>
+        <td class="text-truncate">{{timesheet.weekhoursdone}}</td>
+        <td class="text-truncate">{{timesheet.weekhoursplanned}}</td>
+        <td class="text-truncate">{{timesheet.contracttype}}</td>
+        <td class="text-truncate p-1">
+          <button
+            *ngIf="timesheet.userUid == (userUid|async) || (isAdmin|async) == true; else noOwner"
+            class="btn btn-primary p-mr-2 p-button-text" pButton icon="pi pi-pencil"
+            data-toggle="modal" data-target="#modalBook"
+            (click)="onPreUpdateTimesheet(timesheet)">
+          </button>
+          <ng-template #noOwner>
+            <button class="btn btn-secondary p-mr-2 p-button-text" pButton
+                    icon="pi pi-pencil" disabled="true">
+            </button>
+          </ng-template>
+
+          <button
+            *ngIf="(isAdmin|async) == true; else noAdmin"
+            class="btn btn-danger p-button-danger p-mr-2 p-button-text" pButton
+            icon="pi pi-times" (click)="onDeleteTimesheet(timesheet.id)">
+          </button>
+          <ng-template #noAdmin>
+            <button class="btn btn-danger p-mr-2 p-button-text" pButton
+                    icon="pi pi-times" disabled="true">
+            </button>
+          </ng-template>
+
+          <button
+            class="btn  p-button-success p-button-text" pButton
+            icon="pi pi-envelope" (click)="eventemit(timesheet)">
+          </button>
+          <ng-template #noAdmin>
+            <button class="btn  p-button-success p-button-text" pButton
+                    icon="pi pi-envelope" disabled="true">
+            </button>
+          </ng-template>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+

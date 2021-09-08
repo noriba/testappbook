@@ -4,35 +4,64 @@
 
       <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
         <div class="card_register">
-          <div class="card">
+          <div class="card p-shadow-1">
             <div class="card-body text-center">
-              <form #formRegister="ngForm" (ngSubmit)="onAddUser()">
-                <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+              <form #formRegister="ngForm" (ngSubmit)="onAddUser(formRegister)">
+                <h1 class="h3 mb-3 font-weight-normal">Créer un compte</h1>
                 <div class="alert alert-danger" role="alert" *ngIf="isError">
                   {{msgError}}
                 </div>
+
+                <div class="form-group ">
+                  <input type="text" name="firstname" ngModel class="form-control" placeholder="Prénom"
+                         [ngClass]="{ 'is-invalid': submitted && f.firstName?.errors }"/>
+                  <div *ngIf="submitted && f.firstName?.errors" class="invalid-feedback">
+                    <div *ngIf="f.firstName?.errors.required">First Name is required</div>
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <input type="text" name="lastname" ngModel class="form-control" placeholder="Nom"
+                         [ngClass]="{ 'is-invalid': submitted && f.lastName?.errors }"/>
+                  <div *ngIf="submitted && f.lastName?.errors" class="invalid-feedback">
+                    <div *ngIf="f.lastName?.errors.required">Last Name is required</div>
+                  </div>
+                </div>
                 <div class="form-group">
-                  <input type="email" name="email" class="form-control" placeholder="Email" [(ngModel)]="email" required minlength="8">
+                  <input type="text" name="email" ngModel class="form-control" placeholder="Email"
+                         [ngClass]="{ 'is-invalid': submitted && f.email?.errors }"/>
+                  <div *ngIf="submitted && f.email?.errors" class="invalid-feedback">
+                    <div *ngIf="f.email?.errors.required">Email is required</div>
+                    <div *ngIf="f.email?.errors.email">Email must be a valid email address</div>
+                  </div>
                 </div>
-                <div class="alert alert-danger" role="alert" *ngIf="email.touched && !email.valid">
-                  <div *ngIf="email.errors.required">Email is required</div>
-                  <div *ngIf="email.errors.minlength">Email must be at least 8 characters</div>
+                <div class="form-group ">
+                  <input type="password" name="password" ngModel class="form-control" placeholder="Mot de passe"
+                         [ngClass]="{ 'is-invalid': submitted && f.password?.errors }"/>
+                  <div *ngIf="submitted && f.password?.errors" class="invalid-feedback">
+                    <div *ngIf="f.password?.errors.required">Password is required</div>
+                    <div *ngIf="f.password?.errors.minlength">Password must be at least 6 characters</div>
+                  </div>
+                </div>
+                <div class="form-group ">
+                  <input type="password" name="confirmPassword" ngModel class="form-control" placeholder="Mot de passe confirmation"
+                         [ngClass]="{ 'is-invalid': submitted && f.confirmPassword?.errors }"/>
+                  <div *ngIf="submitted && f.confirmPassword?.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword?.errors.required">Confirm Password is required</div>
+                    <div *ngIf="f.confirmPassword?.errors.mustMatch">Passwords must match</div>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <input type="password" name="password" class="form-control" placeholder="Password" [(ngModel)]="password" required minlength="5"
-                    maxlength="10">
-                </div>
-                <div class="alert alert-danger" role="alert" *ngIf="password.touched && !password.valid">
-                  <div *ngIf="password.errors.required">Password is required</div>
-                  <div *ngIf="password.errors.minlength">Password must be at least 5 characters</div>
-                </div>
-                <div class="form-group">
-                  <h5>Seleccionar image:</h5>
-                  <input type="file" accept=".png, .jpg" (change)="onUpload($event)">
+                  <h5>Sélectionner une image:</h5>
+                  <label for="file-upload" class="custom-file-upload">
+                    <i class="pi pi-upload"></i>
+                  </label>
+                  <input id="file-upload" type="file" accept=".png, .jpg" size="60" (change)="onUpload($event)"
+                         style="color:transparent;" onchange="this.style.color = 'black';">
                 </div>
                 <div class="progress">
-                  <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success"
-                    role="progressbar" [style.width]="(uploadPercent | async) +'%'">
+                  <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'"
+                       class="progress-bar progress-bar-striped bg-success"
+                       role="progressbar" [style.width]="(uploadPercent | async) +'%'">
 
                     <!-- <span class="progressText" *ngIf="urlImage | async">
                       Ok!!</span> -->
@@ -40,19 +69,22 @@
                 </div>
                 <br>
                 <input #imageUser type="hidden" [value]="urlImage | async">
-                <button *ngIf="urlImage | async; else btnDisabled" type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
+                <button *ngIf="urlImage | async; else btnDisabled" type="submit"
+                        class="btn btn-lg btn-primary btn-block">Créer un compte
+                </button>
                 <ng-template #btnDisabled>
-                  <button type="submit" disabled=true class="btn btn-lg btn-secondary btn-block">Register</button>
+                  <button type="submit" disabled=true class="btn btn-lg btn-secondary btn-block">Créer un compte
+                  </button>
                 </ng-template>
                 <div class="form-group">
-                  <a routerLink="/user/login" class="form-control login-user">Do you have account?</a>
+                  <a routerLink="/user/login" class="form-control login-user">Vous avez déja un compte ?</a>
                 </div>
                 <div class="form-group">
-                  <button class="btn btn-block btn-social btn-facebook" (click)="onLoginFacebook()">
+                  <button class="btn btn-lg btn-block btn-social btn-facebook" (click)="onLoginFacebook()">
                     <span class="fa fa-facebook"></span>
                     FACEBOOK
                   </button>
-                  <button class="btn btn-block btn-social btn-google" (click)="onLoginGoogle()">
+                  <button class="btn btn-lg btn-block btn-social btn-google" (click)="onLoginGoogle()">
                     <span class="fa fa-google"></span>
                     GOOGLE
                   </button>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { DataApiService } from '../../services/data-api.service';
-import { BookInterface } from '../../models/book';
+import {Component, OnInit} from '@angular/core';
+import {DataApiService} from '../../services/data-api.service';
+import {BookInterface} from '../../models/book';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -10,7 +10,9 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class DetailsBookComponent implements OnInit {
 
-  constructor(private dataApi: DataApiService, private route: ActivatedRoute) { }
+  constructor(private dataApi: DataApiService, private route: ActivatedRoute) {
+  }
+
   public book: BookInterface = {};
 
   ngOnInit() {
@@ -21,7 +23,7 @@ export class DetailsBookComponent implements OnInit {
   getDetails(idBook: string): void {
     this.dataApi.getOneBook(idBook).subscribe(book => {
       this.book = book;
-    });
+    },err=>err);
   }
 
 }

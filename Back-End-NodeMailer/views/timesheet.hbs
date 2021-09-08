@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      width: 80%;
+    }
+
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 5px;
+    }
+
+    #customers tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    #customers tr:hover {
+      background-color: #ddd;
+    }
+
+    #customers td {
+      color: #333;
+      font-size: 12px;
+    }
+
+    thead tr th {
+      background-color: #04AA6D;
+      color: white;
+    }
+
+    #customers thead th {
+      font-size: 17px;
+
+    }
+
+    #customers tbody th {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      text-align: left;
+      background-color: white;
+      color: #04AA6D;
+    }
+
+    #customers tfoot th {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      text-align: right;
+      background-color: white;
+      color: #04AA6D;
+    }
+
+    caption h1 {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      background-color: #eee;
+      color: #04AA6D;
+    }
+  </style>
+</head>
+<body>
+
+<table id="customers">
+  <caption><h1>Feuille des temps</h1></caption>
+
+  <thead>
+  <tr>
+    <th colspan="4">Identité</th>
+  </tr>
+  </thead>
+<tbody>
+{{#with timesheet}}
+  <tr>
+    <th>Année</th>
+    <td>{{year}}</td>
+    <th>Semaine</th>
+    <td>n° {{week}} </td>
+  </tr>
+  <tr>
+    <th>Matricule</th>
+    <td>{{matricule}}</td>
+    <th>Début de semaine</th>
+    <td>{{weekstart}}  </td>
+  </tr>
+  <tr>
+    <th>Nom et Prénom</th>
+    <td>{{firstname}} {{lastname}}</td>
+    <th>Fin de semaine</th>
+    <td> {{weekend}}  </td>
+  </tr>
+  <tr>
+    <th>Site</th>
+    <td>{{site}}</td>
+    <th>Régime horaire</th>
+    <td style="text-align: right"> {{weekhoursplanned}} heures</td>
+  </tr>
+  <tr>
+    <th>Contrat</th>
+    <td>{{contracttype}} </td>
+    <th></th>
+    <td></td>
+  </tr>
+  </tbody>
+  </table>
+  <br>
+  <table id="customers">
+    <thead>
+    <tr>
+      <th colspan="8">Pointage de la semaine</th>
+    </tr>
+    </thead>
+    <tbody style="">
+    <tr>
+      <th>#</th>
+      <th>Jour</th>
+      <th>Immatriculation</th>
+      <th>Kilometrage</th>
+      <th>Début</th>
+      <th>Fin</th>
+      <th>Pause</th>
+      <th>Total</th>
+    </tr>
+    {{#each weekactivities}}
+      <tr>
+        <th>{{@index}}</th>
+        <td>{{day}}</td>
+        <td>{{numberplate}}</td>
+        <td style="text-align: right">{{mileage}} Km</td>
+        <td>{{daystart}}</td>
+        <td>{{dayend}}</td>
+        <td style="text-align: right">{{pause}} min</td>
+        <td style="text-align: right">
+          {{duration dayend subtract=daystart get="hours"  }}h
+          {{duration dayend subtract=daystart get="minutes" }}min
+         </td>
+        {{!--<td>{{moment d daystart=dayend}} </td>--}}
+      </tr>
+    {{/each}}
+
+    </tbody>
+    <tfoot>
+    <tr>
+      <th scope="row" colspan="7">Total</th>
+      <td style="text-align: right">{{weekhoursdone}} heures</td>
+    </tr>
+    <tr>
+      <th scope="row" colspan="7">Regime horaire</th>
+      <td style="text-align: right">{{weekhoursplanned}} heures</td>
+    </tr>
+    </tfoot>
+  </table>
+  <br>
+  <table id="customers">
+    <thead>
+    <tr>
+      <th colspan="10">Validation Heures Supplémentaires</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th>#</th>
+      <th>Jour</th>
+      <th>Heures supp</th>
+      <th style="width: 60%">Motif</th>
+      <th>Validation</th>
+    </tr>
+    {{#each weekactivities}}
+      <tr>
+        <th>{{@index}}</th>
+        {{#with dayovertime}}
+          <td>{{day}}</td>
+          <td style="text-align: right"> {{overtime}} heures</td>
+          <td style="width: 60%"> {{reason}}</td>
+          <td style="text-align: center">
+            <input class="checkbox-eml" type="checkbox" value="{{overtimestatus}}">
+          </td>
+        {{/with}}
+      </tr>
+    {{/each}}
+    </tbody>
+    <tfoot>
+    <tr>
+      <th scope="row" colspan="2">Total</th>
+      <td style="text-align: right">21,000 heures</td>
+      <td></td>
+      <td></td>
+    </tr>
+    </tfoot>
+  </table>
+{{/with}}
+<br>
+<table id="customers" style="width: 100%; border: 1px">
+  <thead>
+  </thead>
+  <tbody>
+  {{#with statusmanager}}
+    {{status}}
+    {{signature}}
+    {{signaturedate}}
+    {{comment}}
+  {{/with}}
+  </tbody>
+</table>
+{{createdate}}
+{{#with dayovertime}}
+  {{day}}
+  {{reason}}
+  {{overtime}}
+  {{overtimestatus}}
+{{/with}}
+</body>

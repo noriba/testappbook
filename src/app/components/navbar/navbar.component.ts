@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { AngularFireAuth } from '@angular/fire/auth/auth';
-import {map} from 'rxjs/internal/operators/map';
+import {AuthService} from '../../services/auth.service';
+import {AngularFireAuth} from '@angular/fire/auth/auth';
+import {BehaviorSubject, Observable, of, Subject, Subscription} from 'rxjs';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {first,map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -10,39 +12,53 @@ import {map} from 'rxjs/internal/operators/map';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService: AuthService, private afsAuth: AngularFireAuth) { }
-   app_name: string = 'BookStore';
-   isLogged: boolean = false;
+  constructor(private authService: AuthService,
+              private afsAuth: AngularFireAuth,
+              private router: Router,
+  ) {  }
+
+  app_name: string = 'VRP Manager';
+  isLogged: Observable<boolean> ;
+  isAdmin: Observable<boolean>;
+  userUid: Observable<string>;
 
   ngOnInit() {
-    this.getCurrentUser();
+    this.isAdmin = this.authService.isAdmin.pipe();
+    this.isLogged = this.authService.isLogged.pipe();
+    this.userUid = this.authService.userUid.pipe();
   }
 
-  getCurrentUser() {
-    this.authService.isAuth().subscribe(auth => {
+
+  /*getCurrentUser() {
+    this.subscription = this.authService.isAuth().subscribe(auth => {
       if (auth) {
-        console.log('user logged');
         this.isLogged = true;
+        this.userUid = auth.uid;
+        this.subscription = this.authService
+          .isUserAdmin(this.userUid)
+          .subscribe(userRole => {
+              this.isAdmin = Object
+                .assign({}, userRole.roles)
+                .hasOwnProperty('admin');
+              console.log('ADMINISTRATEUR :::' + this.isAdmin);
+            },
+            err => console.log('error', err),
+            () => console.log('completed'));
       } else {
-        console.log('NO user logged');
         this.isLogged = false;
-        this.afsAuth.authState.pipe(map(authState =>   !!authState   ))
-
       }
-    });
-  }
+
+    }, err => console.log('error', err));
+  }*/
 
   onLogout() {
     this.authService.logoutUser()
-      .then(res => {
-        debugger;
-        console.log("Succes onLogout() :: "+res);
+      .then(() => {
       })
       .catch(error => {
-        console.log("Error onLogout() :: "+error);
+        console.log('Error onLogout() :: ' + error);
       });
 
-    //this.afsAuth.auth.signOut();
   }
 
 

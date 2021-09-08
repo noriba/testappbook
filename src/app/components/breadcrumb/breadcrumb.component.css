@@ -1,0 +1,33 @@
+.p-steps span {
+  margin-top: 4px;
+}
+
+.p-steps .p-steps-item .p-menuitem-link {
+  background: transparent;
+}
+
+.p-steps .p-steps-item .p-menuitem-title span {
+
+}
+
+
+.p-steps .p-steps-item .p-menuitem-link .p-steps-title {
+  /* color: white ;*/
+}
+
+/*
+
+
+.p-steps .p-steps-item .p-menuitem-link .p-steps-number {
+background: white;
+}
+
+.p-steps .p-steps-item .p-menuitem-link .p-steps-number:active {
+background: blue;
+}
+*/
+
+.bottom-btn{
+  bottom: 0px;
+}
+

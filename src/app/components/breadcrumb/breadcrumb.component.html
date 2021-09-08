@@ -1,0 +1,64 @@
+<!--<div class="col-lg-md-4 text-right p-2">-->
+<!--  <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>-->
+<!--</div>-->
+
+<!--
+<div #stepsDiv class="pt-4">
+  <p-steps
+    [model]="crumbs$ | async"
+    (activeIndexChange)="stepperChanged3($event)"
+    [(activeIndex)]="activeIndex"
+    [readonly]="false"
+  ></p-steps>
+</div>
+-->
+<!--<div class="col-lg-md-4 text-right p-2">
+  <button (click)="openPDF()" class="btn btn-success btn-block">Download PDF</button>
+</div>--><!--
+<div class="col-lg-md-4 text-right p-2">
+  <button class="ml-2" pButton type="button" label="< Last Step" (click)="lastStepPlease3()"></button>
+
+  <button class="ml-2" pButton type="button" label="Next Step >" (click)="nextStepPlease2()"></button>
+</div>
+
+
+
+<div #stepsDiv2>
+  <p-steps
+           [model]="crumbs$ | async "
+           (activeIndexChange)="stepperChanged3($event)"
+           [(activeIndex)]="activeIndex2"
+           [readonly]="false"
+  ></p-steps>
+</div>
+-->
+
+<p-toast></p-toast>
+
+<div class="py-2 p-0" style="font-size: 16px;">
+  <p-steps #stepper
+           [model]="steps$"
+           (activeIndexChange)="stepperChanged($event)"
+           [(activeIndex)]="activeIndex"
+           [readonly]="false"
+  ></p-steps>
+</div>
+
+
+<!--
+<div class="col-lg-md-4 text-right p-2">
+  <button (click)="openPDF()" class="btn btn-success btn-block">Download PDF</button>
+</div>-->
+
+<!--
+
+<div class="col-lg-md-4 text-right p-2">
+  <button class="ml-2" pButton type="button" label="< Last Step" (click)="lastStepPlease()"></button>
+
+  <button class="ml-2" pButton type="button" label="Next Step >" (click)="nextStepPlease()"></button>
+</div>
+-->
+
+
+
+

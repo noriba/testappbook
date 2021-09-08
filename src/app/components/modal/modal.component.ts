@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {DataApiService} from '../../services/data-api.service';
 import {finalize} from 'rxjs/internal/operators/finalize';
 import {NgForm} from '@angular/forms';
@@ -19,7 +19,7 @@ export class ModalComponent implements OnInit {
     filePath: '',
     ref: '',
     task: ''
-  }
+  };
 
 
   uploadPercent: Observable<number>;
@@ -27,13 +27,13 @@ export class ModalComponent implements OnInit {
   msgError: string;
   isError: any;
 
-  constructor(public dataApi: DataApiService, private storage: AngularFireStorage) {    // customize default values of modals used by this component tree
-     }
+  constructor(public dataApi: DataApiService,
+              private storage: AngularFireStorage) {
+  }
 
   @ViewChild('btnClose') btnClose: ElementRef;
   @Input() userUid: string;
   @ViewChild('imageBook') inputImageBook: ElementRef;
-
 
 
   ngOnInit() {
@@ -45,10 +45,10 @@ export class ModalComponent implements OnInit {
       bookForm.value.userUid = this.userUid;
       bookForm.value.portada = this.inputImageBook.nativeElement.value;
       this.dataApi.addBook(bookForm.value)
-        .then(()=>{
-        bookForm.resetForm();
-        this.btnClose.nativeElement.click();
-      })
+        .then(() => {
+          bookForm.resetForm();
+          this.btnClose.nativeElement.click();
+        })
         .catch(err => {
           this.isError = true;
           this.msgError = err.message;
@@ -57,10 +57,10 @@ export class ModalComponent implements OnInit {
       // Update
       bookForm.value.portada = this.inputImageBook.nativeElement.value;
       this.dataApi.updateBook(bookForm.value)
-        .then(()=>{
+        .then(() => {
           bookForm.resetForm();
           this.btnClose.nativeElement.click();
-      })
+        })
         .catch(err => {
           this.isError = true;
           this.msgError = err.message;
@@ -78,16 +78,16 @@ export class ModalComponent implements OnInit {
     this.imageLoad.filePath = `uploads/book_${this.imageLoad.id}`;
     this.imageLoad.ref = this.storage.ref(this.imageLoad.filePath);
     this.imageLoad.task = this.storage.upload(this.imageLoad.filePath, this.imageLoad.file);
-    try{
+    try {
       this.uploadPercent = this.imageLoad.task.percentageChanges();
       this.imageLoad.task.snapshotChanges()
         .pipe(finalize(() => this.urlImage = this.imageLoad.ref.getDownloadURL()))
         .subscribe();
-      console.log('Success onUpload ::: this.urlimage = '+ this.urlImage );
+      console.log('Success onUpload ::: this.urlimage = ' + this.urlImage);
 
-    }catch (error){
+    } catch (error) {
       this.msgError = error;
-      console.log("Error in load image"+ error);
+      console.log('Error in load image' + error);
     }
   }
 
