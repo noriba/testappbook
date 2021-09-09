@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
               private router: Router,
   ) {  }
 
-  app_name: string = 'VRP Manager';
+  app_name: string = 'VAP Manager';
   isLogged: Observable<boolean> ;
   isAdmin: Observable<boolean>;
   userUid: Observable<string>;
