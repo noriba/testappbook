@@ -1,0 +1,188 @@
+<div class="m-2 col-lg-md-8" id="htmlData">
+
+  <app-breadcrumb></app-breadcrumb>
+
+
+  <p-card styleClass="p-card-sm" header="Validation Heures Supplémentaires">
+    <ng-template pTemplate="header">
+    </ng-template>
+    <p-table styleClass="p-datatable-sm"
+             [value]="dayovertimes"
+             dataKey="day" editMode="row">
+      <ng-template pTemplate="header">
+        <tr class="align-text-top">
+          <th>Jour</th>
+          <th class="text-truncate">Heures supp</th>
+          <th>Motif</th>
+          <th>Validé</th>
+          <th style="width: 6em"></th>
+        </tr>
+      </ng-template>
+      <ng-template [ngIf]="!dayovertimes.length" pTemplate="emptymessage">
+        <tr>
+          <td colspan="3">
+            Aucune données trouvées
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template [ngIf]="dayovertimes" pTemplate="body"
+                   let-dayovertime let-editing="editing" let-ri="rowIndex">
+        <tr class="text-truncate" [pEditableRow]="dayovertime">
+          <td>
+            <p-cellEditor>
+
+              <ng-template pTemplate="output">
+                {{dayovertime.day}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+
+              <ng-template pTemplate="output">
+                {{dayovertime.overtime}} heures
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="text"
+                       [(ngModel)]="dayovertime.reason" required>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{dayovertime.reason }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <input pInputText type="checkbox"
+                       [(ngModel)]="dayovertime.overtimestatus">
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{dayovertime.overtimestatus}}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+
+
+          <td style="text-align:center">
+            <!--            <button *ngIf="editing" pButton pRipple type="button"
+                                pSaveEditableRow icon="pi pi-check"
+                                (click)="onRowEditSave(dayovertime,ri)"
+                                class="p-button-rounded p-button-text p-button-success p-mr-2"
+                        ></button>
+                        <button *ngIf="editing" pButton pRipple type="button"
+                                pCancelEditableRow icon="pi pi-times"
+                                (click)="onRowEditCancel(dayovertime, ri)"
+                                class="p-button-rounded p-button-text p-button-danger"
+                        ></button>-->
+            <button *ngIf="!editing" type="button"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    pButton pRipple pInitEditableRow icon="pi pi-pencil"
+                    (click)="onRowEditInit(dayovertime, ri)"
+                    class="p-button-rounded p-button-text"
+            ></button>
+
+            <div *ngIf="editing" class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+              <form id="formModal">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Activitée du jour</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form class="formModal">
+
+                        <div class="form-group ">
+                          <label class="col-form-label d-block text-left">Jour
+                            :  {{this.dataApi.selectedDayOvertime.day}}</label>
+
+
+                          <label class="col-form-label d-block text-left ">Heures supplementaires
+                            : {{this.dataApi.selectedDayOvertime.overtime}}</label>
+
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-form-label">Raison :</label>
+                          <input class="form-control" name="reason" type="text"
+                                 [(ngModel)]="this.dataApi.selectedDayOvertime.reason"
+                                 required>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-form-label">Validation:</label>
+                          <input class="form-control" name="overtimestatus" type="checkbox"
+                                 [(ngModel)]="this.dataApi.selectedDayOvertime.overtimestatus"
+                                 required>
+                        </div>
+
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <div class="p-fluid  p-grid mt-4">
+                        <button type="button"
+                                class="p-field p-col p-button-danger p-mr-2"
+                                pButton pRipple pCancelEditableRow
+                                data-dismiss="modal"
+                                (click)="onRowEditCancel(this.dataApi.selectedDayOvertime,this.dataApi.selectedOtRow)">
+                          Annuler
+                        </button>
+                        <button type="button"
+                                class="p-field p-col p-button-success "
+                                pButton pRipple pSaveEditableRow
+                                (click)="onRowEditSave(this.dataApi.selectedDayOvertime, this.dataApi.selectedOtRow)"
+                                data-dismiss="modal">Valider
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+ <!--   <div class="p-fluid  p-grid p-md-3 mt-4">
+      <button class="p-field p-col  fixed-bottom"
+              pButton type="button" label="< Précedent"
+              (click)="lastStepPlease()">
+      </button>
+      <button class="p-field p-col ml-2"
+              pButton type="button" label="Suivant >"
+              (click)="nextStepPlease()">
+      </button>
+    </div>-->
+
+    <div class="p-fluid  p-grid p-md-3 pt-5">
+      <button class="p-field p-col "
+              (click)="lastStepPlease()"
+              label="Précedent"
+              pButton type="button"
+              icon="pi pi-angle-left"
+              iconPos="left">
+      </button>
+      <button class="p-field p-col ml-2"
+              (click)="nextStepPlease()"
+              label="Suivant"
+              pButton type="button"
+              icon="pi pi-angle-right"
+              iconPos="right">
+      </button>
+    </div>
+  </p-card>
+
+
+</div>

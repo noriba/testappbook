@@ -1,0 +1,13 @@
+
+.navbar-brand label{
+  color: red;
+  letter-spacing:-1px ;
+  font-weight: 900;
+  background-color: white;
+  padding-right: 2px;
+  padding-left: 2px;
+}
+.navbar-brand {
+  font-weight: bold;
+
+}
