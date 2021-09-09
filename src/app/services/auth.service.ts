@@ -49,9 +49,10 @@ export class AuthService {
             } else {
               this.isLogged.next(true);
               console.log('user correctly registered ' + JSON.stringify(user));
-              console.log('ADMINISTRATEUR ? :::' + this.isAdmin.value);
               user.roles.admin ?
                 this.isAdmin.next(true) : this.isAdmin.next(false);
+              console.log('ADMINISTRATEUR ? :::' + this.isAdmin.value);
+
               this._adminOutEmitter.next(true);
               /* this.subscription = this.isUserAdmin(user.id)
                .pipe(takeUntil(this._loggedOutEmitter))
