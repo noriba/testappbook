@@ -10,14 +10,30 @@
     <p>Vous avez travaillé {{weekhours}} heures</p>
     <p>dont {{weekovertime}} d'heures supplementaires</p>
     <div class="p-fluid  p-grid mt-4">
-  <button class="p-field p-col ml-2 fixed-bottom"
+<!--  <button class="p-field p-col ml-2 fixed-bottom"
               pButton type="button"
               label="< Précedent" (click)="lastStepPlease()">
       </button>
       <button class="p-field p-col ml-2 bg-success"
               pButton type="button"
               label="Terminée >" (click)="nextStepPlease()">
-      </button>
+      </button>-->
+      <div class="p-fluid  p-grid p-md-3 pt-5">
+        <button class="p-field p-col "
+                (click)="lastStepPlease()"
+                label="Précedent"
+                pButton type="button"
+                icon="pi pi-angle-left"
+                iconPos="left">
+        </button>
+        <button class="p-field p-col ml-2 bg-success"
+                (click)="nextStepPlease()"
+                label="Valider"
+                pButton type="button"
+                icon="pi pi-angle-right"
+                iconPos="right">
+        </button>
+      </div>
 </div>
   </p-card>
 </div>

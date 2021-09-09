@@ -11,14 +11,14 @@
              dataKey="day" editMode="row">
       <ng-template pTemplate="header">
         <tr class="align-text-top">
-          <th >Jour</th>
+          <th>Jour</th>
           <th class="text-truncate">Heures supp</th>
-          <th >Motif</th>
-          <th >Validé</th>
+          <th>Motif</th>
+          <th>Validé</th>
           <th style="width: 6em"></th>
         </tr>
       </ng-template>
-      <ng-template [ngIf]="!dayovertimes.length" pTemplate="emptymessage" >
+      <ng-template [ngIf]="!dayovertimes.length" pTemplate="emptymessage">
         <tr>
           <td colspan="3">
             Aucune données trouvées
@@ -59,7 +59,7 @@
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText type="checkbox"
-                       [(ngModel)]="dayovertime.overtimestatus" >
+                       [(ngModel)]="dayovertime.overtimestatus">
               </ng-template>
               <ng-template pTemplate="output">
                 {{dayovertime.overtimestatus}}
@@ -69,17 +69,17 @@
 
 
           <td style="text-align:center">
-<!--            <button *ngIf="editing" pButton pRipple type="button"
-                    pSaveEditableRow icon="pi pi-check"
-                    (click)="onRowEditSave(dayovertime,ri)"
-                    class="p-button-rounded p-button-text p-button-success p-mr-2"
-            ></button>
-            <button *ngIf="editing" pButton pRipple type="button"
-                    pCancelEditableRow icon="pi pi-times"
-                    (click)="onRowEditCancel(dayovertime, ri)"
-                    class="p-button-rounded p-button-text p-button-danger"
-            ></button>-->
-            <button *ngIf="!editing"  type="button"
+            <!--            <button *ngIf="editing" pButton pRipple type="button"
+                                pSaveEditableRow icon="pi pi-check"
+                                (click)="onRowEditSave(dayovertime,ri)"
+                                class="p-button-rounded p-button-text p-button-success p-mr-2"
+                        ></button>
+                        <button *ngIf="editing" pButton pRipple type="button"
+                                pCancelEditableRow icon="pi pi-times"
+                                (click)="onRowEditCancel(dayovertime, ri)"
+                                class="p-button-rounded p-button-text p-button-danger"
+                        ></button>-->
+            <button *ngIf="!editing" type="button"
                     data-toggle="modal"
                     data-target="#exampleModal"
                     pButton pRipple pInitEditableRow icon="pi pi-pencil"
@@ -128,21 +128,23 @@
                       </form>
                     </div>
                     <div class="modal-footer">
-                    <div class="p-fluid  p-grid mt-4">
-                      <button type="button"
-                              class="p-field p-col p-button-danger p-mr-2"
-                              pButton pRipple pCancelEditableRow
-                              data-dismiss="modal"
-                              (click)="onRowEditCancel(this.dataApi.selectedDayOvertime,this.dataApi.selectedOtRow)">
-                        Annuler
-                      </button>
-                      <button type="button"
-                              class="p-field p-col p-button-success "
-                              pButton pRipple pSaveEditableRow
-                              (click)="onRowEditSave(this.dataApi.selectedDayOvertime, this.dataApi.selectedOtRow)"
-                              data-dismiss="modal">Valider
-                      </button>
-                    </div></div>
+                      <div class="p-fluid  p-grid mt-4">
+                        <button type="button"
+                                class="p-field p-col p-button-danger p-mr-2"
+                                pButton pRipple pCancelEditableRow
+                                data-dismiss="modal"
+                                (click)="onRowEditCancel(this.dataApi.selectedDayOvertime,this.dataApi.selectedOtRow)">
+                          Annuler
+                        </button>
+                        <button type="button"
+                                class="p-field p-col p-button-success "
+                                pButton pRipple pSaveEditableRow
+                                (click)="onRowEditSave(this.dataApi.selectedDayOvertime, this.dataApi.selectedOtRow)"
+                                data-dismiss="modal">Valider
+                        </button>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               </form>
@@ -153,7 +155,7 @@
 
     </p-table>
 
-    <div class="p-fluid  p-grid p-md-3 mt-4">
+ <!--   <div class="p-fluid  p-grid p-md-3 mt-4">
       <button class="p-field p-col  fixed-bottom"
               pButton type="button" label="< Précedent"
               (click)="lastStepPlease()">
@@ -162,7 +164,24 @@
               pButton type="button" label="Suivant >"
               (click)="nextStepPlease()">
       </button>
-</div>
+    </div>-->
+
+    <div class="p-fluid  p-grid p-md-3 pt-5">
+      <button class="p-field p-col "
+              (click)="lastStepPlease()"
+              label="Précedent"
+              pButton type="button"
+              icon="pi pi-angle-left"
+              iconPos="left">
+      </button>
+      <button class="p-field p-col ml-2"
+              (click)="nextStepPlease()"
+              label="Suivant"
+              pButton type="button"
+              icon="pi pi-angle-right"
+              iconPos="right">
+      </button>
+    </div>
   </p-card>
 
 

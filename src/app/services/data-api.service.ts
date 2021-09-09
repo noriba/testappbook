@@ -191,7 +191,7 @@ export class DataApiService {
   getAllTimesheets() {
     this.timesheetsCollection = this.afs.collection<Timesheet>('timesheets');
     return this.timesheets = this.timesheetsCollection
-      .snapshotChanges()
+      .snapshotChanges().pipe(take(1))
       .pipe(map(changes => {
         return changes.map(action => {
           const data = action.payload.doc.data() as Timesheet;

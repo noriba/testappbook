@@ -31,7 +31,7 @@ emailRouter.route('/')
     port: '465',
     auth: {
       user: 'vrpmanager75@gmail.com',//replace with your email
-      pass: 'Azerty59'//replace with your password
+      pass: ''//replace with your password
     }
   });
 
